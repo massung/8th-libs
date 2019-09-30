@@ -1,0 +1,167 @@
+\ -*- 8th -*-
+\ ANSI CSI terminal codes for 8th
+\
+
+ns: term
+
+\ platform-specific init routine
+defer: (init)
+
+\ set to true after init successfully called
+false var, initialized
+
+\ bind windows functions
+os 1 n:= #if
+    k32 drop
+
+    \ register foreign functions
+    "NN" "GetStdHandle" func: getStdHandle
+    "NNP" "GetConsoleMode" func: getConsoleMode
+    "NNN" "SetConsoleMode" func: setConsoleMode
+    "NN" "SetConsoleOutputCP" func: setConsoleOutputCP
+
+    \ standard output handle
+    -11 getStdHandle constant stdout
+
+    : win-get-mode \ -- mode flag
+        stdout 0 "i" ptr:pack dup >r getConsoleMode 0 > if
+            r> ptr:unpack true
+        else
+            rdrop false
+        then ;
+
+    : win-set-mode \ mode -- flag
+        stdout swap setConsoleMode 0 > ;
+
+    : win-init-term \ enable virtual processing mode
+        win-get-mode if 4 bor win-set-mode else false then ;
+
+    \ bind windows init to the init routine
+    ' win-init-term w:is (init)
+#else
+    \ linux and mac just work
+    ( true ) w:is (init)
+#then
+
+-- w: init
+-- d: initialize the terminal and enable escape code sequence writing
+
+: init \ --
+    term:(init) initialized ! ;
+
+\ escape sequences
+
+: esc initialized @ if $1b putc '[ putc then ;
+: csi esc swap initialized @ if . putc else 2drop then ;
+: sgr 'm csi ;
+
+\ CSI codes
+
+: up 'A csi ;
+: down 'B csi ;
+: forward 'C csi ;
+: back 'D csi ;
+: next-line 'E csi ;
+: prev-line 'F csi ;
+: goto-column 'G csi ;
+: goto "%d;%d" strfmt 'H csi ;
+: cls-to-end 0 'J csi ;
+: cls-to-start 1 'J csi ;
+: cls 2 'J csi ;
+: clear-line-to-end 0 'K csi ;
+: clear-line-to-start 1 'K csi ;
+: clear-line 2 'K csi ;
+: scroll-up 'S csi ;
+: scroll-down 'T csi ;
+: hide "?25" 'l csi ;
+: show "?25" 'h csi ;
+
+\ save/restore cursor position
+
+: save esc 's putc ;
+: restore esc 'u putc ;
+
+\ SGR codes
+
+: reset 0 sgr ;
+
+\ foreground colors
+
+: black 30 sgr ;
+: red 31 sgr ;
+: green 32 sgr ;
+: yellow 33 sgr ;
+: blue 34 sgr ;
+: magenta 35 sgr ;
+: cyan 36 sgr ;
+: white 37 sgr ;
+
+\ bright foreground colors
+
+: bright-black 90 sgr ;
+: bright-red 91 sgr ;
+: bright-green 92 sgr ;
+: bright-yellow 93 sgr ;
+: bright-blue 94 sgr ;
+: bright-magenta 95 sgr ;
+: bright-cyan 96 sgr ;
+: bright-white 97 sgr ;
+
+\ background colors
+
+: on-black 40 sgr ;
+: on-red 41 sgr ;
+: on-green 42 sgr ;
+: on-yellow 43 sgr ;
+: on-blue 44 sgr ;
+: on-magenta 45 sgr ;
+: on-cyan 46 sgr ;
+: on-white 47 sgr ;
+
+\ bright background colors
+
+: on-bright-black 100 sgr ;
+: on-bright-red 101 sgr ;
+: on-bright-green 102 sgr ;
+: on-bright-yellow 103 sgr ;
+: on-bright-blue 104 sgr ;
+: on-bright-magenta 105 sgr ;
+: on-bright-cyan 106 sgr ;
+: on-bright-white 107 sgr ;
+
+\ rgb colors
+
+: color \ b g r --
+    "38;2;%d;%d;%d" s:strfmt sgr ;
+
+: on \ b g r --
+    "48;2;%d;%d;%d" s:strfmt sgr ;
+
+\ attributes
+
+: bold 1 sgr ;
+: italic 3 sgr ;
+: underline 4 sgr ;
+: blink 5 sgr ;
+: reverse 7 sgr ;
+: conceal 8 sgr ;
+: cross-out 9 sgr ;
+: frame 51 sgr ;
+: overline 53 sgr ;
+
+\ negative attributes
+
+: no-bold 22 sgr ;
+: no-italic 23 sgr ;
+: no-underline 24 sgr ;
+: no-blink 25 sgr ;
+: no-reverse 27 sgr ;
+: no-conceal 28 sgr ;
+: no-cross-out 29 sgr ;
+: no-frame 54 sgr ;
+: no-overline 55 sgr ;
+
+\ fonts
+
+: reset-font 10 sgr ;
+: alt-font 10 + sgr ;

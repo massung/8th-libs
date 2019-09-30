@@ -1,0 +1,54 @@
+\ -*- 8th -*-
+
+\ -------------------
+\ Array utils
+\ -------------------
+
+ns: a
+
+-- w: a:iota
+-- s: n -- a
+-- d: Returns an array of number in the range [0,n).
+
+: iota \ n -- a
+    >r a:new ( a:len a:push ) r> times ;
+
+-- w: a:take
+-- s: a n -- a' a2
+-- d: Shifts out n items from a and returns them as a new array (a2).
+
+: take \ a n -- a' a2
+    2dup 0 swap a:slice >r -1 a:slice r> ;
+
+\ -------------------
+\ Map utils
+\ -------------------
+
+ns: m
+
+\ -------------------
+\ File utils
+\ -------------------
+
+ns: f
+
+-- w: f:homedir
+-- s: -- s
+-- d: Returns the user's home directory (~/).
+
+: homedir \ -- s
+    "HOME" getenv null? if "USERPROFILE" getenv nip then ;
+
+-- w: f:homefile
+-- s: s -- s
+-- d: Returns a file in the home directory. s -> ~/s
+
+: homefile \ s -- s
+    homedir f:sep s:+ "%s%s" s:strfmt ;
+
+-- w: f:vomit
+-- s: x s --
+-- d: Writes the item x to a new file (by filename) s.
+
+: vomit \ x s --
+    f:create swap f:write drop f:close ;
