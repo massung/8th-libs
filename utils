@@ -1,6 +1,19 @@
 \ -*- 8th -*-
 
 \ -------------------
+\ String utils
+\ -------------------
+
+ns: s
+
+-- w: s:empty?
+-- s: s -- s false | true
+-- d: Drop and true if the string is empty, otherwise false.
+
+: empty? \ s -- s false | true
+    s:len 0 > if false else drop true then ;
+
+\ -------------------
 \ Array utils
 \ -------------------
 

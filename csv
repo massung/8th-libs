@@ -1,0 +1,48 @@
+\ -*- 8th -*-
+
+needs utils
+
+: quote? \ s -- s f
+    0 s:@ '" = ;
+
+-- w: csv:next
+-- s: f -- f s | f null
+-- d: Reads the next line of a csv, skipping comments.
+
+: next \ f -- f s | f null
+    repeat f:getline null? if; 0 s:@ '# = while ;
+
+-- w: csv:cell
+-- s: s sep -- s' x
+-- d:
+
+: cell \ s sep -- x | null
+    s:search null? if nip else 0 swap s:slice ;
+
+-- w: csv:col
+-- s: s sep -- s' s
+-- d: Read the next column from a string.
+
+: col \ s ix sep -- s ix x | null
+    >r [
+        ( s:empty? ) , ( rdrop null ) ,
+        ( 0 s:@ '" = ) , ( r> qcell ) ,
+        ( r> cell )
+    ] when ;
+
+-- w: csv: cols
+-- s: s a sep -- s' a'
+-- d: Read all the columns from a line into an array.
+
+: cols \ a s sep -- a'
+    >r repeat
+        r@ col null? if break else >r over r> a:push then
+    while rdrop 2drop ;
+
+-- w: csv:rec
+-- s: sep -- a
+-- d: Read the next record from a CSV file. @sep@ is a word used to match
+-- d: column separator characters.
+
+: rec \ f sep -- f a
+    >r next a:new swap r> cols ;
