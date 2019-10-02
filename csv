@@ -1,48 +1,70 @@
 \ -*- 8th -*-
 
-needs utils
+ns: csv
 
-: quote? \ s -- s f
-    0 s:@ '" = ;
+private
+
+\ open csv properties
+null var, (cols)
+null var, (header)
+
+\ each, map, etc...
+defer: (proc)
+
+public
+
+-- w: csv:>sep
+-- s: s --
+-- d: Set the current column separator.
+
+: >sep \ s --
+    dup "(?<=^|%s)(?:\"(.*)\"|[^\"]*?)(?=%s|$)" strfmt r:new #p:(cols) ! ;
+
+\ default to a comma-separated table
+"," >sep
+
+-- w: csv:>header
+-- s: s --
+-- d: Parse TOS as a record and make it the current header row.
+
+: >header \ a --
+    #p:(header) ! ;
 
 -- w: csv:next
 -- s: f -- f s | f null
 -- d: Reads the next line of a csv, skipping comments.
 
 : next \ f -- f s | f null
-    repeat f:getline null? if; 0 s:@ '# = while ;
+    repeat f:getline null? if; 0 s:@ '# = while! ;
 
--- w: csv:cell
--- s: s sep -- s' x
--- d:
+-- w: csv:rec>
+-- s: s -- a
+-- d: Take a CSV record string and convert it into an array of column values.
 
-: cell \ s sep -- x | null
-    s:search null? if nip else 0 swap s:slice ;
+: rec> \ f -- f a
+    next null? if; #p:(cols) @ r:/ ;
 
 -- w: csv:col
--- s: s sep -- s' s
--- d: Read the next column from a string.
+-- s: a x -- s
+-- d: Looks up a column by name if @x@ is a string, otherwise assumes @x@ is
+-- d: a column index and returns the column value at that index.
 
-: col \ s ix sep -- s ix x | null
-    >r [
-        ( s:empty? ) , ( rdrop null ) ,
-        ( 0 s:@ '" = ) , ( r> qcell ) ,
-        ( r> cell )
-    ] when ;
+: col \ x -- ix
+    number? if; #p:(header) @ swap ' s:= a:indexof nip ;
 
--- w: csv: cols
--- s: s a sep -- s' a'
--- d: Read all the columns from a line into an array.
+-- w: csv:maprec
+-- s: a -- m
+-- d: Map the values of a record to the keys of the current header.
 
-: cols \ a s sep -- a'
-    >r repeat
-        r@ col null? if break else >r over r> a:push then
-    while rdrop 2drop ;
+: maprec \ a -- r
+    m:new swap #p:(header) @ swap ( rot drop m:! ) a:2each 2drop ;
 
--- w: csv:rec
--- s: sep -- a
--- d: Read the next record from a CSV file. @sep@ is a word used to match
--- d: column separator characters.
+-- w: csv:each
+-- s: f w -- f
+-- d: Similar to a:each!. Every row in an opened CSV file (see csv:open)
+-- d: is read and the word on the stack is called with the record.
 
-: rec \ f sep -- f a
-    >r next a:new swap r> cols ;
+: each \ f w -- f
+    w:is #p:(proc) repeat
+        next null; rec> #p:(proc)
+    again ;
