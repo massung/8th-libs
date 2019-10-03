@@ -59,9 +59,9 @@ ns: f
 : homefile \ s -- s
     homedir f:sep s:+ "%s%s" s:strfmt ;
 
--- w: f:vomit
+-- w: f:spit
 -- s: x s --
 -- d: Writes the item x to a new file (by filename) s.
 
-: vomit \ x s --
+: spit \ x s --
     f:create swap f:write drop f:close ;

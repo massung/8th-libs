@@ -1,0 +1,61 @@
+\ -*- 8th -*-
+
+ns: opts
+
+\ This library is for command-line argument parsing. It's intended to be
+\ used in conjunction with `G:appopts`.
+\
+\ The `opt:parse` word should be called with both a map of command line
+\ flags/switches and an array of command line arguments. 
+\
+\ Each argument is shifted out of the array and looked up in the map. If
+\ found, the value is expected to be a word that is then executed with the
+\ rest of the command line array as the TOS. The returned TOS is then
+\ written to `appopts` with the flag/switch as the key.
+\
+\ This process repeats until either the entire command line array has been
+\ parsed (and null returned) or the next argument is not found in the map
+\ and the rest of the array is returned.
+\
+\ Example:
+\
+\ { "-f" : ( a:shift ) , "-t" : ( true ) } constant opts
+\
+\ -- assume the command line was "-t -f data.csv upload"
+\
+\ ok> opts argv parse
+\
+\ ok> .s
+\ ["upload"]
+\
+\ ok> appopts .
+\ G:appopts {"-f":"data.csv","-t":true}
+\
+\ ok> "-t" app:opts@ false ?: .
+\ true
+\
+
+-- w: opts:argv
+-- s: -- a
+-- d: Returns the command line arguments as an array.
+
+: argv \ -- a
+    a:new ( a:len args a:push ) argc times ;
+
+-- w: opts:parse
+-- s: m -- n
+-- d: Parse an array of command line arguments into `G:appopts`.
+
+: parse \ m a -- a | null
+    repeat
+        a:len 0 = if 2drop null ;then \ no more arguments?
+
+        \ get the next argument and look it up
+        0 a:@ swap >r m:@
+
+        \ if not found, bust out
+        null? if 2drop r> ;then
+
+        \ execute the word
+        r> a:shift >r swap w:exec r> swap app:opts!
+    again ;

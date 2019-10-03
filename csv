@@ -66,5 +66,5 @@ public
 
 : each \ f w -- f
     w:is #p:(proc) repeat
-        next null; rec> #p:(proc)
+        rec> null; #p:(proc)
     again ;
