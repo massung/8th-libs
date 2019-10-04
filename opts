@@ -19,17 +19,17 @@ ns: opts
 \
 \ Example:
 \
-\ { "-f" : ( a:shift ) , "-t" : ( true ) } constant opts
+\ { "-f" : ( a:shift ) , "-t" : ( true ) } constant optmap
 \
-\ -- assume the command line was "-t -f data.csv upload"
+\ -- assume the command line was "-t -f , data.csv"
 \
-\ ok> opts argv parse
+\ ok> optmap argv parse
 \
 \ ok> .s
-\ ["upload"]
+\ ["data.csv"]
 \
 \ ok> appopts .
-\ G:appopts {"-f":"data.csv","-t":true}
+\ G:appopts {"-f":",","-t":true}
 \
 \ ok> "-t" app:opts@ false ?: .
 \ true

@@ -44,6 +44,13 @@ public
 : rec> \ f -- f a
     next null? if; #p:(cols) @ r:/ ;
 
+-- w: csv:.rec
+-- s: a s --
+-- d: Print a record to standard out using the given separator.
+
+: .rec \ a s -- a
+    swap a:len n:1- >r ( . r@ n:= if drop ;then dup . ) a:each cr ;
+
 -- w: csv:col
 -- s: a x -- s
 -- d: Looks up a column by name if @x@ is a string, otherwise assumes @x@ is
@@ -52,12 +59,19 @@ public
 : col \ x -- ix
     number? if; #p:(header) @ swap ' s:= a:indexof nip ;
 
--- w: csv:maprec
--- s: a -- m
--- d: Map the values of a record to the keys of the current header.
+-- w: csv:cut
+-- s: a cols -- a1
+-- d: Select columns from a record with an arrow of column index or name.
 
-: maprec \ a -- r
-    m:new swap #p:(header) @ swap ( rot drop m:! ) a:2each 2drop ;
+: cut \ a cols -- a1
+    ( string? if col then a:@ ) a:map nip ;
+
+-- w: csv:test
+-- s: a col n w -- a n1
+-- d: Return the sigma (-1, 0, 1) of a column compared against a constant.
+
+: cmp \ a col n -- a n1
+    >r col a:@ >n r> n:cmp ;
 
 -- w: csv:each
 -- s: f w -- f
