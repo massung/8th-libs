@@ -45,7 +45,7 @@ public
     next null? if; #p:(cols) @ r:/ ;
 
 -- w: csv:.rec
--- s: a s --
+-- s: a s -- a
 -- d: Print a record to standard out using the given separator.
 
 : .rec \ a s -- a
