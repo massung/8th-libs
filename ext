@@ -39,6 +39,14 @@ ns: a
 : take \ a n -- a' a2
     2dup 0 swap a:slice >r -1 a:slice r> ;
 
+-- w: a:in?
+-- s: a x w -- a T
+-- d: True if the item x is contained within the array when compared with
+-- d: the predicate w.
+
+: in? \ a x w -- a T
+    a:indexof null? not nip ;
+
 -- w: a:every
 -- s: a w -- a T
 -- d: The same as a:each! except that word is expected to be a predicate
