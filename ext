@@ -40,20 +40,20 @@ ns: a
     2dup 0 swap a:slice >r -1 a:slice r> ;
 
 -- w: a:every
--- s: a w -- a f
--- d: The same as a:each! except that each word is expected a predicate
+-- s: a w -- a T
+-- d: The same as a:each! except that word is expected to be a predicate
 -- d: that leaves a boolean on the stack. Iteration stops as soon as false
 -- d: is returned. If all pass, then true is returned.
 
-: every \ a w -- a f
+: every \ a w -- a T
     >r ( swap r@ w:exec and dup if; break ) true a:reduce rdrop ;
 
 -- w: a:some
--- s: a w -- a f
+-- s: a w -- a T
 -- d: Similar to a:every except returns true as soon as any of the arguments
 -- d: in the array pass the predicate.
 
-: some \ a w -- a f
+: some \ a w -- a T
     >r ( swap r@ w:exec or dup if break then ) false a:reduce rdrop ;
 
 \ -------------------

@@ -4,12 +4,9 @@ ns: csv
 
 private
 
-\ the currently parsed header row
+\ field separator and current header
 null var, sep
 null var, header
-
-\ row processor
-defer: (proc)
 
 public
 
@@ -70,17 +67,17 @@ public
 
 -- w: csv:cut
 -- s: a cols -- a1
--- d: Return an array of new values from an array of column lookup words.
+-- d: Return an array of new values from an array of column words.
 
 : cut \ a cols -- a1
     ' w:exec a:map nip ;
 
 -- w: csv:.row
--- s: a s -- a
+-- s: a s --
 -- d: Print a row to standard out using the given separator.
 
-: .row \ a s -- a
-    swap a:len n:1- >r ( . r@ n:= if drop ;then dup . ) a:each cr ;
+: .row \ a s --
+    swap a:len n:1- >r ( . r@ n:= if drop ;then dup . ) a:each cr drop rdrop ;
 
 -- w: csv:each
 -- s: f w -- f
@@ -88,6 +85,4 @@ public
 -- d: is read and the word on the stack is called with the row.
 
 : each \ f w -- f
-    w:is #p:(proc) repeat
-        next-row null; #p:(proc)
-    again ;
+    >r repeat next-row null? if r> 2drop ;then r@ w:exec again rdrop ;
