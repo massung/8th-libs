@@ -1,61 +1,30 @@
 \ -*- 8th -*-
 
+needs utils/args
+
 ns: opts
 
-\ This library is for command-line argument parsing. It's intended to be
-\ used in conjunction with `G:appopts`.
-\
-\ The `opt:parse` word should be called with both a map of command line
-\ flags/switches and an array of command line arguments. 
-\
-\ Each argument is shifted out of the array and looked up in the map. If
-\ found, the value is expected to be a word that is then executed with the
-\ rest of the command line array as the TOS. The returned TOS is then
-\ written to `appopts` with the flag/switch as the key.
-\
-\ This process repeats until either the entire command line array has been
-\ parsed (and null returned) or the next argument is not found in the map
-\ and the rest of the array is returned.
-\
-\ Example:
-\
-\ { "-f" : ( a:shift ) , "-t" : ( true ) } constant optmap
-\
-\ -- assume the command line was "-t -f , data.csv"
-\
-\ ok> optmap argv parse
-\
-\ ok> .s
-\ ["data.csv"]
-\
-\ ok> appopts .
-\ G:appopts {"-f":",","-t":true}
-\
-\ ok> "-t" app:opts@ false ?: .
-\ true
-\
+\ command-line options map
+m:new var, (opts)
 
--- w: opts:argv
+-- w: opts: argv
 -- s: -- a
--- d: Returns the command line arguments as an array.
+-- d: Return the command line arguments as an array.
 
 : argv \ -- a
     a:new ( a:len args a:push ) argc times ;
 
+-- w: opts:opt:
+-- s: <name> --
+-- d: Define a new word whose name is added to the (opts) map and - when
+-- d: parsed via opts:parse is executed.
+
+: opt: \ <name> -- \\\ IMMEDIATE
+    (opts) @ parsews dup (:) last m:! drop i;
+
 -- w: opts:parse
--- s: m -- n
--- d: Parse an array of command line arguments into `G:appopts`.
+-- s: --
+-- d: Parse the command line arguments
 
-: parse \ m a -- a | null
-    repeat
-        a:len 0 = if 2drop null ;then \ no more arguments?
-
-        \ get the next argument and look it up
-        0 a:@ swap >r m:@
-
-        \ if not found, bust out
-        null? if 2drop r> ;then
-
-        \ execute the word
-        r> a:shift >r swap w:exec r> swap app:opts!
-    again ;
+: parse \ --
+    (opts) @ process-args ;

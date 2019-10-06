@@ -1,0 +1,40 @@
+\ -*- 8th -*-
+
+(* This is a simple library for composing words together into new,
+ * anonymous words. Examples:
+ *
+ * ok> 1 ( 10 + . cr ) ( dup . cr ) pipe:<| w:exec
+ * 1
+ * 11
+ *
+ * ok> 1 ( dup . cr ) ( 10 + . cr ) pipe:|> w:exec
+ * 1
+ * 11
+ *
+ * ok> 1 [ ( dup . cr ) , ( 10 + ) , ( dup n:* . cr ) ] pipe:new w:exec
+ * 1
+ * 121
+ *)
+
+ns: pipe
+
+-- w: pipe:<|
+-- s: w1 w2 -- w3
+-- d: Composes w1 after w2 and returns a new anonymous word.
+
+: <| \ w1 w2 -- w3
+    p: ( p: compile p: compile p: ) ;
+
+-- w: pipe:|>
+-- s: w1 w2 -- w3
+-- d: Composes w2 after w1 and returns a new anonymous word.
+
+: |> \ w1 w2 -- w3
+    swap <| ;
+
+-- w: pipe:new
+-- s: a -- w
+-- d: Compose an array of words together.
+
+: new \ a -- w
+    ' <| ( ) a:reduce ;
