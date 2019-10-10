@@ -1,21 +1,24 @@
 \ -*- 8th -*-
 
+needs pipe
+
 ns: csv
 
-private
+\ column parser
+defer: (cols)
 
-\ field separator and current header
-null var, sep
-null var, header
-
-public
+\ column mapping
+m:new var, columns
 
 -- w: csv:sep
 -- s: s --
 -- d: Set the current column separator.
 
 : sep \ s --
-    dup "(?<=^|%s)(?:\"(.*)\"|[^\"]*?)(?=%s|$)" strfmt r:new #p:sep ! ;
+    dup "(?<=^|%s)(?:\"(.*)\"|[^\"]*?)(?=%s|$)" strfmt
+
+    \ create the column parser
+    r:new ' r:+/ curry w:is (cols) ;
 
 \ default to comma-separated values
 "," sep
@@ -32,38 +35,38 @@ public
 -- d: Read the next line and parse it into an array.
 
 : next-row \ f -- f a
-    next-line null? if; #p:sep @ r:/ ;
+    next-line null? if; (cols) ;
+
+-- w: csv:(col)
+-- s: n -- w
+-- d: Create a column lookup by index word.
+
+: (col) \ n -- w
+    ' a:@ curry ;
+
+-- w: csv:set-header
+-- s: a --
+-- d: Provided an array of column names, create a new column map.
+
+: set-header \ a --
+    columns @ m:clear swap ( swap (col) m:! ) a:each 2drop ;
 
 -- w: csv:read-header
 -- s: f -- f
 -- d: Read the next row of the CSV and save it as the current header. If
 -- d: there are no more rows then the header isn't read.
 
-: read-header \ f -- f a
-    next-row null; dup #p:header ! ;
-
--- w: csv:(col)
--- s: x -- n
--- d: Returns the column index of x, which may be an index or column name.
-
-: (col) \ s -- n
-    string? if #p:header @ swap ' s:= a:indexof nip then ;
+: read-header \ f -- f m
+    next-row [] ?: set-header ;
 
 -- w: csv:col
 -- s: x -- w
--- d: Creates an anonymous word that will retrieve a column value from a row.
--- d: If x is a string, the column name is first looked up in the header,
--- d: otherwise it is assumed to be a column index.
+-- d: Create a word that will lookup the value of a given column in a row.
+-- d: If x is a number it is assumed to be the column index (0-based),
+-- d: otherwise it is a column name and looked up in the map.
 
 : col \ x -- w
-    (col) null? if ( ) else ' a:@ then curry ;
-
--- w: csv:col:
--- s: x <name> --
--- d: Just like csv:col, except that the column is defined as a word.
-
-: col: \ x <name> -- \\\ IMMEDIATE
-    (col) null? if ( ) else ' a:@ then curry: i;
+    string? if columns @ swap ( null ) m:@? nip ;then ' a:@ curry ;
 
 -- w: csv:cut
 -- s: a cols -- a1
@@ -86,3 +89,10 @@ public
 
 : each \ f w -- f
     >r repeat next-row null? if r> 2drop ;then r@ w:exec again rdrop ;
+
+-- w: csv:open
+-- s: s -- f
+-- d: Open a CSV file as read-only. Clears the current header.
+
+: open \ s -- f
+    f:open-ro columns @ m:clear drop ;

@@ -1,10 +1,22 @@
 \ -*- 8th -*-
 
+needs pipe
+
 \ -------------------
 \ Global utils
 \ -------------------
 
 ns: G
+
+-- w: G:n-cmp
+-- s: a -- w
+-- d: Using an array of sort compare functions (see: `a:qsort`), create a
+-- d: new compare function that tries them in order, exiting as soon as
+-- d: one returns non-zero. Useful for multi-order sort functions (e.g. sort
+-- d: by name and then by age).
+
+: n-cmp \ a -- w
+    ( ( drop >r 2dup r> w:exec dup 0; break ) 0 a:reduce nip nip nip ) curry ;
 
 \ -------------------
 \ String utils
@@ -13,17 +25,40 @@ ns: G
 ns: s
 
 -- w: s:empty?
--- s: s -- s false | true
+-- s: s -- s T
 -- d: Drop and true if the string is empty, otherwise false.
 
 : empty? \ s -- s false | true
-    s:len 0 > if false else drop true then ;
+    s:len 0 n:= ;
+
+-- w: s:empty;
+-- s: s -- s | exit
+-- d: Tests to see if the string on top of the stack is empty. If it is
+-- d: then it is dropped and the current word is exited.
+
+: empty; \ a --
+    ' s:empty? p: compile p: if ' drop p: compile p: ;then i;
 
 \ -------------------
 \ Array utils
 \ -------------------
 
 ns: a
+
+-- w: a:empty?
+-- s: a -- a T
+-- d: Tests if the container is empty.
+
+: empty? \ a -- a T
+    a:len 0 n:= ;
+
+-- w: a:empty;
+-- s: a -- a | exit
+-- d: Tests to see if the current array on top of the stack is empty. If it is
+-- d: then it is dropped and the current word is exited.
+
+: empty; \ a --
+    ' a:empty? p: compile p: if ' drop p: compile p: ;then i;
 
 -- w: a:iota
 -- s: n -- a
@@ -33,11 +68,39 @@ ns: a
     >r a:new ( a:len a:push ) r> times ;
 
 -- w: a:take
--- s: a n -- a' a2
+-- s: a n -- a1 a2
 -- d: Shifts out n items from a and returns them as a new array (a2).
 
-: take \ a n -- a' a2
+: take \ a n -- a1 a2
     2dup 0 swap a:slice >r -1 a:slice r> ;
+
+-- w: a:head
+-- s: a n -- a1
+-- d: Return the first n items from an array in a new array.
+
+: head \ a n -- a1
+    0 swap a:slice ;
+
+-- w: a:tail
+-- s: a n -- a1
+-- d: Return the last n items from an array.
+
+: tail \ a n -- a1
+    >r a:len r> n:- -1 a:slice ;
+
+-- w: a:head*
+-- s: a n -- a1
+-- d: Return all items except the last n.
+
+: head* \ a n -- a1
+    >r a:len r> n:- 0 swap a:slice ;
+
+-- w: a:tail*
+-- s: a n -- a1
+-- d: Return all items except the first n.
+
+: tail* \ a n -- a1
+    -1 a:slice ;
 
 -- w: a:in?
 -- s: a x w -- a T
@@ -64,11 +127,60 @@ ns: a
 : some \ a w -- a T
     >r ( swap r@ w:exec or dup if break then ) false a:reduce rdrop ;
 
+-- w: a:+!
+-- s: a v --
+-- d: Append the contents of a to the array stored in the variable.
+
+: +! \ a v --
+    @ swap a:+ drop ;
+
+-- w: a:push!
+-- s: x v --
+-- d: Push x onto the array stored in the variable.
+
+: push! \ x v --
+    @ swap a:push drop ;
+
+-- w: a:pop!
+-- s: v -- x
+-- d: Pop from the array stored in the variable.
+
+: pop! \ v -- x
+    @ a:pop nip ;
+
 \ -------------------
 \ Map utils
 \ -------------------
 
 ns: m
+
+-- w: m:empty?
+-- s: m -- m T
+-- d: Tests if the container is empty.
+
+: empty? \ a -- a T
+    m:len 0 n:= ;
+
+-- w: m:empty;
+-- s: m -- m | exit
+-- d: Tests to see if the current map on top of the stack is empty. If it is
+-- d: then it is dropped and the current word is exited.
+
+: empty; \ a --
+    ' m:empty? p: if ' drop p: compile p: ;then i;
+
+\ -------------------
+\ Date utils
+\ -------------------
+
+ns: d
+
+-- w: d:cmp
+-- s: d1 d2 -- n
+-- d: Compare two dates using d>msec and n:cmp.
+
+: cmp \ d1 d2 -- n
+    >msec >r >msec r> n:cmp ;
 
 \ -------------------
 \ File utils
