@@ -1,0 +1,83 @@
+\ -*- 8th -*-
+
+ns: rec
+
+(* Simple record structures for 8th using maps, but with helper definitions
+ * for getters, setters, and boa constructors.
+ *
+ * Example usage:
+ *
+ * ok> rec: pt x y ;rec
+ *
+ * ok> words/ pt:
+ * pt
+ * new x x! y y!
+ *
+ * ok> 10 20 pt:new .s
+ *
+ * 1    m: 0000000002f7b830 1  {"y":20,"x":10}
+ *
+ * ok> 30 pt:x! .s
+ *
+ * 1    m: 0000000002f7b830 1  {"y":20,"x":30}
+ *
+ * ok> pt:y .s
+ *
+ * 2    n: 0000000002f8a5b0 2    20
+ * 1    m: 0000000002f7b830 1  {"y":20,"x":30}
+ *
+ * ok>
+ *)
+
+private
+
+-- w: rec:(boa)
+-- s: a --
+-- d: Given an array of keys, compile m! for each into the current word.
+
+: (boa) \ a --
+    a:rev ( ' swap p: compile p: literal ' m:_! p: compile ) a:each! drop ;
+
+-- w: rec:(new)
+-- s: a --
+-- d: Defines a `new` word that is a boa constructor
+
+: (new) \ a --
+    "new" (:) ' m:new p: compile #p:(boa) p: ; ;
+
+-- w: rec:(getter)
+-- s: s --
+-- d: Defines a getter word named s for the current record type.
+
+: (getter) \ s -- s
+    dup (:) dup p: literal ' m:@ p: compile p: ; ;
+
+-- w: rec:(setter)
+-- s: s --
+-- d: Defines a setter word named s! for the current record type.
+
+: (setter) \ s -- s
+    dup dup "!" s:+ (:) p: literal ' m:_! p: compile p: ; ;
+
+public
+
+-- w: rec:rec:
+-- s: <name> -- \\\ IMMEDIATE
+-- d: Creates a namespace for the record type name, then parses keys until
+-- d: `;rec` is reached, after which the original ns is restored. Each key
+-- d: parsed defines a key and key! words that get and set the value in a
+-- d: given map, treating it like it's a record of type <name>.
+-- d:
+-- d: Additionally, a `new` word is defined, which takes as many stack
+-- d: arguments as there are keys in the record and creates a new map that
+-- d: loads them all, in-order (AKA a BOA constructor).
+
+: rec: \ <name> [<key> [<key> [..]] ;rec -- \\\ IMMEDIATE
+    ns? ns: a:new repeat
+        parsews dup ";rec" s:= if
+            drop #p:(new) ns
+        ;then
+
+        \ define the getter and setter words, append to boa
+        #p:(getter) #p:(setter) a:push
+    again i;
