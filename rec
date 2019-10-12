@@ -72,7 +72,7 @@ public
 -- d: arguments as there are keys in the record and creates a new map that
 -- d: loads them all, in-order (AKA a BOA constructor).
 
-: rec: \ <name> [<key> [<key> [..]] ;rec -- \\\ IMMEDIATE
+: rec: \ <name> [<key> [<key> [..]]] ;rec -- \\\ IMMEDIATE
     ns? ns: a:new repeat
         parsews dup ";rec" s:= if
             drop #p:(new) ns
