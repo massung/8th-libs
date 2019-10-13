@@ -15,16 +15,16 @@ ns: G
  *
  * ok> 10 20 pt:new .s
  *
- * 1    m: 0000000002f7b830 1  {"y":20,"x":10}
+ * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":10}
  *
  * ok> 30 pt:x! .s
  *
- * 1    m: 0000000002f7b830 1  {"y":20,"x":30}
+ * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":30}
  *
  * ok> pt:y .s
  *
  * 2    n: 0000000002f8a5b0 2    20
- * 1    m: 0000000002f7b830 1  {"y":20,"x":30}
+ * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":30}
  *
  * ok>
  *)
@@ -43,7 +43,7 @@ private
 -- d: Defines a `new` word that is a boa constructor
 
 : (new) \ a --
-    "new" (:) ' m:new p: compile #p:(boa) p: ; ;
+    "new" (:) ns? s>ns p: literal ' new p: compile #p:(boa) p: ; ;
 
 -- w: (getter)
 -- s: s --
