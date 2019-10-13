@@ -17,6 +17,9 @@ ns: G
  *
  * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":10}
  *
+ * ok> ns:pt isa? .
+ * true
+ *
  * ok> 30 pt:x! .s
  *
  * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":30}
@@ -40,7 +43,7 @@ private
 
 -- w: (new)
 -- s: a --
--- d: Defines a `new` word that is a boa constructor
+-- d: Defines a `new` word that is a boa constructor.
 
 : (new) \ a --
     "new" (:) ns? s>ns p: literal ' new p: compile #p:(boa) p: ; ;
