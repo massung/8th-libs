@@ -7,7 +7,7 @@ ns: rec
  *
  * Example usage:
  *
- * ok> rec: pt x y ;rec
+ * ok> rec: pt x y rec;
  *
  * ok> words/ pt:
  * pt
@@ -68,7 +68,7 @@ public
 -- w: rec:
 -- s: <name> -- \\\ IMMEDIATE
 -- d: Creates a namespace for the record type name, then parses keys until
--- d: `;rec` is reached, after which the original ns is restored. Each key
+-- d: `rec;` is reached, after which the original ns is restored. Each key
 -- d: parsed defines a key and key! words that get and set the value in a
 -- d: given map, treating it like it's a record of type <name>.
 -- d:
@@ -78,7 +78,7 @@ public
 
 : G:rec: \ <name> [<key> [<key> [..]]] rec; -- \\\ IMMEDIATE
     ns? ns: a:new repeat
-        parsews dup ";rec" s:= if
+        parsews dup "rec;" s:= if
             drop #p:(new) ns
         ;then
 
