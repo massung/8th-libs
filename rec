@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-ns: G
+ns: rec
 
 (* Simple record structures for 8th using maps, but with helper definitions
  * for getters, setters, and boa constructors.
@@ -43,10 +43,11 @@ private
 
 -- w: (new)
 -- s: a --
--- d: Defines a `new` word that is a boa constructor.
+-- d: Defines a `new` word that is a boa constructor for the record.
 
 : (new) \ a --
     "new" (:) ns? s>ns p: literal ' new p: compile #p:(boa) p: ; ;
+    \ "new" (:) ' m:new p: compile #p:(boa) p: ; ;
 
 -- w: (getter)
 -- s: s --
@@ -75,7 +76,7 @@ public
 -- d: arguments as there are keys in the record and creates a new map that
 -- d: loads them all, in-order (AKA a BOA constructor).
 
-: rec: \ <name> [<key> [<key> [..]]] ;rec -- \\\ IMMEDIATE
+: G:rec: \ <name> [<key> [<key> [..]]] rec; -- \\\ IMMEDIATE
     ns? ns: a:new repeat
         parsews dup ";rec" s:= if
             drop #p:(new) ns

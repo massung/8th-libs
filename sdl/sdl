@@ -1,0 +1,52 @@
+\ -*- 8th -*-
+
+needs utils/structs
+
+ns: sdl
+
+\ load the SDL dynamic library
+[ "SDL2.so"
+, "e:/sdl2-2.0.10/lib/x64/SDL2.dll"
+] os a:@ nip lib sdl
+
+\ subsystem constants
+0x00000001 constant SDL_INIT_TIMER
+0x00000010 constant SDL_INIT_AUDIO
+0x00000020 constant SDL_INIT_VIDEO
+0x00000200 constant SDL_INIT_JOYSTICK
+0x00001000 constant SDL_INIT_HAPTIC
+0x00002000 constant SDL_INIT_GAMECONTROLLER
+0x00004000 constant SDL_INIT_EVENTS
+0x00008000 constant SDL_INIT_SENSOR
+0x00100000 constant SDL_INIT_NOPARACHUTE
+
+\ all the subsystems
+[ ` SDL_INIT_TIMER `
+, ` SDL_INIT_AUDIO `
+, ` SDL_INIT_VIDEO `
+, ` SDL_INIT_EVENTS `
+, ` SDL_INIT_JOYSTICK `
+, ` SDL_INIT_HAPTIC `
+, ` SDL_INIT_GAMECONTROLLER `
+, ` SDL_INIT_SENSOR `
+] ' n:bor 0 a:reduce constant SDL_INIT_EVERYTHING
+
+\ ensure the SDL library loaded
+sdl null? not assert drop
+
+\ FFI functions
+"NN" "SDL_Init" func: SDL_Init
+"NN" "SDL_InitSubSystem" func: SDL_InitSubSystem
+"VN" "SDL_QuitSubSystem" func: SDL_QuitSubSystem
+"NN" "SDL_WasInit" func: SDL_WasInit
+"V" "SDL_Quit" func: SDL_Quit
+
+\ subsystems
+"video" f:include
+
+-- w: init
+-- s: -- T
+-- d: Initializes the SDL library.
+
+: init \ -- T
+    SDL_INIT_EVERYTHING SDL_Init 0 = ;
