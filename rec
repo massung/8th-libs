@@ -7,7 +7,7 @@ ns: rec
  *
  * Example usage:
  *
- * ok> rec: pt x y rec;
+ * ok> rec: pt field: x field: y rec;
  *
  * ok> words/ pt:
  * pt
@@ -24,12 +24,32 @@ ns: rec
  *
  * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":30}
  *
- * ok> pt:y .s
  *
- * 2    n: 0000000002f8a5b0 2    20
- * 1    pt: 0000000002f7b830 1  pt:1:data:{"y":20,"x":30}
+ * Additionally, there is support for FFI structures using packed records.
+ * Instead of using a user-type/map for the record, an array is used which can
+ * be packed and unpacked into a buffer. For this reason, each field requires
+ * a string argument identifying the packed type it is.
  *
- * ok>
+ * Example usage:
+ *
+ * ok> packed-rec: pt "i" field: x "i" field: y packed-rec;
+ *
+ * ok> words/ pt:
+ * pt
+ * new pack unpack x x! y y!
+ *
+ * ok> 10 20 pt:new .s
+ *
+ * 1    a: 0000000000ff5c80 1  [10,20]
+ *
+ * ok> pt:pack .s
+ *
+ * 1    b: 0000000000ff3610 1  0000000000000008 0a00000014000000
+ *
+ * ok> pt:unpack .s
+ *
+ * 2    n: 0000000000ff9c50 1    8
+ * 1    a: 0000000000ff5c80 1  [10,20]
  *)
 
 private
