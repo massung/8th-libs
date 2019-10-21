@@ -161,7 +161,7 @@ defer: G:field:
 -- d: restores the namespace back to what it originally was.
 
 : G:rec; \ a -- \\\ IMMEDIATE
-    #p:(new) ns ' noop w:is G:field: i;
+    #p:(new) ns ' G:field: p: w:undo i;
 
 -- w: packed-rec:
 -- s: <name> -- n n s \\\ IMMEDIATE
@@ -178,4 +178,4 @@ defer: G:field:
 -- d: back to what it originally was.
 
 : G:packed-rec; \ n n s -- \\\ IMMEDIATE
-    dup #p:(pack) #p:(unpack) #p:(close) ns ' noop w:is G:field: i;
+    dup #p:(pack) #p:(unpack) #p:(close) ns ' G:field: p: w:undo i;
