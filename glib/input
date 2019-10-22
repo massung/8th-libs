@@ -2,15 +2,9 @@
 
 ns: glib
 
-\ internal state
-private
-
 \ mapping of key/button constants to action words
 m:new var, key-bindings
 m:new var, mouse-bindings
-
-\ exposed functionality
-public
 
 \ define a map record for an action binding
 rec: action
@@ -30,14 +24,14 @@ rec;
 -- d: Bind the keycode n to the action w.
 
 : bind-key \ n w --
-    #p:key-bindings @ -rot m:! drop ;
+    key-bindings @ -rot m:! drop ;
 
 -- w: glib:bind-mouse
 -- s: n w --
 -- d: Bind a mouse button n to the action w.
 
 : bind-mouse \ n w --
-    #p:mouse-bindings @ -rot m:! drop ;
+    mouse-bindings @ -rot m:! drop ;
 
 -- w: glib:released
 -- s: action -- T
@@ -99,7 +93,7 @@ rec;
     SDL_Keysym:sym nip
 
     \ lookup the binding for this keycode
-    #p:key-bindings @ swap m:_@ null;
+    key-bindings @ swap m:_@ null;
 
     \ apply the binding and press it
     w:exec press ;
@@ -115,7 +109,7 @@ rec;
     SDL_Keysym:sym nip
 
     \ lookup the binding for this keycode
-    #p:key-bindings @ swap m:_@ null;
+    key-bindings @ swap m:_@ null;
 
     \ apply the binding and press it
     w:exec release ;

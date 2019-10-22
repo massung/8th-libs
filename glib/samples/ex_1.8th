@@ -2,30 +2,21 @@
 
 needs glib/glib
 
+\ define actions
 glib:action: quit
-
-\ called once at the start of the program
-: load \ --
-    ;
 
 \ called once per frame to update game
 : step \ --
     quit glib:pressed if glib:quit then ;
 
-\ called once per frame to draw
-: draw \ --
-    ;
-
 \ entry point
 : app:main \ --
     glib:glib-init
 
-    \ setup handlers
-    ' load w:is glib:load
+    \ set callbacks
     ' step w:is glib:step
-    ' draw w:is glib:draw
 
-    \ setup bindings
+    \ create action bindings
     sdl:SDLK_ESCAPE ' quit glib:bind-key
 
     \ run the example then quit
