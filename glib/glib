@@ -18,7 +18,6 @@ defer: draw
 private
 var window
 var renderer
-var should-quit
 
 : create-window \ m --
     >r
@@ -52,14 +51,14 @@ var should-quit
 
         \ switch based on the event type
         glib:event-type
-            [ ( dup sdl:SDL_KEYDOWN n:= ) , ( drop glib:on-keydown )
+            [ ( dup sdl:SDL_QUIT n:= ) , ( bye )
+            , ( dup sdl:SDL_KEYDOWN n:= ) , ( drop glib:on-keydown )
             , ( dup sdl:SDL_KEYUP n:= ) , ( drop glib:on-keyup )
             , ( 2drop )
             ] when
     again ;
 
 : run-loop \ --
-    #p:should-quit @ if;
     #p:process-events
 
     \ clear the backbuffer
@@ -100,5 +99,12 @@ public
     #p:window @ sdl:SDL_DestroyWindow
     ;
 
+-- w: glib:quit
+-- s: --
+-- d: Posts a quit event that will be processed next frame.
+
 : quit \ --
-    true #p:should-quit ! ;
+    sdl:SDL_QUIT 0 SDL_CommonEvent:new SDL_CommonEvent:pack
+
+    \ post the event, ignore the return value
+    sdl:SDL_PushEvent drop ;
