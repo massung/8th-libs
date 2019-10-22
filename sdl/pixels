@@ -1,0 +1,112 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ pixel types
+0 constant SDL_PIXELTYPE_UNKNOWN
+1 constant SDL_PIXELTYPE_INDEX1
+2 constant SDL_PIXELTYPE_INDEX4
+3 constant SDL_PIXELTYPE_INDEX8
+4 constant SDL_PIXELTYPE_PACKED8
+5 constant SDL_PIXELTYPE_PACKED16
+6 constant SDL_PIXELTYPE_PACKED32
+7 constant SDL_PIXELTYPE_ARRAYU8
+6 constant SDL_PIXELTYPE_ARRAYU16
+9 constant SDL_PIXELTYPE_ARRAYU32
+10 constant SDL_PIXELTYPE_ARRAYF16
+11 constant SDL_PIXELTYPE_ARRAYF32
+
+\ bitmap pixel order
+0 constant SDL_BITMAPORDER_NONE
+1 constant SDL_BITMAPORDER_4321
+2 constant SDL_BITMAPORDER_1234
+
+\ packed component order
+0 constant SDL_PACKEDORDER_NONE
+1 constant SDL_PACKEDORDER_XRGB
+2 constant SDL_PACKEDORDER_RGBX
+3 constant SDL_PACKEDORDER_ARGB
+4 constant SDL_PACKEDORDER_RGBA
+5 constant SDL_PACKEDORDER_XBGR
+6 constant SDL_PACKEDORDER_BGRX
+7 constant SDL_PACKEDORDER_ABGR
+8 constant SDL_PACKEDORDER_BGRA
+
+\ array component order
+0 constant SDL_ARRAYORDER_NONE
+1 constant SDL_ARRAYORDER_RGB
+2 constant SDL_ARRAYORDER_RGBA
+3 constant SDL_ARRAYORDER_ARGB
+4 constant SDL_ARRAYORDER_BGR
+5 constant SDL_ARRAYORDER_BGRA
+6 constant SDL_ARRAYORDER_ABGR
+
+\ packed layouts
+0 constant SDL_PACKEDLAYOUT_NONE
+1 constant SDL_PACKEDLAYOUT_332
+2 constant SDL_PACKEDLAYOUT_4444
+3 constant SDL_PACKEDLAYOUT_1555
+4 constant SDL_PACKEDLAYOUT_5551
+5 constant SDL_PACKEDLAYOUT_565
+6 constant SDL_PACKEDLAYOUT_8888
+7 constant SDL_PACKEDLAYOUT_2101010
+8 constant SDL_PACKEDLAYOUT_1010102
+
+\ rgba color
+packed-rec: SDL_Color
+    "B" field: r
+    "B" field: g
+    "B" field: b
+    "B" field: a
+packed-rec;
+
+\ palette
+packed-rec: SDL_Palette
+    "=" field: ncolors
+    "b" field: colors
+    "i" field: version
+    "=" field: refcount
+packed-rec;
+
+\ pixel format
+packed-rec: SDL_PixelFormat
+    "i" field: format
+    "b" field: palette
+    "B" field: BitsPerPixel
+    "B" field: BytesPerPixel
+    "B" field: padding1
+    "B" field: padding2
+    "i" field: Rmask
+    "i" field: Gmask
+    "i" field: Bmask
+    "i" field: Amask
+    "B" field: Rloss
+    "B" field: Gloss
+    "B" field: Bloss
+    "B" field: Aloss
+    "B" field: Rshift
+    "B" field: Gshift
+    "B" field: Bshift
+    "B" field: Ashift
+    "=" field: refcount
+    "b" field: next
+packed-rec;
+
+\ functions
+"ZN" "SDL_GetPixelFormatName" func: SDL_GetPixelFormatName
+"NNPPPPP" "SDL_PixelFormatEnumToMasks" func: SDL_PixelFormatEnumToMasks
+"NNNNNN" "SDL_MasksToPixelFormatEnum" func: SDL_MasksToPixelFormatEnum
+"BN" "SDL_AllocFormat" func: SDL_AllocFormat
+"VB" "SDL_PixelFormat" func: SDL_PixelFormat
+"BN" "SDL_AllocPalette" func: SDL_AllocPalette
+"NBB" "SDL_SetPixelFormatPalette" func: SDL_SetPixelFormatPalette
+"NBBNN" "SDL_SetPaletteColors" func: SDL_SetPaletteColors
+"VB" "SDL_FreePalette" func: SDL_FreePalette
+"NBNNN" "SDL_MapRGB" func: SDL_MapRGB
+"NBNNNN" "SDL_MapRGBA" func: SDL_MapRGBA
+"VNBPPP" "SDL_GetRGB" func: SDL_GetRGB
+"VNBPPPP" "SDL_GetRGBA" func: SDL_GetRGBA
+"VFP" "SDL_CalculateGammaRamp" func: SDL_CalculateGammaRamp

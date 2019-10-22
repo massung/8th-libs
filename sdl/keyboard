@@ -1,0 +1,31 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ keysym struct
+packed-rec: SDL_Keysym
+    "i" field: scancode
+    "i" field: sym
+    "w" field: mod
+    "i" field: unused
+packed-rec;
+
+\ functions
+"PP" "SDL_GetKeyboardState" func: SDL_GetKeyboardState
+"N" "SDL_GetModState" func: SDL_GetModState
+"VN" "SDL_SetModState" func: SDL_SetModState
+"NN" "SDL_GetKeyFromScancode" func: SDL_GetKeyFromScancode
+"NN" "SDL_GetScancodeFromKey" func: SDL_GetScancodeFromKey
+"ZN" "SDL_GetScancodeName" func: SDL_GetScancodeName
+"NZ" "SDL_GetScancodeFromName" func: SDL_GetScancodeFromName
+"ZN" "SDL_GetKeyName" func: SDL_GetKeyName
+"NZ" "SDL_GetKeyFromName" func: SDL_GetKeyFromName
+"V" "SDL_StartTextInput" func: SDL_StartTextInput
+"N" "SDL_IsTextInputActive" func: SDL_IsTextInputActive
+"V" "SDL_StopTextInput" func: SDL_StopTextInput
+"VP" "SDL_SetTextInputRect" func: SDL_SetTextInputRect
+"N" "SDL_HasScreenKeyboardSupport" func: SDL_HasScreenKeyboardSupport
+"NP" "SDL_IsScreenKeyboardShown" func: SDL_IsScreenKeyboardShown

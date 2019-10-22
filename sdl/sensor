@@ -1,0 +1,31 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ sensor type constants
+-1 constant SDL_SENSOR_INVALID
+ 0 constant SDL_SENSOR_UNKNOWN
+ 1 constant SDL_SENSOR_ACCEL
+ 2 constant SDL_SENSOR_GYRO
+
+\ gravity constant
+9.80665 constant SDL_STANDARD_GRAVITY
+
+\ functions
+"N" "SDL_NumSensors" func: SDL_NumSensors
+"ZN" "SDL_SensorGetDeviceName" func: SDL_SensorGetDeviceName
+"NN" "SDL_SensorGetDeviceType" func: SDL_SensorGetDeviceType
+"NN" "SDL_SensorGetDeviceNonPortableType" func: SDL_SensorGetDeviceNonPortableType
+"NN" "SDL_SensorGetDeviceInstanceID" func: SDL_SensorGetDeviceInstanceID
+"PN" "SDL_SensorOpen" func: SDL_SensorOpen
+"PN" "SDL_SensorFromInstanceID" func: SDL_SensorFromInstanceID
+"ZP" "SDL_SensorGetName" func: SDL_SensorGetName
+"NP" "SDL_SensorGetType" func: SDL_SensorGetType
+"NP" "SDL_SensorGetNonPortableType" func: SDL_SensorGetNonPortableType
+"NP" "SDL_SensorGetInstanceID" func: SDL_SensorGetInstanceID
+"NPPN" "SDL_SensorGetData" func: SDL_SensorGetData
+"VP" "SDL_SensorClose" func: SDL_SensorClose
+"V" "SDL_SensorUpdate" func: SDL_SensorUpdate

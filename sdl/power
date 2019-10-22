@@ -1,0 +1,16 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ power state constants
+0 constant SDL_POWERSTATE_UNKNOWN
+1 constant SDL_POWERSTATE_ON_BATTERY
+2 constant SDL_POWERSTATE_NO_BATTERY
+3 constant SDL_POWERSTATE_CHARGING
+4 constant SDL_POWERSTATE_CHARGED
+
+\ functions
+"NPP" "SDL_GetPowerInfo" func: SDL_GetPowerInfo

@@ -1,0 +1,12 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ functions
+"NN" "SDL_RecordGesture" func: SDL_RecordGesture
+"NP" "SDL_SaveAllDollarTemplates" func: SDL_SaveAllDollarTemplates
+"NNP" "SDL_SaveDollarTemplate" func: SDL_SaveDollarTemplate
+"NNP" "SDL_LoadDollarTemplates" func: SDL_LoadDollarTemplates

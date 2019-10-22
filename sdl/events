@@ -1,0 +1,428 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ system events
+0 constant SDL_FIRSTEVENT
+
+\ app events
+0x100 constant SDL_QUIT
+0x101 constant SDL_APP_TERMINATING
+0x102 constant SDL_APP_LOWMEMORY
+0x103 constant SDL_APP_WILLENTERBACKGROUND
+0x104 constant SDL_APP_DIDENTERBACKGROUND
+0x105 constant SDL_APP_WILLENTERFOREGROUND
+0x106 constant SDL_APP_DIDENTERFOREGROUND
+
+\ display events
+0x150 constant SDL_DISPLAYEVENT
+
+\ window events
+0x200 constant SDL_WINDOWEVENT
+0x201 constant SDL_SYSWMEVENT
+
+\ key events
+0x300 constant SDL_KEYDOWN
+0x301 constant SDL_KEYUP
+0x302 constant SDL_TEXTEDITING
+0x303 constant SDL_TEXTINPUT
+0x304 constant SDL_KEYMAPCHANGED
+
+\ mouse events
+0x400 constant SDL_MOUSEMOTION
+0x401 constant SDL_MOUSEBUTTONDOWN
+0x402 constant SDL_MOUSEBUTTONUP
+0x403 constant SDL_MOUSEWHEEL
+
+\ joystick events
+0x600 constant SDL_JOYAXISMOTION
+0x601 constant SDL_JOYBALLMOTION
+0x602 constant SDL_JOYHATMOTION
+0x603 constant SDL_JOYBUTTONDOWN
+0x604 constant SDL_JOYBUTTONUP
+0x605 constant SDL_JOYDEVICEADDED
+0x606 constant SDL_JOYDEVICEREMOVED
+
+\ controller events
+0x650 constant SDL_CONTROLLERAXISMOTION
+0x651 constant SDL_CONTROLLERBUTTONDOWN
+0x652 constant SDL_CONTROLLERBUTTONUP
+0x653 constant SDL_CONTROLLERDEVICEADDED
+0x654 constant SDL_CONTROLLERDEVICEREMOVED
+0x655 constant SDL_CONTROLLERDEVICEREMAPPED
+
+\ finger events
+0x700 constant SDL_FINGER_DOWN
+0x701 constant SDL_FINGERUP
+0x702 constant SDL_FINGERMOTION
+
+\ gesture events
+0x800 constant SDL_DOLLARGESTURE
+0x801 constant SDL_DOLLARRECORD
+0x802 constant SDL_MULTIGESTURE
+
+\ clipboard events
+0x900 constant SDL_CLIPBOARDUPDATE
+
+\ drag and drop events
+0x1000 constant SDL_DROPFILE
+0x1001 constant SDL_DROPTEXT
+0x1002 constant SDL_DROPBEGIN
+0x1003 constant SDL_DROPCOMPLETE
+
+\ audio hotplug events
+0x1100 constant SDL_AUDIODEVICEADDED
+0x1101 constant SSDL_AUDIODEVICEREMOVED
+
+\ sensor events
+0x1200 constant SDL_SENSORUPDATE
+
+\ render events
+0x2000 constant SDL_RENDER_TARGETS_RESET
+0x2001 constant SDL_RENDER_DEVICE_RESET
+
+\ user events
+0x8000 constant SDL_USEREVENT
+0xFFFF constant SDL_LASTEVENT
+
+\ event states
+-1 constant SDL_QUERY
+ 0 constant SDL_IGNORE
+ 0 constant SDL_DISABLE
+ 1 constant SDL_ENABLE
+
+\ union event type
+packed-rec: SDL_Event
+    "56b" field: data
+packed-rec;
+
+\ common event
+packed-rec: SDL_CommonEvent
+    "i" field: type
+    "i" field: timestamp
+packed-rec;
+
+\ display event
+packed-rec: SDL_DisplayEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: display
+    "B" field: event
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+    "i" field: data1
+packed-rec;
+
+\ window event
+packed-rec: SDL_WindowEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "B" field: event
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+    "i" field: data1
+    "i" field: data2
+packed-rec;
+
+\ keyboard event
+packed-rec: SDL_KeyboardEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "B" field: state
+    "B" field: repeat
+    "B" field: padding2
+    "B" field: padding3
+    "*b" field: keysym
+packed-rec;
+
+\ text editing event
+packed-rec: SDL_TextEditingEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "32c" field: text
+    "i" field: start
+    "i" field: length
+packed-rec;
+
+\ text input event
+packed-rec: SDL_TextInputEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "32c" field: text
+packed-rec;
+
+\ mouse motion event
+packed-rec: SDL_MouseMotionEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "i" field: which
+    "i" field: state
+    "i" field: x
+    "i" field: y
+    "i" field: xrel
+    "i" field: yrel
+packed-rec;
+
+\ mouse button event
+packed-rec: SDL_MouseButtonEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "i" field: which
+    "B" field: button
+    "B" field: state
+    "B" field: clicks
+    "B" field: padding1
+    "i" field: x
+    "i" field: y
+packed-rec;
+
+\ mouse wheel event
+packed-rec: SDL_MouseWheelEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "i" field: which
+    "i" field: x
+    "i" field: y
+    "i" field: direction
+packed-rec;
+
+\ joystick axis motion event
+packed-rec: SDL_JoyAxisEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: axis
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+    "w" field: value
+    "w" field: padding4
+packed-rec;
+
+\ joystick trackball event
+packed-rec: SDL_JoyBallEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: ball
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+    "w" field: xrel
+    "w" field: yrel
+packed-rec;
+
+\ joystick hat position event
+packed-rec: SDL_JoyHatEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: hat
+    "B" field: value
+    "B" field: padding1
+    "B" field: padding2
+packed-rec;
+
+\ joystick button event
+packed-rec: SDL_JoyButtonEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: button
+    "B" field: state
+    "B" field: padding1
+    "B" field: padding2
+packed-rec;
+
+\ joystick device event
+packed-rec: SDL_JoyDeviceEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+packed-rec;
+
+\ controller axis event
+packed-rec: SDL_ControllerAxisEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: axis
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+    "w" field: value
+    "w" field: padding4
+packed-rec;
+
+\ controller button event
+packed-rec: SDL_ControllerButtonEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: button
+    "B" field: state
+    "B" field: padding1
+    "B" field: padding2
+packed-rec;
+
+\ controller device event
+packed-rec: SDL_ControllerDeviceEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+packed-rec;
+
+\ audio device event
+packed-rec: SDL_AudioDeviceEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "B" field: iscapture
+    "B" field: padding1
+    "B" field: padding2
+    "B" field: padding3
+packed-rec;
+
+\ touch finger event
+packed-rec: SDL_TouchFingerEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: touchId
+    "i" field: fingerId
+    "f" field: x
+    "f" field: y
+    "f" field: dx
+    "f" field: dy
+    "f" field: pressure
+packed-rec;
+
+\ multi-gesture event
+packed-rec: SDL_MultiGestureEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: touchId
+    "f" field: dTheta
+    "f" field: dDist
+    "f" field: x
+    "f" field: y
+    "f" field: pressure
+    "w" field: numFingers
+    "w" field: padding
+packed-rec;
+
+\ dollar gesture event
+packed-rec: SDL_DollarGestureEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: touchId
+    "i" field: gestureId
+    "i" field: numFingers
+    "f" field: error
+    "f" field: x
+    "f" field: y
+packed-rec;
+
+\ file drop event
+packed-rec: SDL_DropEvent
+    "i" field: type
+    "i" field: timestamp
+    "p" field: file
+    "i" field: windowID
+packed-rec;
+
+\ sensor event
+packed-rec: SDL_SensorEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: which
+    "6f" field: data
+packed-rec;
+
+\ quit event
+packed-rec: SDL_QuitEvent
+    "i" field: type
+    "i" field: timestamp
+packed-rec;
+
+\ os event
+packed-rec: SDL_OSEvent
+    "i" field: type
+    "i" field: timestamp
+packed-rec;
+
+\ user event
+packed-rec: SDL_UserEvent
+    "i" field: type
+    "i" field: timestamp
+    "i" field: windowID
+    "i" field: code
+    "P" field: data1
+    "P" field: data2
+packed-rec;
+
+\ user event
+packed-rec: SDL_SysWMEvent
+    "i" field: type
+    "i" field: timestamp
+    "P" field: msg
+packed-rec;
+
+\ functions
+"V" "SDL_PumpEvents" func: SDL_PumpEvents
+"NPNN" "SDL_PeepEvents" func: SDL_PeepEvents
+"NN" "SDL_HasEvent" func: SDL_HasEvent
+"NNN" "SDL_HasEvents" func: SDL_HasEvents
+"VN" "SDL_FlushEvent" func: SDL_FlushEvent
+"VNN" "SDL_FlushEvents" func: SDL_FlushEvents
+"Nb" "SDL_PollEvent" func: SDL_PollEvent
+"Nb" "SDL_WaitEvent" func: SDL_WaitEvent
+"NbN" "SDL_WaitEventTimeout" func: SDL_WaitEventTimeout
+"Nb" "SDL_PushEvent" func: SDL_PushEvent
+"VNP" "SDL_SetEventFilter" func: SDL_SetEventFilter
+"VPP" "SDL_GetEventFilter" func: SDL_GetEventFilter
+"VNP" "SDL_AddEventWatch" func: SDL_AddEventWatch
+"VNP" "SDL_DelEventWatch" func: SDL_DelEventWatch
+"VNP" "SDL_FilterEvents" func: SDL_FilterEvents
+"NNN" "SDL_EventState" func: SDL_EventState
+"NN" "SDL_RegisterEvents" func: SDL_RegisterEvents
+
+-- w: sdl:new-event
+-- s: -- b
+-- d: Create a new event buffer for use with SDL_PollEvent, etc.
+
+: new-event \ -- b
+    56 b:new ;
+
+-- w: sdl:event-type
+-- s: n -- b n
+-- d: Unpack the type from an event buffer.
+
+: event-type \ b -- b n
+    dup SDL_CommonEvent:unpack drop SDL_CommonEvent:type nip ;
+
+-- w: sdl:poll-event
+-- s: -- b n true | false
+-- d: Wrapper for SDL_PollEvent that return an event buffer, type of event
+-- d: and a flag if there even was an event.
+
+: poll-event \ -- b n | null
+    new-event dup SDL_PollEvent 0 = if drop null ;then event-type ;
+
+-- w: sdl:wait-event
+-- s: -- b n
+-- d: Wait for the next event and unpack it.
+
+: wait-event \ -- b n | null
+    new-event dup SDL_WaitEvent 0 = if drop null ;then event-type ;

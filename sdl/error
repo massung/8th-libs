@@ -1,0 +1,11 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ functions
+"Z" "SDL_GetError" func: SDL_GetError
+"V" "SDL_ClearError" func: SDL_ClearError
+"NN" "SDL_Error" func: SDL_Error

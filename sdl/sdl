@@ -1,13 +1,19 @@
 \ -*- 8th -*-
 
-needs utils/structs
+needs rec
 
+\ SDL namespace
 ns: sdl
 
 \ load the SDL dynamic library
-[ "SDL2.so"
-, "e:/sdl2-2.0.10/lib/x64/SDL2.dll"
-] os a:@ nip lib sdl
+"SDL2" lib sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ true/false constants
+0 constant SDL_FALSE
+1 constant SDL_TRUE
 
 \ subsystem constants
 0x00000001 constant SDL_INIT_TIMER
@@ -19,34 +25,47 @@ ns: sdl
 0x00004000 constant SDL_INIT_EVENTS
 0x00008000 constant SDL_INIT_SENSOR
 0x00100000 constant SDL_INIT_NOPARACHUTE
+0x0010FFFF constant SDL_INIT_EVERYTHING
 
-\ all the subsystems
-[ ` SDL_INIT_TIMER `
-, ` SDL_INIT_AUDIO `
-, ` SDL_INIT_VIDEO `
-, ` SDL_INIT_EVENTS `
-, ` SDL_INIT_JOYSTICK `
-, ` SDL_INIT_HAPTIC `
-, ` SDL_INIT_GAMECONTROLLER `
-, ` SDL_INIT_SENSOR `
-] ' n:bor 0 a:reduce constant SDL_INIT_EVERYTHING
-
-\ ensure the SDL library loaded
-sdl null? not assert drop
-
-\ FFI functions
+\ SDL.h
 "NN" "SDL_Init" func: SDL_Init
 "NN" "SDL_InitSubSystem" func: SDL_InitSubSystem
 "VN" "SDL_QuitSubSystem" func: SDL_QuitSubSystem
 "NN" "SDL_WasInit" func: SDL_WasInit
 "V" "SDL_Quit" func: SDL_Quit
 
-\ subsystems
-"video" f:include
+\ SDL_platform.h
+"Z" "SDL_GetPlatform" func: SDL_GetPlatform
 
--- w: init
--- s: -- T
--- d: Initializes the SDL library.
+\ SDL_version.h
+"VP" "SDL_GetVersion" func: SDL_GetVersion
+"S" "SDL_GetRevision" func: SDL_GetRevision
+"N" "SDL_GetRevisionNumber" func: SDL_GetRevisionNumber
 
-: init \ -- T
-    SDL_INIT_EVERYTHING SDL_Init 0 = ;
+needs sdl/blendmode
+needs sdl/clipboard
+needs sdl/cpu
+needs sdl/error
+needs sdl/events
+needs sdl/gesture
+needs sdl/keyboard
+needs sdl/keycode
+needs sdl/mouse
+needs sdl/opengl
+needs sdl/pixels
+needs sdl/power
+needs sdl/rect
+needs sdl/render
+needs sdl/sensor
+needs sdl/shape
+needs sdl/surface
+needs sdl/timer
+needs sdl/touch
+needs sdl/video
+
+-- w: sdl:sdl-init
+-- s: --
+-- d: Initializes SDL library and auto shutdown. Asserts on failure.
+
+: sdl-init \ --
+    SDL_INIT_EVERYTHING SDL_Init 0 = assert ' SDL_Quit onexit ;

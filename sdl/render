@@ -1,0 +1,108 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ render flag constants
+0x00000001 constant SDL_RENDERER_SOFTWARE
+0x00000002 constant SDL_RENDERER_ACCELERATED
+0x00000004 constant SDL_RENDERER_PRESENTVSYNC
+0x00000008 constant SDL_RENDERER_TARGETTEXTURE
+
+\ texture access constants
+0 constant SDL_TEXTUREACCESS_STATIC
+1 constant SDL_TEXTUREACCESS_STREAMING
+2 constant SDL_TEXTUREACCESS_TARGET
+
+\ texture channel modulation constants
+0 constant SDL_TEXTUREMODULATE_NONE
+1 constant SDL_TEXTUREMODULATE_COLOR
+2 constant SDL_TEXTUREMODULATE_ALPHA
+
+\ render flip constants
+0 constant SDL_FLIP_NONE
+1 constant SDL_FLIP_HORIZONTAL
+2 constant SDL_FLIP_VERTICAL
+
+\ render info
+packed-rec: SDL_RenderInfo
+    "p" field: name
+    "i" field: flags
+    "i" field: num_texture_formats
+    "16i" field: texture_formats
+    "=" field: max_texture_width
+    "=" field: max_texture_height
+packed-rec;
+
+\ functions
+"N" "SDL_GetNumRenderDrivers" func: SDL_GetNumRenderDrivers
+"NNB" "SDL_GetRenderDriverInfo" func: SDL_GetRenderDriverInfo
+"NNNNPP" "SDL_CreateWindowAndRenderer" func: SDL_CreateWindowAndRenderer
+"PPNN" "SDL_CreateRenderer" func: SDL_CreateRenderer
+"PP" "SDL_CreateSoftwareRenderer" func: SDL_CreateSoftwareRenderer
+"PP" "SDL_GetRenderer" func: SDL_GetRenderer
+"NPP" "SDL_GetRendererInfo" func: SDL_GetRendererInfo
+"NPPP" "SDL_GetRendererOutputSize" func: SDL_GetRendererOutputSize
+"PPNNNN" "SDL_CreateTexture" func: SDL_CreateTexture
+"PPP" "SDL_CreateTextureFromSurface" func: SDL_CreateTextureFromSurface
+"NPPPPP" "SDL_QueryTexture" func: SDL_QueryTexture
+"NPNNN" "SDL_SetTextureColorMod" func: SDL_SetTextureColorMod
+"NPPPP" "SDL_GetTextureColorMod" func: SDL_GetTextureColorMod
+"NP1N" "SDL_SetTextureAlphaMod" func: SDL_SetTextureAlphaMod
+"NPP" "SDL_GetTextureAlphaMod" func: SDL_GetTextureAlphaMod
+"NPN" "SDL_SetTextureBlendMode" func: SDL_SetTextureBlendMode
+"NPP" "SDL_GetTextureBlendMode" func: SDL_GetTextureBlendMode
+"NPPPN" "SDL_UpdateTexture" func: SDL_UpdateTexture
+"NPPPNPNPN" "SDL_UpdateYUVTexture" func: SDL_UpdateYUVTexture
+"NPPPP" "SDL_LockTexture" func: SDL_LockTexture
+"VP" "SDL_UnlockTexture" func: SDL_UnlockTexture
+"NP" "SDL_RenderTargetSupported" func: SDL_RenderTargetSupported
+"NPP" "SDL_SetRenderTarget" func: SDL_SetRenderTarget
+"PP" "SDL_GetRenderTarget" func: SDL_GetRenderTarget
+"NPNN" "SDL_RenderSetLogicalSize" func: SDL_RenderSetLogicalSize
+"NPPP" "SDL_RenderGetLogicalSize" func: SDL_RenderGetLogicalSize
+"NPN" "SDL_RenderSetIntegerScale" func: SDL_RenderSetIntegerScale
+"NP" "SDL_RenderGetIntegerScale" func: SDL_RenderGetIntegerScale
+"NPP" "SDL_RenderSetViewport" func: SDL_RenderSetViewport
+"VPP" "SDL_RenderGetViewport" func: SDL_RenderGetViewport
+"NPP" "SDL_RenderSetClipRect" func: SDL_RenderSetClipRect
+"VPP" "SDL_RenderGetClipRect" func: SDL_RenderGetClipRect
+"NP" "SDL_RenderIsClipEnabled" func: SDL_RenderIsClipEnabled
+"NPFF" "SDL_RenderSetScale" func: SDL_RenderSetScale
+"NPPP" "SDL_RenderGetScale" func: SDL_RenderGetScale
+"NPNNNN" "SDL_SetRenderDrawColor" func: SDL_SetRenderDrawColor
+"NPPPPP" "SDL_GetRenderDrawColor" func: SDL_GetRenderDrawColor
+"NPN" "SDL_SetRenderDrawBlendMode" func: SDL_SetRenderDrawBlendMode
+"NPP" "SDL_GetRenderDrawBlendMode" func: SDL_GetRenderDrawBlendMode
+"NP" "SDL_RenderClear" func: SDL_RenderClear
+"NPNN" "SDL_RenderDrawPoint" func: SDL_RenderDrawPoint
+"NPPN" "SDL_RenderDrawPoints" func: SDL_RenderDrawPoints
+"NPNNNN" "SDL_RenderDrawLine" func: SDL_RenderDrawLine
+"NPPN" "SDL_RenderDrawLines" func: SDL_RenderDrawLines
+"NPP" "SDL_RenderDrawRect" func: SDL_RenderDrawRect
+"NPPN" "SDL_RenderDrawRects" func: SDL_RenderDrawRects
+"NPP" "SDL_RenderFillRect" func: SDL_RenderFillRect
+"NPPN" "SDL_RenderFillRects" func: SDL_RenderFillRects
+"NPPPP" "SDL_RenderCopy" func: SDL_RenderCopy
+"NPPPPDPN" "SDL_RenderCopyEx" func: SDL_RenderCopyEx
+"NPFF" "SDL_RenderDrawPointF" func: SDL_RenderDrawPointF
+"NPPN" "SDL_RenderDrawPointsF" func: SDL_RenderDrawPointsF
+"NPFFFF" "SDL_RenderDrawLineF" func: SDL_RenderDrawLineF
+"NPPN" "SDL_RenderDrawLinesF" func: SDL_RenderDrawLinesF
+"NPP" "SDL_RenderDrawRectF" func: SDL_RenderDrawRectF
+"NPPN" "SDL_RenderDrawRectsF" func: SDL_RenderDrawRectsF
+"NPP" "SDL_RenderFillRectF" func: SDL_RenderFillRectF
+"NPPN" "SDL_RenderFillRectsF" func: SDL_RenderFillRectsF
+"NPPPP" "SDL_RenderCopyF" func: SDL_RenderCopyF
+"NPPPPDPN" "SDL_RenderCopyExF" func: SDL_RenderCopyExF
+"NPPNPN" "SDL_RenderReadPixels" func: SDL_RenderReadPixels
+"VP" "SDL_RenderPresent" func: SDL_RenderPresent
+"VP" "SDL_DestroyTexture" func: SDL_DestroyTexture
+"VP" "SDL_DestroyRenderer" func: SDL_DestroyRenderer
+"NP" "SDL_RenderFlush" func: SDL_RenderFlush
+"NPPP" "SDL_GL_BindTexture" func: SDL_GL_BindTexture
+"NP" "SDL_GL_UnbindTexture" func: SDL_GL_UnbindTexture
+"PP" "SDL_RenderGetMetalLayer" func: SDL_RenderGetMetalLayer
+"PP" "SDL_RenderGetMetalCommandEncoder" func: SDL_RenderGetMetalCommandEncoder

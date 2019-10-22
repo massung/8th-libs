@@ -1,0 +1,48 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ yuv conversion mode constants
+0 constant SDL_YUV_CONVERSION_JPEG
+1 constant SDL_YUV_CONVERSION_BT601
+2 constant SDL_YUV_CONVERSION_BT709
+3 constant SDL_YUV_CONVERSION_AUTOMATIC
+
+\ functions
+"PPNNNNNNNN" "SDL_CreateRGBSurfaceFrom" func: SDL_CreateRGBSurfaceFrom
+"PPNNNNN" "SDL_CreateRGBSurfaceWithFormatFrom" func: SDL_CreateRGBSurfaceWithFormatFrom
+"VP" "SDL_FreeSurface" func: SDL_FreeSurface
+"NPP" "SDL_SetSurfacePalette" func: SDL_SetSurfacePalette
+"NP" "SDL_LockSurface" func: SDL_LockSurface
+"VP" "SDL_UnlockSurface" func: SDL_UnlockSurface
+"PPN" "SDL_LoadBMP_RW" func: SDL_LoadBMP_RW
+"NPPN" "SDL_SaveBMP_RW" func: SDL_SaveBMP_RW
+"NPN" "SDL_SetSurfaceRLE" func: SDL_SetSurfaceRLE
+"NPNN" "SDL_SetColorKey" func: SDL_SetColorKey
+"NP" "SDL_HasColorKey" func: SDL_HasColorKey
+"NPP" "SDL_GetColorKey" func: SDL_GetColorKey
+"NPNNN" "SDL_SetSurfaceColorMod" func: SDL_SetSurfaceColorMod
+"NPPPP" "SDL_GetSurfaceColorMod" func: SDL_GetSurfaceColorMod
+"NPN" "SDL_SetSurfaceAlphaMod" func: SDL_SetSurfaceAlphaMod
+"NPP" "SDL_GetSurfaceAlphaMod" func: SDL_GetSurfaceAlphaMod
+"NPN" "SDL_SetSurfaceBlendMode" func: SDL_SetSurfaceBlendMode
+"NPP" "SDL_GetSurfaceBlendMode" func: SDL_GetSurfaceBlendMode
+"NPP" "SDL_SetClipRect" func: SDL_SetClipRect
+"VPP" "SDL_GetClipRect" func: SDL_GetClipRect
+"PP" "SDL_DuplicateSurface" func: SDL_DuplicateSurface
+"PPPN" "SDL_ConvertSurface" func: SDL_ConvertSurface
+"PPNN" "SDL_ConvertSurfaceFormat" func: SDL_ConvertSurfaceFormat
+"NNNNPNNPN" "SDL_ConvertPixels" func: SDL_ConvertPixels
+"NPPN" "SDL_FillRect" func: SDL_FillRect
+"NPPNN" "SDL_FillRects" func: SDL_FillRects
+"NPPPP" "SDL_UpperBlit" func: SDL_UpperBlit
+"NPPPP" "SDL_LowerBlit" func: SDL_LowerBlit
+"NPPPP" "SDL_SoftStretch" func: SDL_SoftStretch
+"NPPPP" "SDL_UpperBlitScaled" func: SDL_UpperBlitScaled
+"NPPPP" "SDL_LowerBlitScaled" func: SDL_LowerBlitScaled
+"VN" "SDL_SetYUVConversionMode" func: SDL_SetYUVConversionMode
+"N" "SDL_GetYUVConversionMode" func: SDL_GetYUVConversionMode
+"NNN" "SDL_GetYUVConversionModeForResolution" func: SDL_GetYUVConversionModeForResolution

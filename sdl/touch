@@ -1,0 +1,19 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ touch device constants
+-1 constant SDL_TOUCH_DEVICE_INVALID
+ 0 constant SDL_TOUCH_DEVICE_DIRECT
+ 1 constant SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE
+ 2 constant SDL_TOUCH_DEVICE_INDIRECT_RELATIVE
+
+\ functions
+"N" "SDL_GetNumTouchDevices" func: SDL_GetNumTouchDevices
+"NN" "SDL_GetTouchDevice" func: SDL_GetTouchDevice
+"NN" "SDL_GetTouchDeviceType" func: SDL_GetTouchDeviceType
+"NN" "SDL_GetNumTouchFingers" func: SDL_GetNumTouchFingers
+"PNN" "SDL_GetTouchFinger" func: SDL_GetTouchFinger

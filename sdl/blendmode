@@ -1,0 +1,35 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ blend modes
+0x00000000 constant SDL_BLENDMODE_NONE
+0x00000001 constant SDL_BLENDMODE_BLEND
+0x00000002 constant SDL_BLENDMODE_ADD
+0x00000004 constant SDL_BLENDMODE_MOD
+0x7FFFFFFF constant SDL_BLENDMODE_INVALID
+
+\ blend operations
+0 constant SDL_BLENDOPERATION_ADD
+1 constant SDL_BLENDOPERATION_SUBTRACT
+2 constant SDL_BLENDOPERATION_REV_SUBTRACT
+3 constant SDL_BLENDOPERATION_MINIMUM
+4 constant SDL_BLENDOPERATION_MAXIMUM
+
+\ blend factors
+0x1 constant SDL_BLENDFACTOR_ZERO
+0x2 constant SDL_BLENDFACTOR_ONE
+0x3 constant SDL_BLENDFACTOR_SRC_COLOR
+0x4 constant SDL_BLENDFACTOR_ONE_MINUS_SRC_COLOR
+0x5 constant SDL_BLENDFACTOR_SRC_ALPHA
+0x6 constant SDL_BLENDFACTOR_ONE_MINUS_SRC_ALPHA
+0x7 constant SDL_BLENDFACTOR_DST_COLOR
+0x8 constant SDL_BLENDFACTOR_ONE_MINUS_DST_COLOR
+0x9 constant SDL_BLENDFACTOR_DST_ALPHA
+0xa constant SDL_BLENDFACTOR_ONE_MINUS_DST_ALPHA
+
+\ functions
+"NNNNNNN" "SDL_ComposeCustomBlendMode" func: SDL_ComposeCustomBlendMode

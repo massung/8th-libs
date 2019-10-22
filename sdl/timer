@@ -1,0 +1,14 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ functions
+"U" "SDL_GetTicks" func: SDL_GetTicks
+"8N" "SDL_GetPerformanceCounter" func: SDL_GetPerformanceCounter
+"8N" "SDL_GetPerformanceFrequency" func: SDL_GetPerformanceFrequency
+"VN" "SDL_Delay" func: SDL_Delay
+"NNwP" "SDL_AddTimer" func: SDL_AddTimer
+"NN" "SDL_RemoveTimer" func: SDL_RemoveTimer

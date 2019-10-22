@@ -1,0 +1,23 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ shape error constants
+-1 constant SDL_NONSHAPEABLE_WINDOW
+-2 constant SDL_INVALID_SHAPE_ARGUMENT
+-3 constant SDL_WINDOW_LACKS_SHAPE
+
+\ window shape mode constants
+0 constant ShapeModeDefault
+1 constant ShapeModeBinarizeAlpha
+2 constant ShapeModeReverseBinarizeAlpha
+3 constant ShapeModeColorKey
+
+\ functions
+"PZNNNNN" "SDL_CreateShapedWindow" func: SDL_CreateShapedWindow
+"NP" "SDL_IsShapedWindow" func: SDL_IsShapedWindow
+"NPPP" "SDL_SetWindowShape" func: SDL_SetWindowShape
+"NPP" "SDL_GetShapedWindowMode" func: SDL_GetShapedWindowMode

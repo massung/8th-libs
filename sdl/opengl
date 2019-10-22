@@ -1,0 +1,1292 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ Booleans
+0 constant GL_FALSE
+1 constant GL_TRUE
+
+\ Data types
+0x1400 constant GL_BYTE
+0x1401 constant GL_UNSIGNED_BYTE
+0x1402 constant GL_SHORT
+0x1403 constant GL_UNSIGNED_SHORT
+0x1404 constant GL_INT
+0x1405 constant GL_UNSIGNED_INT
+0x1406 constant GL_FLOAT
+0x1407 constant GL_2_BYTES
+0x1408 constant GL_3_BYTES
+0x1409 constant GL_4_BYTES
+0x140A constant GL_DOUBLE
+
+\ Primitives
+0x0000 constant GL_POINTS
+0x0001 constant GL_LINES
+0x0002 constant GL_LINE_LOOP
+0x0003 constant GL_LINE_STRIP
+0x0004 constant GL_TRIANGLES
+0x0005 constant GL_TRIANGLE_STRIP
+0x0006 constant GL_TRIANGLE_FAN
+0x0007 constant GL_QUADS
+0x0008 constant GL_QUAD_STRIP
+0x0009 constant GL_POLYGON
+
+\ Vertex Arrays
+0x8074 constant GL_VERTEX_ARRAY
+0x8075 constant GL_NORMAL_ARRAY
+0x8076 constant GL_COLOR_ARRAY
+0x8077 constant GL_INDEX_ARRAY
+0x8078 constant GL_TEXTURE_COORD_ARRAY
+0x8079 constant GL_EDGE_FLAG_ARRAY
+0x807A constant GL_VERTEX_ARRAY_SIZE
+0x807B constant GL_VERTEX_ARRAY_TYPE
+0x807C constant GL_VERTEX_ARRAY_STRIDE
+0x807E constant GL_NORMAL_ARRAY_TYPE
+0x807F constant GL_NORMAL_ARRAY_STRIDE
+0x8081 constant GL_COLOR_ARRAY_SIZE
+0x8082 constant GL_COLOR_ARRAY_TYPE
+0x8083 constant GL_COLOR_ARRAY_STRIDE
+0x8085 constant GL_INDEX_ARRAY_TYPE
+0x8086 constant GL_INDEX_ARRAY_STRIDE
+0x8088 constant GL_TEXTURE_COORD_ARRAY_SIZE
+0x8089 constant GL_TEXTURE_COORD_ARRAY_TYPE
+0x808A constant GL_TEXTURE_COORD_ARRAY_STRIDE
+0x808C constant GL_EDGE_FLAG_ARRAY_STRIDE
+0x808E constant GL_VERTEX_ARRAY_POINTER
+0x808F constant GL_NORMAL_ARRAY_POINTER
+0x8090 constant GL_COLOR_ARRAY_POINTER
+0x8091 constant GL_INDEX_ARRAY_POINTER
+0x8092 constant GL_TEXTURE_COORD_ARRAY_POINTER
+0x8093 constant GL_EDGE_FLAG_ARRAY_POINTER
+0x2A20 constant GL_V2F
+0x2A21 constant GL_V3F
+0x2A22 constant GL_C4UB_V2F
+0x2A23 constant GL_C4UB_V3F
+0x2A24 constant GL_C3F_V3F
+0x2A25 constant GL_N3F_V3F
+0x2A26 constant GL_C4F_N3F_V3F
+0x2A27 constant GL_T2F_V3F
+0x2A28 constant GL_T4F_V4F
+0x2A29 constant GL_T2F_C4UB_V3F
+0x2A2A constant GL_T2F_C3F_V3F
+0x2A2B constant GL_T2F_N3F_V3F
+0x2A2C constant GL_T2F_C4F_N3F_V3F
+0x2A2D constant GL_T4F_C4F_N3F_V4F
+
+\ Matrix Mode
+0x0BA0 constant GL_MATRIX_MODE
+0x1700 constant GL_MODELVIEW
+0x1701 constant GL_PROJECTION
+0x1702 constant GL_TEXTURE
+
+\ Points
+0x0B10 constant GL_POINT_SMOOTH
+0x0B11 constant GL_POINT_SIZE
+0x0B13 constant GL_POINT_SIZE_GRANULARITY
+0x0B12 constant GL_POINT_SIZE_RANGE
+
+\ Lines
+0x0B20 constant GL_LINE_SMOOTH
+0x0B24 constant GL_LINE_STIPPLE
+0x0B25 constant GL_LINE_STIPPLE_PATTERN
+0x0B26 constant GL_LINE_STIPPLE_REPEAT
+0x0B21 constant GL_LINE_WIDTH
+0x0B23 constant GL_LINE_WIDTH_GRANULARITY
+0x0B22 constant GL_LINE_WIDTH_RANGE
+
+\ Polygons
+0x1B00 constant GL_POINT
+0x1B01 constant GL_LINE
+0x1B02 constant GL_FILL
+0x0900 constant GL_CW
+0x0901 constant GL_CCW
+0x0B40 constant GL_POLYGON_MODE
+0x0B41 constant GL_POLYGON_SMOOTH
+0x0B42 constant GL_POLYGON_STIPPLE
+0x0B43 constant GL_EDGE_FLAG
+0x0B44 constant GL_CULL_FACE
+0x0B45 constant GL_CULL_FACE_MODE
+0x0B46 constant GL_FRONT_FACE
+0x8038 constant GL_POLYGON_OFFSET_FACTOR
+0x2A00 constant GL_POLYGON_OFFSET_UNITS
+0x2A01 constant GL_POLYGON_OFFSET_POINT
+0x2A02 constant GL_POLYGON_OFFSET_LINE
+0x8037 constant GL_POLYGON_OFFSET_FILL
+
+\ Display Lists
+0x1300 constant GL_COMPILE
+0x1301 constant GL_COMPILE_AND_EXECUTE
+0x0B32 constant GL_LIST_BASE
+0x0B33 constant GL_LIST_INDEX
+0x0B30 constant GL_LIST_MODE
+
+\ Depth buffer
+0x0200 constant GL_NEVER
+0x0201 constant GL_LESS
+0x0202 constant GL_EQUAL
+0x0203 constant GL_LEQUAL
+0x0204 constant GL_GREATER
+0x0205 constant GL_NOTEQUAL
+0x0206 constant GL_GEQUAL
+0x0207 constant GL_ALWAYS
+0x0B71 constant GL_DEPTH_TEST
+0x0D56 constant GL_DEPTH_BITS
+0x0B73 constant GL_DEPTH_CLEAR_VALUE
+0x0B74 constant GL_DEPTH_FUNC
+0x0B70 constant GL_DEPTH_RANGE
+0x0B72 constant GL_DEPTH_WRITEMASK
+0x1902 constant GL_DEPTH_COMPONENT
+
+\ Lighting
+0x0B50 constant GL_LIGHTING
+0x4000 constant GL_LIGHT0
+0x4001 constant GL_LIGHT1
+0x4002 constant GL_LIGHT2
+0x4003 constant GL_LIGHT3
+0x4004 constant GL_LIGHT4
+0x4005 constant GL_LIGHT5
+0x4006 constant GL_LIGHT6
+0x4007 constant GL_LIGHT7
+0x1205 constant GL_SPOT_EXPONENT
+0x1206 constant GL_SPOT_CUTOFF
+0x1207 constant GL_CONSTANT_ATTENUATION
+0x1208 constant GL_LINEAR_ATTENUATION
+0x1209 constant GL_QUADRATIC_ATTENUATION
+0x1200 constant GL_AMBIENT
+0x1201 constant GL_DIFFUSE
+0x1202 constant GL_SPECULAR
+0x1601 constant GL_SHININESS
+0x1600 constant GL_EMISSION
+0x1203 constant GL_POSITION
+0x1204 constant GL_SPOT_DIRECTION
+0x1602 constant GL_AMBIENT_AND_DIFFUSE
+0x1603 constant GL_COLOR_INDEXES
+0x0B52 constant GL_LIGHT_MODEL_TWO_SIDE
+0x0B51 constant GL_LIGHT_MODEL_LOCAL_VIEWER
+0x0B53 constant GL_LIGHT_MODEL_AMBIENT
+0x0B54 constant GL_SHADE_MODEL
+0x1D00 constant GL_FLAT
+0x1D01 constant GL_SMOOTH
+0x0B57 constant GL_COLOR_MATERIAL
+0x0B55 constant GL_COLOR_MATERIAL_FACE
+0x0B56 constant GL_COLOR_MATERIAL_PARAMETER
+0x0BA1 constant GL_NORMALIZE
+
+\ User clipping planes
+0x3000 constant GL_CLIP_PLANE0
+0x3001 constant GL_CLIP_PLANE1
+0x3002 constant GL_CLIP_PLANE2
+0x3003 constant GL_CLIP_PLANE3
+0x3004 constant GL_CLIP_PLANE4
+0x3005 constant GL_CLIP_PLANE5
+
+\ Accumulation buffer
+0x0D58 constant GL_ACCUM_RED_BITS
+0x0D59 constant GL_ACCUM_GREEN_BITS
+0x0D5A constant GL_ACCUM_BLUE_BITS
+0x0D5B constant GL_ACCUM_ALPHA_BITS
+0x0B80 constant GL_ACCUM_CLEAR_VALUE
+0x0100 constant GL_ACCUM
+0x0104 constant GL_ADD
+0x0101 constant GL_LOAD
+0x0103 constant GL_MULT
+0x0102 constant GL_RETURN
+
+\ Alpha testing
+0x0BC0 constant GL_ALPHA_TEST
+0x0BC2 constant GL_ALPHA_TEST_REF
+0x0BC1 constant GL_ALPHA_TEST_FUNC
+
+\ Blending
+0x0BE2 constant GL_BLEND
+0x0BE1 constant GL_BLEND_SRC
+0x0BE0 constant GL_BLEND_DST
+0x0000 constant GL_ZERO
+0x0001 constant GL_ONE
+0x0300 constant GL_SRC_COLOR
+0x0301 constant GL_ONE_MINUS_SRC_COLOR
+0x0302 constant GL_SRC_ALPHA
+0x0303 constant GL_ONE_MINUS_SRC_ALPHA
+0x0304 constant GL_DST_ALPHA
+0x0305 constant GL_ONE_MINUS_DST_ALPHA
+0x0306 constant GL_DST_COLOR
+0x0307 constant GL_ONE_MINUS_DST_COLOR
+0x0308 constant GL_SRC_ALPHA_SATURATE
+
+\ Render Mode
+0x1C01 constant GL_FEEDBACK
+0x1C00 constant GL_RENDER
+0x1C02 constant GL_SELECT
+
+\ Feedback
+0x0600 constant GL_2D
+0x0601 constant GL_3D
+0x0602 constant GL_3D_COLOR
+0x0603 constant GL_3D_COLOR_TEXTURE
+0x0604 constant GL_4D_COLOR_TEXTURE
+0x0701 constant GL_POINT_TOKEN
+0x0702 constant GL_LINE_TOKEN
+0x0707 constant GL_LINE_RESET_TOKEN
+0x0703 constant GL_POLYGON_TOKEN
+0x0704 constant GL_BITMAP_TOKEN
+0x0705 constant GL_DRAW_PIXEL_TOKEN
+0x0706 constant GL_COPY_PIXEL_TOKEN
+0x0700 constant GL_PASS_THROUGH_TOKEN
+0x0DF0 constant GL_FEEDBACK_BUFFER_POINTER
+0x0DF1 constant GL_FEEDBACK_BUFFER_SIZE
+0x0DF2 constant GL_FEEDBACK_BUFFER_TYPE
+
+\ Selection
+0x0DF3 constant GL_SELECTION_BUFFER_POINTER
+0x0DF4 constant GL_SELECTION_BUFFER_SIZE
+
+\ Fog
+0x0B60 constant GL_FOG
+0x0B65 constant GL_FOG_MODE
+0x0B62 constant GL_FOG_DENSITY
+0x0B66 constant GL_FOG_COLOR
+0x0B61 constant GL_FOG_INDEX
+0x0B63 constant GL_FOG_START
+0x0B64 constant GL_FOG_END
+0x2601 constant GL_LINEAR
+0x0800 constant GL_EXP
+0x0801 constant GL_EXP2
+
+\ Logic Ops
+0x0BF1 constant GL_LOGIC_OP
+0x0BF1 constant GL_INDEX_LOGIC_OP
+0x0BF2 constant GL_COLOR_LOGIC_OP
+0x0BF0 constant GL_LOGIC_OP_MODE
+0x1500 constant GL_CLEAR
+0x150F constant GL_SET
+0x1503 constant GL_COPY
+0x150C constant GL_COPY_INVERTED
+0x1505 constant GL_NOOP
+0x150A constant GL_INVERT
+0x1501 constant GL_AND
+0x150E constant GL_NAND
+0x1507 constant GL_OR
+0x1508 constant GL_NOR
+0x1506 constant GL_XOR
+0x1509 constant GL_EQUIV
+0x1502 constant GL_AND_REVERSE
+0x1504 constant GL_AND_INVERTED
+0x150B constant GL_OR_REVERSE
+0x150D constant GL_OR_INVERTED
+
+\ Stencil
+0x0D57 constant GL_STENCIL_BITS
+0x0B90 constant GL_STENCIL_TEST
+0x0B91 constant GL_STENCIL_CLEAR_VALUE
+0x0B92 constant GL_STENCIL_FUNC
+0x0B93 constant GL_STENCIL_VALUE_MASK
+0x0B94 constant GL_STENCIL_FAIL
+0x0B95 constant GL_STENCIL_PASS_DEPTH_FAIL
+0x0B96 constant GL_STENCIL_PASS_DEPTH_PASS
+0x0B97 constant GL_STENCIL_REF
+0x0B98 constant GL_STENCIL_WRITEMASK
+0x1901 constant GL_STENCIL_INDEX
+0x1E00 constant GL_KEEP
+0x1E01 constant GL_REPLACE
+0x1E02 constant GL_INCR
+0x1E03 constant GL_DECR
+
+\ Buffers, Pixel Drawing/Reading
+0x0000 constant GL_NONE
+0x0404 constant GL_FRONT
+0x0405 constant GL_BACK
+0x0406 constant GL_LEFT
+0x0407 constant GL_RIGHT
+0x0408 constant GL_FRONT_AND_BACK
+0x0400 constant GL_FRONT_LEFT
+0x0401 constant GL_FRONT_RIGHT
+0x0402 constant GL_BACK_LEFT
+0x0403 constant GL_BACK_RIGHT
+0x0409 constant GL_AUX0
+0x040A constant GL_AUX1
+0x040B constant GL_AUX2
+0x040C constant GL_AUX3
+0x1900 constant GL_COLOR_INDEX
+0x1903 constant GL_RED
+0x1904 constant GL_GREEN
+0x1905 constant GL_BLUE
+0x1906 constant GL_ALPHA
+0x1909 constant GL_LUMINANCE
+0x190A constant GL_LUMINANCE_ALPHA
+0x0D55 constant GL_ALPHA_BITS
+0x0D52 constant GL_RED_BITS
+0x0D53 constant GL_GREEN_BITS
+0x0D54 constant GL_BLUE_BITS
+0x0D51 constant GL_INDEX_BITS
+0x0D50 constant GL_SUBPIXEL_BITS
+0x0C00 constant GL_AUX_BUFFERS
+0x0C02 constant GL_READ_BUFFER
+0x0C01 constant GL_DRAW_BUFFER
+0x0C32 constant GL_DOUBLEBUFFER
+0x0C33 constant GL_STEREO
+0x1A00 constant GL_BITMAP
+0x1800 constant GL_COLOR
+0x1801 constant GL_DEPTH
+0x1802 constant GL_STENCIL
+0x0BD0 constant GL_DITHER
+0x1907 constant GL_RGB
+0x1908 constant GL_RGBA
+
+\ Implementation limits
+0x0B31 constant GL_MAX_LIST_NESTING
+0x0D30 constant GL_MAX_EVAL_ORDER
+0x0D31 constant GL_MAX_LIGHTS
+0x0D32 constant GL_MAX_CLIP_PLANES
+0x0D33 constant GL_MAX_TEXTURE_SIZE
+0x0D34 constant GL_MAX_PIXEL_MAP_TABLE
+0x0D35 constant GL_MAX_ATTRIB_STACK_DEPTH
+0x0D36 constant GL_MAX_MODELVIEW_STACK_DEPTH
+0x0D37 constant GL_MAX_NAME_STACK_DEPTH
+0x0D38 constant GL_MAX_PROJECTION_STACK_DEPTH
+0x0D39 constant GL_MAX_TEXTURE_STACK_DEPTH
+0x0D3A constant GL_MAX_VIEWPORT_DIMS
+0x0D3B constant GL_MAX_CLIENT_ATTRIB_STACK_DEPTH
+
+\ Gets
+0x0BB0 constant GL_ATTRIB_STACK_DEPTH
+0x0BB1 constant GL_CLIENT_ATTRIB_STACK_DEPTH
+0x0C22 constant GL_COLOR_CLEAR_VALUE
+0x0C23 constant GL_COLOR_WRITEMASK
+0x0B01 constant GL_CURRENT_INDEX
+0x0B00 constant GL_CURRENT_COLOR
+0x0B02 constant GL_CURRENT_NORMAL
+0x0B04 constant GL_CURRENT_RASTER_COLOR
+0x0B09 constant GL_CURRENT_RASTER_DISTANCE
+0x0B05 constant GL_CURRENT_RASTER_INDEX
+0x0B07 constant GL_CURRENT_RASTER_POSITION
+0x0B06 constant GL_CURRENT_RASTER_TEXTURE_COORDS
+0x0B08 constant GL_CURRENT_RASTER_POSITION_VALID
+0x0B03 constant GL_CURRENT_TEXTURE_COORDS
+0x0C20 constant GL_INDEX_CLEAR_VALUE
+0x0C30 constant GL_INDEX_MODE
+0x0C21 constant GL_INDEX_WRITEMASK
+0x0BA6 constant GL_MODELVIEW_MATRIX
+0x0BA3 constant GL_MODELVIEW_STACK_DEPTH
+0x0D70 constant GL_NAME_STACK_DEPTH
+0x0BA7 constant GL_PROJECTION_MATRIX
+0x0BA4 constant GL_PROJECTION_STACK_DEPTH
+0x0C40 constant GL_RENDER_MODE
+0x0C31 constant GL_RGBA_MODE
+0x0BA8 constant GL_TEXTURE_MATRIX
+0x0BA5 constant GL_TEXTURE_STACK_DEPTH
+0x0BA2 constant GL_VIEWPORT
+
+\ Evaluators
+0x0D80 constant GL_AUTO_NORMAL
+0x0D90 constant GL_MAP1_COLOR_4
+0x0D91 constant GL_MAP1_INDEX
+0x0D92 constant GL_MAP1_NORMAL
+0x0D93 constant GL_MAP1_TEXTURE_COORD_1
+0x0D94 constant GL_MAP1_TEXTURE_COORD_2
+0x0D95 constant GL_MAP1_TEXTURE_COORD_3
+0x0D96 constant GL_MAP1_TEXTURE_COORD_4
+0x0D97 constant GL_MAP1_VERTEX_3
+0x0D98 constant GL_MAP1_VERTEX_4
+0x0DB0 constant GL_MAP2_COLOR_4
+0x0DB1 constant GL_MAP2_INDEX
+0x0DB2 constant GL_MAP2_NORMAL
+0x0DB3 constant GL_MAP2_TEXTURE_COORD_1
+0x0DB4 constant GL_MAP2_TEXTURE_COORD_2
+0x0DB5 constant GL_MAP2_TEXTURE_COORD_3
+0x0DB6 constant GL_MAP2_TEXTURE_COORD_4
+0x0DB7 constant GL_MAP2_VERTEX_3
+0x0DB8 constant GL_MAP2_VERTEX_4
+0x0DD0 constant GL_MAP1_GRID_DOMAIN
+0x0DD1 constant GL_MAP1_GRID_SEGMENTS
+0x0DD2 constant GL_MAP2_GRID_DOMAIN
+0x0DD3 constant GL_MAP2_GRID_SEGMENTS
+0x0A00 constant GL_COEFF
+0x0A01 constant GL_ORDER
+0x0A02 constant GL_DOMAIN
+
+\ Hints
+0x0C50 constant GL_PERSPECTIVE_CORRECTION_HINT
+0x0C51 constant GL_POINT_SMOOTH_HINT
+0x0C52 constant GL_LINE_SMOOTH_HINT
+0x0C53 constant GL_POLYGON_SMOOTH_HINT
+0x0C54 constant GL_FOG_HINT
+0x1100 constant GL_DONT_CARE
+0x1101 constant GL_FASTEST
+0x1102 constant GL_NICEST
+
+\ Scissor box
+0x0C10 constant GL_SCISSOR_BOX
+0x0C11 constant GL_SCISSOR_TEST
+
+\ Pixel Mode / Transfer
+0x0D10 constant GL_MAP_COLOR
+0x0D11 constant GL_MAP_STENCIL
+0x0D12 constant GL_INDEX_SHIFT
+0x0D13 constant GL_INDEX_OFFSET
+0x0D14 constant GL_RED_SCALE
+0x0D15 constant GL_RED_BIAS
+0x0D18 constant GL_GREEN_SCALE
+0x0D19 constant GL_GREEN_BIAS
+0x0D1A constant GL_BLUE_SCALE
+0x0D1B constant GL_BLUE_BIAS
+0x0D1C constant GL_ALPHA_SCALE
+0x0D1D constant GL_ALPHA_BIAS
+0x0D1E constant GL_DEPTH_SCALE
+0x0D1F constant GL_DEPTH_BIAS
+0x0CB1 constant GL_PIXEL_MAP_S_TO_S_SIZE
+0x0CB0 constant GL_PIXEL_MAP_I_TO_I_SIZE
+0x0CB2 constant GL_PIXEL_MAP_I_TO_R_SIZE
+0x0CB3 constant GL_PIXEL_MAP_I_TO_G_SIZE
+0x0CB4 constant GL_PIXEL_MAP_I_TO_B_SIZE
+0x0CB5 constant GL_PIXEL_MAP_I_TO_A_SIZE
+0x0CB6 constant GL_PIXEL_MAP_R_TO_R_SIZE
+0x0CB7 constant GL_PIXEL_MAP_G_TO_G_SIZE
+0x0CB8 constant GL_PIXEL_MAP_B_TO_B_SIZE
+0x0CB9 constant GL_PIXEL_MAP_A_TO_A_SIZE
+0x0C71 constant GL_PIXEL_MAP_S_TO_S
+0x0C70 constant GL_PIXEL_MAP_I_TO_I
+0x0C72 constant GL_PIXEL_MAP_I_TO_R
+0x0C73 constant GL_PIXEL_MAP_I_TO_G
+0x0C74 constant GL_PIXEL_MAP_I_TO_B
+0x0C75 constant GL_PIXEL_MAP_I_TO_A
+0x0C76 constant GL_PIXEL_MAP_R_TO_R
+0x0C77 constant GL_PIXEL_MAP_G_TO_G
+0x0C78 constant GL_PIXEL_MAP_B_TO_B
+0x0C79 constant GL_PIXEL_MAP_A_TO_A
+0x0D05 constant GL_PACK_ALIGNMENT
+0x0D01 constant GL_PACK_LSB_FIRST
+0x0D02 constant GL_PACK_ROW_LENGTH
+0x0D04 constant GL_PACK_SKIP_PIXELS
+0x0D03 constant GL_PACK_SKIP_ROWS
+0x0D00 constant GL_PACK_SWAP_BYTES
+0x0CF5 constant GL_UNPACK_ALIGNMENT
+0x0CF1 constant GL_UNPACK_LSB_FIRST
+0x0CF2 constant GL_UNPACK_ROW_LENGTH
+0x0CF4 constant GL_UNPACK_SKIP_PIXELS
+0x0CF3 constant GL_UNPACK_SKIP_ROWS
+0x0CF0 constant GL_UNPACK_SWAP_BYTES
+0x0D16 constant GL_ZOOM_X
+0x0D17 constant GL_ZOOM_Y
+
+\ Texture mapping
+0x2300 constant GL_TEXTURE_ENV
+0x2200 constant GL_TEXTURE_ENV_MODE
+0x0DE0 constant GL_TEXTURE_1D
+0x0DE1 constant GL_TEXTURE_2D
+0x2802 constant GL_TEXTURE_WRAP_S
+0x2803 constant GL_TEXTURE_WRAP_T
+0x2800 constant GL_TEXTURE_MAG_FILTER
+0x2801 constant GL_TEXTURE_MIN_FILTER
+0x2201 constant GL_TEXTURE_ENV_COLOR
+0x0C60 constant GL_TEXTURE_GEN_S
+0x0C61 constant GL_TEXTURE_GEN_T
+0x0C62 constant GL_TEXTURE_GEN_R
+0x0C63 constant GL_TEXTURE_GEN_Q
+0x2500 constant GL_TEXTURE_GEN_MODE
+0x1004 constant GL_TEXTURE_BORDER_COLOR
+0x1000 constant GL_TEXTURE_WIDTH
+0x1001 constant GL_TEXTURE_HEIGHT
+0x1005 constant GL_TEXTURE_BORDER
+0x1003 constant GL_TEXTURE_COMPONENTS
+0x805C constant GL_TEXTURE_RED_SIZE
+0x805D constant GL_TEXTURE_GREEN_SIZE
+0x805E constant GL_TEXTURE_BLUE_SIZE
+0x805F constant GL_TEXTURE_ALPHA_SIZE
+0x8060 constant GL_TEXTURE_LUMINANCE_SIZE
+0x8061 constant GL_TEXTURE_INTENSITY_SIZE
+0x2700 constant GL_NEAREST_MIPMAP_NEAREST
+0x2702 constant GL_NEAREST_MIPMAP_LINEAR
+0x2701 constant GL_LINEAR_MIPMAP_NEAREST
+0x2703 constant GL_LINEAR_MIPMAP_LINEAR
+0x2401 constant GL_OBJECT_LINEAR
+0x2501 constant GL_OBJECT_PLANE
+0x2400 constant GL_EYE_LINEAR
+0x2502 constant GL_EYE_PLANE
+0x2402 constant GL_SPHERE_MAP
+0x2101 constant GL_DECAL
+0x2100 constant GL_MODULATE
+0x2600 constant GL_NEAREST
+0x2901 constant GL_REPEAT
+0x2900 constant GL_CLAMP
+0x2000 constant GL_S
+0x2001 constant GL_T
+0x2002 constant GL_R
+0x2003 constant GL_Q
+
+\ Utility
+0x1F00 constant GL_VENDOR
+0x1F01 constant GL_RENDERER
+0x1F02 constant GL_VERSION
+0x1F03 constant GL_EXTENSIONS
+
+\ Errors
+0x0000 constant GL_NO_ERROR
+0x0500 constant GL_INVALID_ENUM
+0x0501 constant GL_INVALID_VALUE
+0x0502 constant GL_INVALID_OPERATION
+0x0503 constant GL_STACK_OVERFLOW
+0x0504 constant GL_STACK_UNDERFLOW
+0x0505 constant GL_OUT_OF_MEMORY
+
+\ glPush/PopAttrib bits
+0x00000001 constant GL_CURRENT_BIT
+0x00000002 constant GL_POINT_BIT
+0x00000004 constant GL_LINE_BIT
+0x00000008 constant GL_POLYGON_BIT
+0x00000010 constant GL_POLYGON_STIPPLE_BIT
+0x00000020 constant GL_PIXEL_MODE_BIT
+0x00000040 constant GL_LIGHTING_BIT
+0x00000080 constant GL_FOG_BIT
+0x00000100 constant GL_DEPTH_BUFFER_BIT
+0x00000200 constant GL_ACCUM_BUFFER_BIT
+0x00000400 constant GL_STENCIL_BUFFER_BIT
+0x00000800 constant GL_VIEWPORT_BIT
+0x00001000 constant GL_TRANSFORM_BIT
+0x00002000 constant GL_ENABLE_BIT
+0x00004000 constant GL_COLOR_BUFFER_BIT
+0x00008000 constant GL_HINT_BIT
+0x00010000 constant GL_EVAL_BIT
+0x00020000 constant GL_LIST_BIT
+0x00040000 constant GL_TEXTURE_BIT
+0x00080000 constant GL_SCISSOR_BIT
+0x000FFFFF constant GL_ALL_ATTRIB_BITS
+
+
+\ OpenGL 1.1
+0x8063 constant GL_PROXY_TEXTURE_1D
+0x8064 constant GL_PROXY_TEXTURE_2D
+0x8066 constant GL_TEXTURE_PRIORITY
+0x8067 constant GL_TEXTURE_RESIDENT
+0x8068 constant GL_TEXTURE_BINDING_1D
+0x8069 constant GL_TEXTURE_BINDING_2D
+0x1003 constant GL_TEXTURE_INTERNAL_FORMAT
+0x803B constant GL_ALPHA4
+0x803C constant GL_ALPHA8
+0x803D constant GL_ALPHA12
+0x803E constant GL_ALPHA16
+0x803F constant GL_LUMINANCE4
+0x8040 constant GL_LUMINANCE8
+0x8041 constant GL_LUMINANCE12
+0x8042 constant GL_LUMINANCE16
+0x8043 constant GL_LUMINANCE4_ALPHA4
+0x8044 constant GL_LUMINANCE6_ALPHA2
+0x8045 constant GL_LUMINANCE8_ALPHA8
+0x8046 constant GL_LUMINANCE12_ALPHA4
+0x8047 constant GL_LUMINANCE12_ALPHA12
+0x8048 constant GL_LUMINANCE16_ALPHA16
+0x8049 constant GL_INTENSITY
+0x804A constant GL_INTENSITY4
+0x804B constant GL_INTENSITY8
+0x804C constant GL_INTENSITY12
+0x804D constant GL_INTENSITY16
+0x2A10 constant GL_R3_G3_B2
+0x804F constant GL_RGB4
+0x8050 constant GL_RGB5
+0x8051 constant GL_RGB8
+0x8052 constant GL_RGB10
+0x8053 constant GL_RGB12
+0x8054 constant GL_RGB16
+0x8055 constant GL_RGBA2
+0x8056 constant GL_RGBA4
+0x8057 constant GL_RGB5_A1
+0x8058 constant GL_RGBA8
+0x8059 constant GL_RGB10_A2
+0x805A constant GL_RGBA12
+0x805B constant GL_RGBA16
+
+\
+0x803A constant GL_RESCALE_NORMAL
+0x812F constant GL_CLAMP_TO_EDGE
+0x80E8 constant GL_MAX_ELEMENTS_VERTICES
+0x80E9 constant GL_MAX_ELEMENTS_INDICES
+0x80E0 constant GL_BGR
+0x80E1 constant GL_BGRA
+0x8032 constant GL_UNSIGNED_BYTE_3_3_2
+0x8362 constant GL_UNSIGNED_BYTE_2_3_3_REV
+0x8363 constant GL_UNSIGNED_SHORT_5_6_5
+0x8364 constant GL_UNSIGNED_SHORT_5_6_5_REV
+0x8033 constant GL_UNSIGNED_SHORT_4_4_4_4
+0x8365 constant GL_UNSIGNED_SHORT_4_4_4_4_REV
+0x8034 constant GL_UNSIGNED_SHORT_5_5_5_1
+0x8366 constant GL_UNSIGNED_SHORT_1_5_5_5_REV
+0x8035 constant GL_UNSIGNED_INT_8_8_8_8
+0x8367 constant GL_UNSIGNED_INT_8_8_8_8_REV
+0x8036 constant GL_UNSIGNED_INT_10_10_10_2
+0x8368 constant GL_UNSIGNED_INT_2_10_10_10_REV
+0x81F8 constant GL_LIGHT_MODEL_COLOR_CONTROL
+0x81F9 constant GL_SINGLE_COLOR
+0x81FA constant GL_SEPARATE_SPECULAR_COLOR
+0x813A constant GL_TEXTURE_MIN_LOD
+0x813B constant GL_TEXTURE_MAX_LOD
+0x813C constant GL_TEXTURE_BASE_LEVEL
+0x813D constant GL_TEXTURE_MAX_LEVEL
+0x0B12 constant GL_SMOOTH_POINT_SIZE_RANGE
+0x0B13 constant GL_SMOOTH_POINT_SIZE_GRANULARITY
+0x0B22 constant GL_SMOOTH_LINE_WIDTH_RANGE
+0x0B23 constant GL_SMOOTH_LINE_WIDTH_GRANULARITY
+0x846D constant GL_ALIASED_POINT_SIZE_RANGE
+0x846E constant GL_ALIASED_LINE_WIDTH_RANGE
+0x806B constant GL_PACK_SKIP_IMAGES
+0x806C constant GL_PACK_IMAGE_HEIGHT
+0x806D constant GL_UNPACK_SKIP_IMAGES
+0x806E constant GL_UNPACK_IMAGE_HEIGHT
+0x806F constant GL_TEXTURE_3D
+0x8070 constant GL_PROXY_TEXTURE_3D
+0x8071 constant GL_TEXTURE_DEPTH
+0x8072 constant GL_TEXTURE_WRAP_R
+0x8073 constant GL_MAX_3D_TEXTURE_SIZE
+0x806A constant GL_TEXTURE_BINDING_3D
+
+\ ARGB imaging
+0x8001 constant GL_CONSTANT_COLOR
+0x8002 constant GL_ONE_MINUS_CONSTANT_COLOR
+0x8003 constant GL_CONSTANT_ALPHA
+0x8004 constant GL_ONE_MINUS_CONSTANT_ALPHA
+0x80D0 constant GL_COLOR_TABLE
+0x80D1 constant GL_POST_CONVOLUTION_COLOR_TABLE
+0x80D2 constant GL_POST_COLOR_MATRIX_COLOR_TABLE
+0x80D3 constant GL_PROXY_COLOR_TABLE
+0x80D4 constant GL_PROXY_POST_CONVOLUTION_COLOR_TABLE
+0x80D5 constant GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE
+0x80D6 constant GL_COLOR_TABLE_SCALE
+0x80D7 constant GL_COLOR_TABLE_BIAS
+0x80D8 constant GL_COLOR_TABLE_FORMAT
+0x80D9 constant GL_COLOR_TABLE_WIDTH
+0x80DA constant GL_COLOR_TABLE_RED_SIZE
+0x80DB constant GL_COLOR_TABLE_GREEN_SIZE
+0x80DC constant GL_COLOR_TABLE_BLUE_SIZE
+0x80DD constant GL_COLOR_TABLE_ALPHA_SIZE
+0x80DE constant GL_COLOR_TABLE_LUMINANCE_SIZE
+0x80DF constant GL_COLOR_TABLE_INTENSITY_SIZE
+0x8010 constant GL_CONVOLUTION_1D
+0x8011 constant GL_CONVOLUTION_2D
+0x8012 constant GL_SEPARABLE_2D
+0x8013 constant GL_CONVOLUTION_BORDER_MODE
+0x8014 constant GL_CONVOLUTION_FILTER_SCALE
+0x8015 constant GL_CONVOLUTION_FILTER_BIAS
+0x8016 constant GL_REDUCE
+0x8017 constant GL_CONVOLUTION_FORMAT
+0x8018 constant GL_CONVOLUTION_WIDTH
+0x8019 constant GL_CONVOLUTION_HEIGHT
+0x801A constant GL_MAX_CONVOLUTION_WIDTH
+0x801B constant GL_MAX_CONVOLUTION_HEIGHT
+0x801C constant GL_POST_CONVOLUTION_RED_SCALE
+0x801D constant GL_POST_CONVOLUTION_GREEN_SCALE
+0x801E constant GL_POST_CONVOLUTION_BLUE_SCALE
+0x801F constant GL_POST_CONVOLUTION_ALPHA_SCALE
+0x8020 constant GL_POST_CONVOLUTION_RED_BIAS
+0x8021 constant GL_POST_CONVOLUTION_GREEN_BIAS
+0x8022 constant GL_POST_CONVOLUTION_BLUE_BIAS
+0x8023 constant GL_POST_CONVOLUTION_ALPHA_BIAS
+0x8151 constant GL_CONSTANT_BORDER
+0x8153 constant GL_REPLICATE_BORDER
+0x8154 constant GL_CONVOLUTION_BORDER_COLOR
+0x80B1 constant GL_COLOR_MATRIX
+0x80B2 constant GL_COLOR_MATRIX_STACK_DEPTH
+0x80B3 constant GL_MAX_COLOR_MATRIX_STACK_DEPTH
+0x80B4 constant GL_POST_COLOR_MATRIX_RED_SCALE
+0x80B5 constant GL_POST_COLOR_MATRIX_GREEN_SCALE
+0x80B6 constant GL_POST_COLOR_MATRIX_BLUE_SCALE
+0x80B7 constant GL_POST_COLOR_MATRIX_ALPHA_SCALE
+0x80B8 constant GL_POST_COLOR_MATRIX_RED_BIAS
+0x80B9 constant GL_POST_COLOR_MATRIX_GREEN_BIAS
+0x80BA constant GL_POST_COLOR_MATRIX_BLUE_BIAS
+0x80BB constant GL_POST_COLOR_MATRIX_ALPHA_BIAS
+0x8024 constant GL_HISTOGRAM
+0x8025 constant GL_PROXY_HISTOGRAM
+0x8026 constant GL_HISTOGRAM_WIDTH
+0x8027 constant GL_HISTOGRAM_FORMAT
+0x8028 constant GL_HISTOGRAM_RED_SIZE
+0x8029 constant GL_HISTOGRAM_GREEN_SIZE
+0x802A constant GL_HISTOGRAM_BLUE_SIZE
+0x802B constant GL_HISTOGRAM_ALPHA_SIZE
+0x802C constant GL_HISTOGRAM_LUMINANCE_SIZE
+0x802D constant GL_HISTOGRAM_SINK
+0x802E constant GL_MINMAX
+0x802F constant GL_MINMAX_FORMAT
+0x8030 constant GL_MINMAX_SINK
+0x8031 constant GL_TABLE_TOO_LARGE
+0x8009 constant GL_BLEND_EQUATION
+0x8007 constant GL_MIN
+0x8008 constant GL_MAX
+0x8006 constant GL_FUNC_ADD
+0x800A constant GL_FUNC_SUBTRACT
+0x800B constant GL_FUNC_REVERSE_SUBTRACT
+0x8005 constant GL_BLEND_COLOR
+
+\ Textures
+0x84C0 constant GL_TEXTURE0
+0x84C1 constant GL_TEXTURE1
+0x84C2 constant GL_TEXTURE2
+0x84C3 constant GL_TEXTURE3
+0x84C4 constant GL_TEXTURE4
+0x84C5 constant GL_TEXTURE5
+0x84C6 constant GL_TEXTURE6
+0x84C7 constant GL_TEXTURE7
+0x84C8 constant GL_TEXTURE8
+0x84C9 constant GL_TEXTURE9
+0x84CA constant GL_TEXTURE10
+0x84CB constant GL_TEXTURE11
+0x84CC constant GL_TEXTURE12
+0x84CD constant GL_TEXTURE13
+0x84CE constant GL_TEXTURE14
+0x84CF constant GL_TEXTURE15
+0x84D0 constant GL_TEXTURE16
+0x84D1 constant GL_TEXTURE17
+0x84D2 constant GL_TEXTURE18
+0x84D3 constant GL_TEXTURE19
+0x84D4 constant GL_TEXTURE20
+0x84D5 constant GL_TEXTURE21
+0x84D6 constant GL_TEXTURE22
+0x84D7 constant GL_TEXTURE23
+0x84D8 constant GL_TEXTURE24
+0x84D9 constant GL_TEXTURE25
+0x84DA constant GL_TEXTURE26
+0x84DB constant GL_TEXTURE27
+0x84DC constant GL_TEXTURE28
+0x84DD constant GL_TEXTURE29
+0x84DE constant GL_TEXTURE30
+0x84DF constant GL_TEXTURE31
+0x84E0 constant GL_ACTIVE_TEXTURE
+0x84E1 constant GL_CLIENT_ACTIVE_TEXTURE
+0x84E2 constant GL_MAX_TEXTURE_UNITS
+
+\ Texture cube map
+0x8511 constant GL_NORMAL_MAP
+0x8512 constant GL_REFLECTION_MAP
+0x8513 constant GL_TEXTURE_CUBE_MAP
+0x8514 constant GL_TEXTURE_BINDING_CUBE_MAP
+0x8515 constant GL_TEXTURE_CUBE_MAP_POSITIVE_X
+0x8516 constant GL_TEXTURE_CUBE_MAP_NEGATIVE_X
+0x8517 constant GL_TEXTURE_CUBE_MAP_POSITIVE_Y
+0x8518 constant GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
+0x8519 constant GL_TEXTURE_CUBE_MAP_POSITIVE_Z
+0x851A constant GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
+0x851B constant GL_PROXY_TEXTURE_CUBE_MAP
+0x851C constant GL_MAX_CUBE_MAP_TEXTURE_SIZE
+
+\ Texture_compression
+0x84E9 constant GL_COMPRESSED_ALPHA
+0x84EA constant GL_COMPRESSED_LUMINANCE
+0x84EB constant GL_COMPRESSED_LUMINANCE_ALPHA
+0x84EC constant GL_COMPRESSED_INTENSITY
+0x84ED constant GL_COMPRESSED_RGB
+0x84EE constant GL_COMPRESSED_RGBA
+0x84EF constant GL_TEXTURE_COMPRESSION_HINT
+0x86A0 constant GL_TEXTURE_COMPRESSED_IMAGE_SIZE
+0x86A1 constant GL_TEXTURE_COMPRESSED
+0x86A2 constant GL_NUM_COMPRESSED_TEXTURE_FORMATS
+0x86A3 constant GL_COMPRESSED_TEXTURE_FORMATS
+
+\ Multisample
+0x809D constant GL_MULTISAMPLE
+0x809E constant GL_SAMPLE_ALPHA_TO_COVERAGE
+0x809F constant GL_SAMPLE_ALPHA_TO_ONE
+0x80A0 constant GL_SAMPLE_COVERAGE
+0x80A8 constant GL_SAMPLE_BUFFERS
+0x80A9 constant GL_SAMPLES
+0x80AA constant GL_SAMPLE_COVERAGE_VALUE
+0x80AB constant GL_SAMPLE_COVERAGE_INVERT
+0x20000000 constant GL_MULTISAMPLE_BIT
+
+\ Transpose matrix
+0x84E3 constant GL_TRANSPOSE_MODELVIEW_MATRIX
+0x84E4 constant GL_TRANSPOSE_PROJECTION_MATRIX
+0x84E5 constant GL_TRANSPOSE_TEXTURE_MATRIX
+0x84E6 constant GL_TRANSPOSE_COLOR_MATRIX
+
+\ Texture env combine
+0x8570 constant GL_COMBINE
+0x8571 constant GL_COMBINE_RGB
+0x8572 constant GL_COMBINE_ALPHA
+0x8580 constant GL_SOURCE0_RGB
+0x8581 constant GL_SOURCE1_RGB
+0x8582 constant GL_SOURCE2_RGB
+0x8588 constant GL_SOURCE0_ALPHA
+0x8589 constant GL_SOURCE1_ALPHA
+0x858A constant GL_SOURCE2_ALPHA
+0x8590 constant GL_OPERAND0_RGB
+0x8591 constant GL_OPERAND1_RGB
+0x8592 constant GL_OPERAND2_RGB
+0x8598 constant GL_OPERAND0_ALPHA
+0x8599 constant GL_OPERAND1_ALPHA
+0x859A constant GL_OPERAND2_ALPHA
+0x8573 constant GL_RGB_SCALE
+0x8574 constant GL_ADD_SIGNED
+0x8575 constant GL_INTERPOLATE
+0x84E7 constant GL_SUBTRACT
+0x8576 constant GL_CONSTANT
+0x8577 constant GL_PRIMARY_COLOR
+0x8578 constant GL_PREVIOUS
+
+\ Texture env dot3
+0x86AE constant GL_DOT3_RGB
+0x86AF constant GL_DOT3_RGBA
+
+\ Texture border clamp
+0x812D constant GL_CLAMP_TO_BORDER
+
+\ Client bits
+0x00000001 constant GL_CLIENT_PIXEL_STORE_BIT
+0x00000002 constant GL_CLIENT_VERTEX_ARRAY_BIT
+0xFFFFFFFF constant GL_ALL_CLIENT_ATTRIB_BITS
+0xFFFFFFFF constant GL_CLIENT_ALL_ATTRIB_BITS
+
+\ functions
+"VNF" "glAccum" func: glAccum
+"VN" "glActiveTexture" func: glActiveTexture
+"VN" "glActiveTextureARB" func: glActiveTextureARB
+"VNF" "glAlphaFunc" func: glAlphaFunc
+"NNPP" "glAreTexturesResident" func: glAreTexturesResident
+"VN" "glArrayElement" func: glArrayElement
+"VN" "glBegin" func: glBegin
+"VNN" "glBindTexture" func: glBindTexture
+"VNNFFFFP" "glBitmap" func: glBitmap
+"VFFFF" "glBlendColor" func: glBlendColor
+"VN" "glBlendEquation" func: glBlendEquation
+"VNN" "glBlendFunc" func: glBlendFunc
+"VN" "glCallList" func: glCallList
+"VNNP" "glCallLists" func: glCallLists
+"VN" "glClear" func: glClear
+"VFFFF" "glClearAccum" func: glClearAccum
+"VFFFF" "glClearColor" func: glClearColor
+"VD" "glClearDepth" func: glClearDepth
+"VF" "glClearIndex" func: glClearIndex
+"VN" "glClearStencil" func: glClearStencil
+"VN" "glClientActiveTexture" func: glClientActiveTexture
+"VN" "glClientActiveTextureARB" func: glClientActiveTextureARB
+"VNP" "glClipPlane" func: glClipPlane
+"VNNN" "glColor3b" func: glColor3b
+"VP" "glColor3bv" func: glColor3bv
+"VDDD" "glColor3d" func: glColor3d
+"VP" "glColor3dv" func: glColor3dv
+"VFFF" "glColor3f" func: glColor3f
+"VP" "glColor3fv" func: glColor3fv
+"VNNN" "glColor3i" func: glColor3i
+"VP" "glColor3iv" func: glColor3iv
+"VNNN" "glColor3s" func: glColor3s
+"VP" "glColor3sv" func: glColor3sv
+"VNNN" "glColor3ub" func: glColor3ub
+"VP" "glColor3ubv" func: glColor3ubv
+"VNNN" "glColor3ui" func: glColor3ui
+"VP" "glColor3uiv" func: glColor3uiv
+"VNNN" "glColor3us" func: glColor3us
+"VP" "glColor3usv" func: glColor3usv
+"VNNNN" "glColor4b" func: glColor4b
+"VP" "glColor4bv" func: glColor4bv
+"VDDDD" "glColor4d" func: glColor4d
+"VP" "glColor4dv" func: glColor4dv
+"VFFFF" "glColor4f" func: glColor4f
+"VP" "glColor4fv" func: glColor4fv
+"VNNNN" "glColor4i" func: glColor4i
+"VP" "glColor4iv" func: glColor4iv
+"VNNNN" "glColor4s" func: glColor4s
+"VP" "glColor4sv" func: glColor4sv
+"VNNNN" "glColor4ub" func: glColor4ub
+"VP" "glColor4ubv" func: glColor4ubv
+"VNNNN" "glColor4ui" func: glColor4ui
+"VP" "glColor4uiv" func: glColor4uiv
+"VNNNN" "glColor4us" func: glColor4us
+"VP" "glColor4usv" func: glColor4usv
+"VNNNN" "glColorMask" func: glColorMask
+"VNN" "glColorMaterial" func: glColorMaterial
+"VNNNP" "glColorPointer" func: glColorPointer
+"VNNNNNP" "glColorSubTable" func: glColorSubTable
+"VNNNNNP" "glColorTable" func: glColorTable
+"VNNP" "glColorTableParameterfv" func: glColorTableParameterfv
+"VNNP" "glColorTableParameteriv" func: glColorTableParameteriv
+"VNNNNNNP" "glCompressedTexImage1D" func: glCompressedTexImage1D
+"VNNNNNNNP" "glCompressedTexImage2D" func: glCompressedTexImage2D
+"VNNNNNNNNP" "glCompressedTexImage3D" func: glCompressedTexImage3D
+"VNNNNNNP" "glCompressedTexSubImage1D" func: glCompressedTexSubImage1D
+"VNNNNNNNNP" "glCompressedTexSubImage2D" func: glCompressedTexSubImage2D
+"VNNNNNNNNNNP" "glCompressedTexSubImage3D" func: glCompressedTexSubImage3D
+"VNNNNNP" "glConvolutionFilter1D" func: glConvolutionFilter1D
+"VNNNNNNP" "glConvolutionFilter2D" func: glConvolutionFilter2D
+"VNNF" "glConvolutionParameterf" func: glConvolutionParameterf
+"VNNP" "glConvolutionParameterfv" func: glConvolutionParameterfv
+"VNNN" "glConvolutionParameteri" func: glConvolutionParameteri
+"VNNP" "glConvolutionParameteriv" func: glConvolutionParameteriv
+"VNNNNN" "glCopyColorSubTable" func: glCopyColorSubTable
+"VNNNNN" "glCopyColorTable" func: glCopyColorTable
+"VNNNNN" "glCopyConvolutionFilter1D" func: glCopyConvolutionFilter1D
+"VNNNNNN" "glCopyConvolutionFilter2D" func: glCopyConvolutionFilter2D
+"VNNNNN" "glCopyPixels" func: glCopyPixels
+"VNNNNNNN" "glCopyTexImage1D" func: glCopyTexImage1D
+"VNNNNNNNN" "glCopyTexImage2D" func: glCopyTexImage2D
+"VNNNNNN" "glCopyTexSubImage1D" func: glCopyTexSubImage1D
+"VNNNNNNNN" "glCopyTexSubImage2D" func: glCopyTexSubImage2D
+"VNNNNNNNNN" "glCopyTexSubImage3D" func: glCopyTexSubImage3D
+"VN" "glCullFace" func: glCullFace
+"VNN" "glDeleteLists" func: glDeleteLists
+"VNP" "glDeleteTextures" func: glDeleteTextures
+"VN" "glDepthFunc" func: glDepthFunc
+"VN" "glDepthMask" func: glDepthMask
+"VDD" "glDepthRange" func: glDepthRange
+"VN" "glDisable" func: glDisable
+"VN" "glDisableClientState" func: glDisableClientState
+"VNNN" "glDrawArrays" func: glDrawArrays
+"VN" "glDrawBuffer" func: glDrawBuffer
+"VNNNP" "glDrawElements" func: glDrawElements
+"VNNNNP" "glDrawPixels" func: glDrawPixels
+"VNNNNNP" "glDrawRangeElements" func: glDrawRangeElements
+"VN" "glEdgeFlag" func: glEdgeFlag
+"VNP" "glEdgeFlagPointer" func: glEdgeFlagPointer
+"VP" "glEdgeFlagv" func: glEdgeFlagv
+"VN" "glEnable" func: glEnable
+"VN" "glEnableClientState" func: glEnableClientState
+"V" "glEnd" func: glEnd
+"V" "glEndList" func: glEndList
+"VD" "glEvalCoord1d" func: glEvalCoord1d
+"VP" "glEvalCoord1dv" func: glEvalCoord1dv
+"VF" "glEvalCoord1f" func: glEvalCoord1f
+"VP" "glEvalCoord1fv" func: glEvalCoord1fv
+"VDD" "glEvalCoord2d" func: glEvalCoord2d
+"VP" "glEvalCoord2dv" func: glEvalCoord2dv
+"VFF" "glEvalCoord2f" func: glEvalCoord2f
+"VP" "glEvalCoord2fv" func: glEvalCoord2fv
+"VNNN" "glEvalMesh1" func: glEvalMesh1
+"VNNNNN" "glEvalMesh2" func: glEvalMesh2
+"VN" "glEvalPoint1" func: glEvalPoint1
+"VNN" "glEvalPoint2" func: glEvalPoint2
+"VNNP" "glFeedbackBuffer" func: glFeedbackBuffer
+"V" "glFinish" func: glFinish
+"V" "glFlush" func: glFlush
+"VNF" "glFogf" func: glFogf
+"VNP" "glFogfv" func: glFogfv
+"VNN" "glFogi" func: glFogi
+"VNP" "glFogiv" func: glFogiv
+"VN" "glFrontFace" func: glFrontFace
+"VDDDDDD" "glFrustum" func: glFrustum
+"NN" "glGenLists" func: glGenLists
+"VNP" "glGenTextures" func: glGenTextures
+"VNP" "glGetBooleanv" func: glGetBooleanv
+"VNP" "glGetClipPlane" func: glGetClipPlane
+"VNNNP" "glGetColorTable" func: glGetColorTable
+"VNNP" "glGetColorTableParameterfv" func: glGetColorTableParameterfv
+"VNNP" "glGetColorTableParameteriv" func: glGetColorTableParameteriv
+"VNNP" "glGetCompressedTexImage" func: glGetCompressedTexImage
+"VNNNP" "glGetConvolutionFilter" func: glGetConvolutionFilter
+"VNNP" "glGetConvolutionParameterfv" func: glGetConvolutionParameterfv
+"VNNP" "glGetConvolutionParameteriv" func: glGetConvolutionParameteriv
+"VNP" "glGetDoublev" func: glGetDoublev
+"N" "glGetError" func: glGetError
+"VNP" "glGetFloatv" func: glGetFloatv
+"VNNNNP" "glGetHistogram" func: glGetHistogram
+"VNNP" "glGetHistogramParameterfv" func: glGetHistogramParameterfv
+"VNNP" "glGetHistogramParameteriv" func: glGetHistogramParameteriv
+"VNP" "glGetIntegerv" func: glGetIntegerv
+"VNNP" "glGetLightfv" func: glGetLightfv
+"VNNP" "glGetLightiv" func: glGetLightiv
+"VNNP" "glGetMapdv" func: glGetMapdv
+"VNNP" "glGetMapfv" func: glGetMapfv
+"VNNP" "glGetMapiv" func: glGetMapiv
+"VNNP" "glGetMaterialfv" func: glGetMaterialfv
+"VNNP" "glGetMaterialiv" func: glGetMaterialiv
+"VNNNNP" "glGetMinmax" func: glGetMinmax
+"VNNP" "glGetMinmaxParameterfv" func: glGetMinmaxParameterfv
+"VNNP" "glGetMinmaxParameteriv" func: glGetMinmaxParameteriv
+"VNP" "glGetPixelMapfv" func: glGetPixelMapfv
+"VNP" "glGetPixelMapuiv" func: glGetPixelMapuiv
+"VNP" "glGetPixelMapusv" func: glGetPixelMapusv
+"VNP" "glGetPointerv" func: glGetPointerv
+"VP" "glGetPolygonStipple" func: glGetPolygonStipple
+"VNNNPPP" "glGetSeparableFilter" func: glGetSeparableFilter
+"ZN" "glGetString" func: glGetString
+"VNNP" "glGetTexEnvfv" func: glGetTexEnvfv
+"VNNP" "glGetTexEnviv" func: glGetTexEnviv
+"VNNP" "glGetTexGendv" func: glGetTexGendv
+"VNNP" "glGetTexGenfv" func: glGetTexGenfv
+"VNNP" "glGetTexGeniv" func: glGetTexGeniv
+"VNNNNP" "glGetTexImage" func: glGetTexImage
+"VNNNP" "glGetTexLevelParameterfv" func: glGetTexLevelParameterfv
+"VNNNP" "glGetTexLevelParameteriv" func: glGetTexLevelParameteriv
+"VNNP" "glGetTexParameterfv" func: glGetTexParameterfv
+"VNNP" "glGetTexParameteriv" func: glGetTexParameteriv
+"VNN" "glHint" func: glHint
+"VNNNN" "glHistogram" func: glHistogram
+"VD" "glIndexd" func: glIndexd
+"VP" "glIndexdv" func: glIndexdv
+"VF" "glIndexf" func: glIndexf
+"VP" "glIndexfv" func: glIndexfv
+"VN" "glIndexi" func: glIndexi
+"VP" "glIndexiv" func: glIndexiv
+"VN" "glIndexMask" func: glIndexMask
+"VNNP" "glIndexPointer" func: glIndexPointer
+"VN" "glIndexs" func: glIndexs
+"VP" "glIndexsv" func: glIndexsv
+"VN" "glIndexub" func: glIndexub
+"VP" "glIndexubv" func: glIndexubv
+"V" "glInitNames" func: glInitNames
+"VNNP" "glInterleavedArrays" func: glInterleavedArrays
+"NN" "glIsEnabled" func: glIsEnabled
+"NN" "glIsList" func: glIsList
+"NN" "glIsTexture" func: glIsTexture
+"VNNF" "glLightf" func: glLightf
+"VNNP" "glLightfv" func: glLightfv
+"VNNN" "glLighti" func: glLighti
+"VNNP" "glLightiv" func: glLightiv
+"VNF" "glLightModelf" func: glLightModelf
+"VNP" "glLightModelfv" func: glLightModelfv
+"VNN" "glLightModeli" func: glLightModeli
+"VNP" "glLightModeliv" func: glLightModeliv
+"VNN" "glLineStipple" func: glLineStipple
+"VF" "glLineWidth" func: glLineWidth
+"VN" "glListBase" func: glListBase
+"V" "glLoadIdentity" func: glLoadIdentity
+"VP" "glLoadMatrixd" func: glLoadMatrixd
+"VP" "glLoadMatrixf" func: glLoadMatrixf
+"VN" "glLoadName" func: glLoadName
+"V16D" "glLoadTransposeMatrixd" func: glLoadTransposeMatrixd
+"V16F" "glLoadTransposeMatrixf" func: glLoadTransposeMatrixf
+"VN" "glLogicOp" func: glLogicOp
+"VNDDNNP" "glMap1d" func: glMap1d
+"VNFFNNP" "glMap1f" func: glMap1f
+"VNDDNNDDNNP" "glMap2d" func: glMap2d
+"VNFFNNFFNNP" "glMap2f" func: glMap2f
+"VNDD" "glMapGrid1d" func: glMapGrid1d
+"VNFF" "glMapGrid1f" func: glMapGrid1f
+"VNDDNDD" "glMapGrid2d" func: glMapGrid2d
+"VNFFNFF" "glMapGrid2f" func: glMapGrid2f
+"VNNF" "glMaterialf" func: glMaterialf
+"VNNP" "glMaterialfv" func: glMaterialfv
+"VNNN" "glMateriali" func: glMateriali
+"VNNP" "glMaterialiv" func: glMaterialiv
+"VN" "glMatrixMode" func: glMatrixMode
+"VNNN" "glMinmax" func: glMinmax
+"VND" "glMultiTexCoord1d" func: glMultiTexCoord1d
+"VND" "glMultiTexCoord1dARB" func: glMultiTexCoord1dARB
+"VNP" "glMultiTexCoord1dv" func: glMultiTexCoord1dv
+"VNP" "glMultiTexCoord1dvARB" func: glMultiTexCoord1dvARB
+"VNF" "glMultiTexCoord1f" func: glMultiTexCoord1f
+"VNF" "glMultiTexCoord1fARB" func: glMultiTexCoord1fARB
+"VNP" "glMultiTexCoord1fv" func: glMultiTexCoord1fv
+"VNP" "glMultiTexCoord1fvARB" func: glMultiTexCoord1fvARB
+"VNN" "glMultiTexCoord1i" func: glMultiTexCoord1i
+"VNN" "glMultiTexCoord1iARB" func: glMultiTexCoord1iARB
+"VNP" "glMultiTexCoord1iv" func: glMultiTexCoord1iv
+"VNP" "glMultiTexCoord1ivARB" func: glMultiTexCoord1ivARB
+"VNN" "glMultiTexCoord1s" func: glMultiTexCoord1s
+"VNN" "glMultiTexCoord1sARB" func: glMultiTexCoord1sARB
+"VNP" "glMultiTexCoord1sv" func: glMultiTexCoord1sv
+"VNP" "glMultiTexCoord1svARB" func: glMultiTexCoord1svARB
+"VNDD" "glMultiTexCoord2d" func: glMultiTexCoord2d
+"VNDD" "glMultiTexCoord2dARB" func: glMultiTexCoord2dARB
+"VNP" "glMultiTexCoord2dv" func: glMultiTexCoord2dv
+"VNP" "glMultiTexCoord2dvARB" func: glMultiTexCoord2dvARB
+"VNFF" "glMultiTexCoord2f" func: glMultiTexCoord2f
+"VNFF" "glMultiTexCoord2fARB" func: glMultiTexCoord2fARB
+"VNP" "glMultiTexCoord2fv" func: glMultiTexCoord2fv
+"VNP" "glMultiTexCoord2fvARB" func: glMultiTexCoord2fvARB
+"VNNN" "glMultiTexCoord2i" func: glMultiTexCoord2i
+"VNNN" "glMultiTexCoord2iARB" func: glMultiTexCoord2iARB
+"VNP" "glMultiTexCoord2iv" func: glMultiTexCoord2iv
+"VNP" "glMultiTexCoord2ivARB" func: glMultiTexCoord2ivARB
+"VNNN" "glMultiTexCoord2s" func: glMultiTexCoord2s
+"VNNN" "glMultiTexCoord2sARB" func: glMultiTexCoord2sARB
+"VNP" "glMultiTexCoord2sv" func: glMultiTexCoord2sv
+"VNP" "glMultiTexCoord2svARB" func: glMultiTexCoord2svARB
+"VNDDD" "glMultiTexCoord3d" func: glMultiTexCoord3d
+"VNDDD" "glMultiTexCoord3dARB" func: glMultiTexCoord3dARB
+"VNP" "glMultiTexCoord3dv" func: glMultiTexCoord3dv
+"VNP" "glMultiTexCoord3dvARB" func: glMultiTexCoord3dvARB
+"VNFFF" "glMultiTexCoord3f" func: glMultiTexCoord3f
+"VNFFF" "glMultiTexCoord3fARB" func: glMultiTexCoord3fARB
+"VNP" "glMultiTexCoord3fv" func: glMultiTexCoord3fv
+"VNP" "glMultiTexCoord3fvARB" func: glMultiTexCoord3fvARB
+"VNNNN" "glMultiTexCoord3i" func: glMultiTexCoord3i
+"VNNNN" "glMultiTexCoord3iARB" func: glMultiTexCoord3iARB
+"VNP" "glMultiTexCoord3iv" func: glMultiTexCoord3iv
+"VNP" "glMultiTexCoord3ivARB" func: glMultiTexCoord3ivARB
+"VNNNN" "glMultiTexCoord3s" func: glMultiTexCoord3s
+"VNNNN" "glMultiTexCoord3sARB" func: glMultiTexCoord3sARB
+"VNP" "glMultiTexCoord3sv" func: glMultiTexCoord3sv
+"VNP" "glMultiTexCoord3svARB" func: glMultiTexCoord3svARB
+"VNDDDD" "glMultiTexCoord4d" func: glMultiTexCoord4d
+"VNDDDD" "glMultiTexCoord4dARB" func: glMultiTexCoord4dARB
+"VNP" "glMultiTexCoord4dv" func: glMultiTexCoord4dv
+"VNP" "glMultiTexCoord4dvARB" func: glMultiTexCoord4dvARB
+"VNFFFF" "glMultiTexCoord4f" func: glMultiTexCoord4f
+"VNFFFF" "glMultiTexCoord4fARB" func: glMultiTexCoord4fARB
+"VNP" "glMultiTexCoord4fv" func: glMultiTexCoord4fv
+"VNP" "glMultiTexCoord4fvARB" func: glMultiTexCoord4fvARB
+"VNNNNN" "glMultiTexCoord4i" func: glMultiTexCoord4i
+"VNNNNN" "glMultiTexCoord4iARB" func: glMultiTexCoord4iARB
+"VNP" "glMultiTexCoord4iv" func: glMultiTexCoord4iv
+"VNP" "glMultiTexCoord4ivARB" func: glMultiTexCoord4ivARB
+"VNNNNN" "glMultiTexCoord4s" func: glMultiTexCoord4s
+"VNNNNN" "glMultiTexCoord4sARB" func: glMultiTexCoord4sARB
+"VNP" "glMultiTexCoord4sv" func: glMultiTexCoord4sv
+"VNP" "glMultiTexCoord4svARB" func: glMultiTexCoord4svARB
+"VP" "glMultMatrixd" func: glMultMatrixd
+"VP" "glMultMatrixf" func: glMultMatrixf
+"V16D" "glMultTransposeMatrixd" func: glMultTransposeMatrixd
+"V16F" "glMultTransposeMatrixf" func: glMultTransposeMatrixf
+"VNN" "glNewList" func: glNewList
+"VNNN" "glNormal3b" func: glNormal3b
+"VP" "glNormal3bv" func: glNormal3bv
+"VDDD" "glNormal3d" func: glNormal3d
+"VP" "glNormal3dv" func: glNormal3dv
+"VFFF" "glNormal3f" func: glNormal3f
+"VP" "glNormal3fv" func: glNormal3fv
+"VNNN" "glNormal3i" func: glNormal3i
+"VP" "glNormal3iv" func: glNormal3iv
+"VNNN" "glNormal3s" func: glNormal3s
+"VP" "glNormal3sv" func: glNormal3sv
+"VNNP" "glNormalPointer" func: glNormalPointer
+"VDDDDDD" "glOrtho" func: glOrtho
+"VF" "glPassThrough" func: glPassThrough
+"VNNP" "glPixelMapfv" func: glPixelMapfv
+"VNNP" "glPixelMapuiv" func: glPixelMapuiv
+"VNNP" "glPixelMapusv" func: glPixelMapusv
+"VNF" "glPixelStoref" func: glPixelStoref
+"VNN" "glPixelStorei" func: glPixelStorei
+"VNF" "glPixelTransferf" func: glPixelTransferf
+"VNN" "glPixelTransferi" func: glPixelTransferi
+"VFF" "glPixelZoom" func: glPixelZoom
+"VF" "glPointSize" func: glPointSize
+"VNN" "glPolygonMode" func: glPolygonMode
+"VFF" "glPolygonOffset" func: glPolygonOffset
+"VP" "glPolygonStipple" func: glPolygonStipple
+"V" "glPopAttrib" func: glPopAttrib
+"V" "glPopClientAttrib" func: glPopClientAttrib
+"V" "glPopMatrix" func: glPopMatrix
+"V" "glPopName" func: glPopName
+"VNPP" "glPrioritizeTextures" func: glPrioritizeTextures
+"VN" "glPushAttrib" func: glPushAttrib
+"VN" "glPushClientAttrib" func: glPushClientAttrib
+"V" "glPushMatrix" func: glPushMatrix
+"VN" "glPushName" func: glPushName
+"VDD" "glRasterPos2d" func: glRasterPos2d
+"VP" "glRasterPos2dv" func: glRasterPos2dv
+"VFF" "glRasterPos2f" func: glRasterPos2f
+"VP" "glRasterPos2fv" func: glRasterPos2fv
+"VNN" "glRasterPos2i" func: glRasterPos2i
+"VP" "glRasterPos2iv" func: glRasterPos2iv
+"VNN" "glRasterPos2s" func: glRasterPos2s
+"VP" "glRasterPos2sv" func: glRasterPos2sv
+"VDDD" "glRasterPos3d" func: glRasterPos3d
+"VP" "glRasterPos3dv" func: glRasterPos3dv
+"VFFF" "glRasterPos3f" func: glRasterPos3f
+"VP" "glRasterPos3fv" func: glRasterPos3fv
+"VNNN" "glRasterPos3i" func: glRasterPos3i
+"VP" "glRasterPos3iv" func: glRasterPos3iv
+"VNNN" "glRasterPos3s" func: glRasterPos3s
+"VP" "glRasterPos3sv" func: glRasterPos3sv
+"VDDDD" "glRasterPos4d" func: glRasterPos4d
+"VP" "glRasterPos4dv" func: glRasterPos4dv
+"VFFFF" "glRasterPos4f" func: glRasterPos4f
+"VP" "glRasterPos4fv" func: glRasterPos4fv
+"VNNNN" "glRasterPos4i" func: glRasterPos4i
+"VP" "glRasterPos4iv" func: glRasterPos4iv
+"VNNNN" "glRasterPos4s" func: glRasterPos4s
+"VP" "glRasterPos4sv" func: glRasterPos4sv
+"VN" "glReadBuffer" func: glReadBuffer
+"VNNNNNNP" "glReadPixels" func: glReadPixels
+"VDDDD" "glRectd" func: glRectd
+"VPP" "glRectdv" func: glRectdv
+"VFFFF" "glRectf" func: glRectf
+"VPP" "glRectfv" func: glRectfv
+"VNNNN" "glRecti" func: glRecti
+"VPP" "glRectiv" func: glRectiv
+"VNNNN" "glRects" func: glRects
+"VPP" "glRectsv" func: glRectsv
+"NN" "glRenderMode" func: glRenderMode
+"VN" "glResetHistogram" func: glResetHistogram
+"VN" "glResetMinmax" func: glResetMinmax
+"VDDDD" "glRotated" func: glRotated
+"VFFFF" "glRotatef" func: glRotatef
+"VFN" "glSampleCoverage" func: glSampleCoverage
+"VDDD" "glScaled" func: glScaled
+"VFFF" "glScalef" func: glScalef
+"VNNNN" "glScissor" func: glScissor
+"VNP" "glSelectBuffer" func: glSelectBuffer
+"VNNNNNNPP" "glSeparableFilter2D" func: glSeparableFilter2D
+"VN" "glShadeModel" func: glShadeModel
+"VNNN" "glStencilFunc" func: glStencilFunc
+"VN" "glStencilMask" func: glStencilMask
+"VNNN" "glStencilOp" func: glStencilOp
+"VD" "glTexCoord1d" func: glTexCoord1d
+"VP" "glTexCoord1dv" func: glTexCoord1dv
+"VF" "glTexCoord1f" func: glTexCoord1f
+"VP" "glTexCoord1fv" func: glTexCoord1fv
+"VN" "glTexCoord1i" func: glTexCoord1i
+"VP" "glTexCoord1iv" func: glTexCoord1iv
+"VN" "glTexCoord1s" func: glTexCoord1s
+"VP" "glTexCoord1sv" func: glTexCoord1sv
+"VDD" "glTexCoord2d" func: glTexCoord2d
+"VP" "glTexCoord2dv" func: glTexCoord2dv
+"VFF" "glTexCoord2f" func: glTexCoord2f
+"VP" "glTexCoord2fv" func: glTexCoord2fv
+"VNN" "glTexCoord2i" func: glTexCoord2i
+"VP" "glTexCoord2iv" func: glTexCoord2iv
+"VNN" "glTexCoord2s" func: glTexCoord2s
+"VP" "glTexCoord2sv" func: glTexCoord2sv
+"VDDD" "glTexCoord3d" func: glTexCoord3d
+"VP" "glTexCoord3dv" func: glTexCoord3dv
+"VFFF" "glTexCoord3f" func: glTexCoord3f
+"VP" "glTexCoord3fv" func: glTexCoord3fv
+"VNNN" "glTexCoord3i" func: glTexCoord3i
+"VP" "glTexCoord3iv" func: glTexCoord3iv
+"VNNN" "glTexCoord3s" func: glTexCoord3s
+"VP" "glTexCoord3sv" func: glTexCoord3sv
+"VDDDD" "glTexCoord4d" func: glTexCoord4d
+"VP" "glTexCoord4dv" func: glTexCoord4dv
+"VFFFF" "glTexCoord4f" func: glTexCoord4f
+"VP" "glTexCoord4fv" func: glTexCoord4fv
+"VNNNN" "glTexCoord4i" func: glTexCoord4i
+"VP" "glTexCoord4iv" func: glTexCoord4iv
+"VNNNN" "glTexCoord4s" func: glTexCoord4s
+"VP" "glTexCoord4sv" func: glTexCoord4sv
+"VNNNP" "glTexCoordPointer" func: glTexCoordPointer
+"VNNF" "glTexEnvf" func: glTexEnvf
+"VNNP" "glTexEnvfv" func: glTexEnvfv
+"VNNN" "glTexEnvi" func: glTexEnvi
+"VNNP" "glTexEnviv" func: glTexEnviv
+"VNND" "glTexGend" func: glTexGend
+"VNNP" "glTexGendv" func: glTexGendv
+"VNNF" "glTexGenf" func: glTexGenf
+"VNNP" "glTexGenfv" func: glTexGenfv
+"VNNN" "glTexGeni" func: glTexGeni
+"VNNP" "glTexGeniv" func: glTexGeniv
+"VNNNNNNNP" "glTexImage1D" func: glTexImage1D
+"VNNNNNNNNP" "glTexImage2D" func: glTexImage2D
+"VNNNNNNNNNP" "glTexImage3D" func: glTexImage3D
+"VNNF" "glTexParameterf" func: glTexParameterf
+"VNNP" "glTexParameterfv" func: glTexParameterfv
+"VNNN" "glTexParameteri" func: glTexParameteri
+"VNNP" "glTexParameteriv" func: glTexParameteriv
+"VNNNNNNP" "glTexSubImage1D" func: glTexSubImage1D
+"VNNNNNNNNP" "glTexSubImage2D" func: glTexSubImage2D
+"VNNNNNNNNNNP" "glTexSubImage3D" func: glTexSubImage3D
+"VDDD" "glTranslated" func: glTranslated
+"VFFF" "glTranslatef" func: glTranslatef
+"VDD" "glVertex2d" func: glVertex2d
+"VP" "glVertex2dv" func: glVertex2dv
+"VFF" "glVertex2f" func: glVertex2f
+"VP" "glVertex2fv" func: glVertex2fv
+"VNN" "glVertex2i" func: glVertex2i
+"VP" "glVertex2iv" func: glVertex2iv
+"VNN" "glVertex2s" func: glVertex2s
+"VP" "glVertex2sv" func: glVertex2sv
+"VDDD" "glVertex3d" func: glVertex3d
+"VP" "glVertex3dv" func: glVertex3dv
+"VFFF" "glVertex3f" func: glVertex3f
+"VP" "glVertex3fv" func: glVertex3fv
+"VNNN" "glVertex3i" func: glVertex3i
+"VP" "glVertex3iv" func: glVertex3iv
+"VNNN" "glVertex3s" func: glVertex3s
+"VP" "glVertex3sv" func: glVertex3sv
+"VDDDD" "glVertex4d" func: glVertex4d
+"VP" "glVertex4dv" func: glVertex4dv
+"VFFFF" "glVertex4f" func: glVertex4f
+"VP" "glVertex4fv" func: glVertex4fv
+"VNNNN" "glVertex4i" func: glVertex4i
+"VP" "glVertex4iv" func: glVertex4iv
+"VNNNN" "glVertex4s" func: glVertex4s
+"VP" "glVertex4sv" func: glVertex4sv
+"VNNNP" "glVertexPointer" func: glVertexPointer
+"VNNNN" "glViewport" func: glViewport

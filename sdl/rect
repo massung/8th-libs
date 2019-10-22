@@ -1,0 +1,41 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ functions
+"Nbb" "SDL_HasIntersection" func: SDL_HasIntersection
+"Nbbb" "SDL_IntersectRect" func: SDL_IntersectRect
+"Nbbb" "SDL_UnionRect" func: SDL_UnionRect
+"NbNbb" "SDL_EnclosePoints" func: SDL_EnclosePoints
+"Nbbbb" "SDL_IntersectRectAndLine" func: SDL_IntersectRectAndLine
+
+\ SDL_Point record
+packed-rec: SDL_Point
+    "=" field: x
+    "=" field: y
+packed-rec;
+
+\ SDL_Rect record
+packed-rec: SDL_Rect
+    "=" field: x
+    "=" field: y
+    "=" field: w
+    "=" field: h
+packed-rec;
+
+\ SDL_FPoint record
+packed-rec: SDL_FPoint
+    "f" field: x
+    "f" field: y
+packed-rec;
+
+\ SDL_FRect record
+packed-rec: SDL_FRect
+    "f" field: x
+    "f" field: y
+    "f" field: w
+    "f" field: h
+packed-rec;

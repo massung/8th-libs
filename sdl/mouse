@@ -1,0 +1,58 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+sdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ cursor constants
+0x0 constant SDL_SYSTEM_CURSOR_ARROW
+0x1 constant SDL_SYSTEM_CURSOR_IBEAM
+0x2 constant SDL_SYSTEM_CURSOR_WAIT
+0x3 constant SDL_SYSTEM_CURSOR_CROSSHAIR
+0x4 constant SDL_SYSTEM_CURSOR_WAITARROW
+0x5 constant SDL_SYSTEM_CURSOR_SIZENWSE
+0x6 constant SDL_SYSTEM_CURSOR_SIZENESW
+0x7 constant SDL_SYSTEM_CURSOR_SIZEWE
+0x8 constant SDL_SYSTEM_CURSOR_SIZENS
+0x9 constant SDL_SYSTEM_CURSOR_SIZEALL
+0xa constant SDL_SYSTEM_CURSOR_NO
+0xb constant SDL_SYSTEM_CURSOR_HAND
+0xc constant SDL_NUM_SYSTEM_CURSORS
+
+\ scroll direction constants
+0 constant SDL_MOUSEWHEEL_NORMAL
+1 constant SDL_MOUSEWHEEL_FLIPPED
+
+\ mouse button constants
+1 constant SDL_BUTTON_LEFT
+2 constant SDL_BUTTON_MIDDLE
+3 constant SDL_BUTTON_RIGHT
+4 constant SDL_BUTTON_X1
+5 constant SDL_BUTTON_X2
+
+\ mouse button mask constants
+0x00001 constant SDL_BUTTON_LMASK
+0x00010 constant SDL_BUTTON_MMASK
+0x00100 constant SDL_BUTTON_RMASK
+0x01000 constant SDL_BUTTON_X1MASK
+0x10000 constant SDL_BUTTON_X2MASK
+
+\ functions
+"P" "SDL_GetMouseFocus" func: SDL_GetMouseFocus
+"NPP" "SDL_GetMouseState" func: SDL_GetMouseState
+"NPP" "SDL_GetGlobalMouseState" func: SDL_GetGlobalMouseState
+"NPP" "SDL_GetRelativeMouseState" func: SDL_GetRelativeMouseState
+"VPNN" "SDL_WarpMouseInWindow" func: SDL_WarpMouseInWindow
+"NNN" "SDL_WarpMouseGlobal" func: SDL_WarpMouseGlobal
+"NN" "SDL_SetRelativeMouseMode" func: SDL_SetRelativeMouseMode
+"NN" "SDL_CaptureMouse" func: SDL_CaptureMouse
+"N" "SDL_GetRelativeMouseMode" func: SDL_GetRelativeMouseMode
+"PPPNNNN" "SDL_CreateCursor" func: SDL_CreateCursor
+"PPNN" "SDL_CreateColorCursor" func: SDL_CreateColorCursor
+"PN" "SDL_CreateSystemCursor" func: SDL_CreateSystemCursor
+"VP" "SDL_SetCursor" func: SDL_SetCursor
+"P" "SDL_GetCursor" func: SDL_GetCursor
+"P" "SDL_GetDefaultCursor" func: SDL_GetDefaultCursor
+"VP" "SDL_FreeCursor" func: SDL_FreeCursor
+"NN" "SDL_ShowCursor" func: SDL_ShowCursor
