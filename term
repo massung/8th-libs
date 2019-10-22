@@ -15,23 +15,24 @@ os 1 n:= #if
     k32 drop
 
     \ register foreign functions
-    "NN" "GetStdHandle" func: getStdHandle
-    "NNP" "GetConsoleMode" func: getConsoleMode
-    "NNN" "SetConsoleMode" func: setConsoleMode
-    "NN" "SetConsoleOutputCP" func: setConsoleOutputCP
+    "NN" "GetStdHandle" func: GetStdHandle
+    "NNP" "GetConsoleMode" func: GetConsoleMode
+    "NNN" "SetConsoleMode" func: SetConsoleMode
+    "NN" "SetConsoleOutputCP" func: SetConsoleOutputCP
 
-    \ standard output handle
-    -11 getStdHandle constant stdout
+    \ standard handles
+    -10 GetStdHandle constant STD_INPUT_HANDLE
+    -11 GetStdHandle constant STD_OUTPUT_HANDLE
 
     : win-get-mode \ -- mode flag
-        stdout 0 "i" ptr:pack dup >r getConsoleMode 0 > if
+        STD_OUTPUT_HANDLE 0 "i" ptr:pack dup >r GetConsoleMode 0 > if
             r> ptr:unpack true
         else
             rdrop false
         then ;
 
     : win-set-mode \ mode -- flag
-        stdout swap setConsoleMode 0 > ;
+        STD_OUTPUT_HANDLE swap SetConsoleMode 0 > ;
 
     : win-init-term \ enable virtual processing mode
         win-get-mode if 4 bor win-set-mode else false then ;
