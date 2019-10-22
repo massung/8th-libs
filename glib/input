@@ -1,0 +1,121 @@
+\ -*- 8th -*-
+
+ns: glib
+
+\ internal state
+private
+
+\ mapping of key/button constants to action words
+m:new var, key-bindings
+m:new var, mouse-bindings
+
+\ exposed functionality
+public
+
+\ define a map record for an action binding
+rec: action
+    field: state
+    field: hits
+rec;
+
+-- w: glib:action:
+-- s: <name> -- \\\ IMMEDIATE
+-- d: Define a new action that can be bound to a key or mouse button.
+
+: action: \ <name> -- \\\ IMMEDIATE
+    0 0 action:new p: constant i;
+
+-- w: glib:bind-key
+-- s: n w --
+-- d: Bind the keycode n to the action w.
+
+: bind-key \ n w --
+    #p:key-bindings @ -rot m:! drop ;
+
+-- w: glib:bind-mouse
+-- s: n w --
+-- d: Bind a mouse button n to the action w.
+
+: bind-mouse \ n w --
+    #p:mouse-bindings @ -rot m:! drop ;
+
+-- w: glib:released
+-- s: action -- T
+-- d: True if the action is currently in the released state.
+
+: released \ action -- T
+    action:state nip %1 n:band 0 = ;
+
+-- w: glib:just-released
+-- s: action -- T
+-- d: True if the action was just released.
+
+: just-released \ action -- T
+    action:state nip %10 = ;
+
+-- w: glib:pressed
+-- s: action -- T
+-- d: True if the action is currently in the pressed state.
+
+: pressed \ action -- T
+    action:state nip %1 n:band 1 = ;
+
+-- w: glib:just-pressed
+-- s: action -- T
+-- d: True if the action was just pressed.
+
+: just-pressed \ action -- T
+    action:state nip %11 = ;
+
+-- w: glib:clear-hits
+-- s: action --
+-- d: Remove all hits from an action.
+
+: clear-hits \ action --
+    0 action:hits! ;
+
+-- w: glib:release
+-- s: action --
+-- d: Update the action to the released state.
+
+: release \ action --
+    dup pressed if %10 else %00 then action:state! ;
+
+-- w: glib:press
+-- s: action --
+-- d: Update the action to the pressed state.
+
+: press \ action --
+    dup released if %11 else %01 then action:state! ;
+
+-- w: glib:on-keydown
+-- s: b --
+-- d: Update any bound actions.
+
+: on-keydown \ b --
+    SDL_KeyboardEvent:unpack drop
+    SDL_KeyboardEvent:keysym
+    SDL_Keysym:unpack drop
+    SDL_Keysym:sym nip
+
+    \ lookup the binding for this keycode
+    #p:key-bindings @ swap m:_@ null;
+
+    \ apply the binding and press it
+    w:exec press ;
+
+-- w: glib:on-keyup
+-- s: b --
+-- d: Update any bound actions.
+
+: on-keyup \ b --
+    SDL_KeyboardEvent:unpack drop
+    SDL_KeyboardEvent:keysym
+    SDL_Keysym:unpack drop
+    SDL_Keysym:sym nip
+
+    \ lookup the binding for this keycode
+    #p:key-bindings @ swap m:_@ null;
+
+    \ apply the binding and press it
+    w:exec release ;

@@ -1,0 +1,32 @@
+\ -*- 8th -*-
+
+needs glib/glib
+
+glib:action: quit
+
+\ called once at the start of the program
+: load \ --
+    ;
+
+\ called once per frame to update game
+: step \ --
+    quit glib:pressed if glib:quit then ;
+
+\ called once per frame to draw
+: draw \ --
+    ;
+
+\ entry point
+: app:main \ --
+    glib:glib-init
+
+    \ setup handlers
+    ' load w:is glib:load
+    ' step w:is glib:step
+    ' draw w:is glib:draw
+
+    \ setup bindings
+    sdl:SDLK_ESCAPE ' quit glib:bind-key
+
+    \ run the example then quit
+    { "title" : "Glib Example 1" } glib:run bye ;
