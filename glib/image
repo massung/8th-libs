@@ -1,0 +1,15 @@
+\ -*- 8th -*-
+
+ns: glib
+
+-- w: glib:load-image
+-- s: s -- ptr
+-- d: Load an image as an SDL_Surface from disk.
+
+' sdl:IMG_Load alias: load-image
+
+-- w: glib:load-texture
+-- s: ptr s -- ptr
+-- d: Load an image as an SDL_Texture from disk.
+
+' sdl:IMG_LoadTexture alias: load-texture

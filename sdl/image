@@ -1,0 +1,92 @@
+\ -*- 8th -*-
+
+needs rec
+
+ns: sdl
+
+\ attempt to load extension libraries
+"SDL2_image" lib libsdl-image
+
+\ ensure the SDL library loaded
+libsdl-image "Failed to find/load SDL_image dynamic library" thrownull drop
+
+\ init flags
+0x00000001 constant IMG_INIT_JPG
+0x00000002 constant IMG_INIT_PNG
+0x00000004 constant IMG_INIT_TIF
+0x00000008 constant IMG_INIT_WEBP
+
+\ animation (multiple frames)
+packed-rec: IMG_Animation
+    "=" field: w
+    "=" field: h
+    "=" field: count
+    "P" field: frames
+    "=" field: delays
+packed-rec;
+
+\ initialization
+"NN" "IMG_Init" func: IMG_Init
+"V" "IMG_Quit" func: IMG_Quit
+
+\ load surfaces
+"PZ" "IMG_Load" func: IMG_Load
+"PPN" "IMG_Load_RW" func: IMG_Load_RW
+"PPNZ" "IMG_LoadTyped_RW" func: IMG_LoadTyped_RW
+
+\ load textures
+"PPZ" "IMG_LoadTexture" func: IMG_LoadTexture
+"PPPN" "IMG_LoadTexture_RW" func: IMG_LoadTexture_RW
+"PPPNZ" "IMG_LoadTextureTyped_RW" func: IMG_LoadTextureTyped_RW
+
+\ predicate functions
+"NP" "IMG_isICO" func: IMG_isICO
+"NP" "IMG_isCUR" func: IMG_isCUR
+"NP" "IMG_isBMP" func: IMG_isBMP
+"NP" "IMG_isGIF" func: IMG_isGIF
+"NP" "IMG_isJPG" func: IMG_isJPG
+"NP" "IMG_isLBM" func: IMG_isLBM
+"NP" "IMG_isPCX" func: IMG_isPCX
+"NP" "IMG_isPNG" func: IMG_isPNG
+"NP" "IMG_isPNM" func: IMG_isPNM
+"NP" "IMG_isSVG" func: IMG_isSVG
+"NP" "IMG_isTIF" func: IMG_isTIF
+"NP" "IMG_isXCF" func: IMG_isXCF
+"NP" "IMG_isXPM" func: IMG_isXPM
+"NP" "IMG_isXV" func: IMG_isXV
+"NP" "IMG_isWEBP" func: IMG_isWEBP
+
+\ load surface by type
+"PP" "IMG_LoadICO_RW" func: IMG_LoadICO_RW
+"PP" "IMG_LoadCUR_RW" func: IMG_LoadCUR_RW
+"PP" "IMG_LoadBMP_RW" func: IMG_LoadBMP_RW
+"PP" "IMG_LoadGIF_RW" func: IMG_LoadGIF_RW
+"PP" "IMG_LoadJPG_RW" func: IMG_LoadJPG_RW
+"PP" "IMG_LoadLBM_RW" func: IMG_LoadLBM_RW
+"PP" "IMG_LoadPCX_RW" func: IMG_LoadPCX_RW
+"PP" "IMG_LoadPNG_RW" func: IMG_LoadPNG_RW
+"PP" "IMG_LoadPNM_RW" func: IMG_LoadPNM_RW
+"PP" "IMG_LoadSVG_RW" func: IMG_LoadSVG_RW
+"PP" "IMG_LoadTGA_RW" func: IMG_LoadTGA_RW
+"PP" "IMG_LoadTIF_RW" func: IMG_LoadTIF_RW
+"PP" "IMG_LoadXCF_RW" func: IMG_LoadXCF_RW
+"PP" "IMG_LoadXV_RW" func: IMG_LoadXV_RW
+"PP" "IMG_LoadWEBP_RW" func: IMG_LoadWEBP_RW
+
+\ read from memory buffer
+"Pb" "IMG_ReadXPMFromArray" func: IMG_ReadXPMFromArray
+
+\ saving images
+"NPZ" "IMG_SavePNG" func: IMG_SavePNG
+"NPPN" "IMG_SavePNG_RW" func: IMG_SavePNG_RW
+"NPZN" "IMG_SaveJPG" func: IMG_SaveJPG
+"NPPNN" "IMG_SaveJPG_RW" func: IMG_SaveJPG_RW
+
+\ animation functions
+"PZ" "IMG_LoadAnimation" func: IMG_LoadAnimation
+"PPN" "IMG_LoadAnimation_RW" func: IMG_LoadAnimation_RW
+"PPNZ" "IMG_LoadAnimationTyped_RW" func: IMG_LoadAnimationTyped_RW
+"VP" "IMG_FreeAnimation" func: IMG_FreeAnimation
+
+\ individual animation loading
+"PP" "IMG_LoadGIFAnimation_RW" func: IMG_LoadGIFAnimation_RW

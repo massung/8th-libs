@@ -3,7 +3,7 @@
 ns: sdl
 
 \ ensure the SDL library loaded
-sdl "Failed to find/load SDL dynamic library" thrownull drop
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ pixel types
 0 constant SDL_PIXELTYPE_UNKNOWN

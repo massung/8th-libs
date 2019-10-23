@@ -1,0 +1,43 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ RWops types
+0 constant SDL_RWOPS_UNKNOWN
+1 constant SDL_RWOPS_WINFILE
+2 constant SDL_RWOPS_STDFILE
+3 constant SDL_RWOPS_JNIFILE
+4 constant SDL_RWOPS_MEMORY
+5 constant SDL_RWOPS_MEMORY_RO
+
+\ functions
+"PZZ" "SDL_RWFromFile" func: SDL_RWFromFile
+"PPN" "SDL_RWFromFP" func: SDL_RWFromFP
+"PPN" "SDL_RWFromMem" func: SDL_RWFromMem
+"PPN" "SDL_RWFromConstMem" func: SDL_RWFromConstMem
+"P" "SDL_AllocRW" func: SDL_AllocRW
+"VP" "SDL_FreeRW" func: SDL_FreeRW
+"NP" "SDL_RWsize" func: SDL_RWsize
+"NPNN" "SDL_RWseek" func: SDL_RWseek
+"NP" "SDL_RWtell" func: SDL_RWtell
+"NPPNN" "SDL_RWread" func: SDL_RWread
+"NPPNN" "SDL_RWwrite" func: SDL_RWwrite
+"PPPN" "SDL_LoadFile_RW" func: SDL_LoadFile_RW
+"PZP" "SDL_LoadFile" func: SDL_LoadFile
+"NP" "SDL_ReadU8" func: SDL_ReadU8
+"NP" "SDL_ReadLE16" func: SDL_ReadLE16
+"NP" "SDL_ReadBE16" func: SDL_ReadBE16
+"NP" "SDL_ReadLE32" func: SDL_ReadLE32
+"NP" "SDL_ReadBE32" func: SDL_ReadBE32
+"NP" "SDL_ReadLE64" func: SDL_ReadLE64
+"NP" "SDL_ReadBE64" func: SDL_ReadBE64
+"NPN" "SDL_WriteU8" func: SDL_WriteU8
+"NPN" "SDL_WriteLE16" func: SDL_WriteLE16
+"NPN" "SDL_WriteBE16" func: SDL_WriteBE16
+"NPN" "SDL_WriteLE32" func: SDL_WriteLE32
+"NPN" "SDL_WriteBE32" func: SDL_WriteBE32
+"NPN" "SDL_WriteLE64" func: SDL_WriteLE64
+"NPN" "SDL_WriteBE64" func: SDL_WriteBE64

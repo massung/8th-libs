@@ -1,0 +1,11 @@
+\ -*- 8th -*-
+
+needs rec
+
+ns: sdl
+
+\ attempt to load extension libraries
+"SDL2_mixer" lib libsdl-mixer
+
+\ ensure the SDL library loaded
+mixer-image "Failed to find/load SDL_mixer dynamic library" thrownull drop

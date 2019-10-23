@@ -6,10 +6,10 @@ needs rec
 ns: sdl
 
 \ load the SDL dynamic library
-"SDL2" lib sdl
+"SDL2" lib libsdl
 
 \ ensure the SDL library loaded
-sdl "Failed to find/load SDL dynamic library" thrownull drop
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ true/false constants
 0 constant SDL_FALSE
@@ -56,6 +56,7 @@ needs sdl/pixels
 needs sdl/power
 needs sdl/rect
 needs sdl/render
+needs sdl/rwops
 needs sdl/sensor
 needs sdl/shape
 needs sdl/surface

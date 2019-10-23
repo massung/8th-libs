@@ -3,7 +3,7 @@
 ns: sdl
 
 \ ensure the SDL library loaded
-sdl "Failed to find/load SDL dynamic library" thrownull drop
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ yuv conversion mode constants
 0 constant SDL_YUV_CONVERSION_JPEG
@@ -46,3 +46,11 @@ sdl "Failed to find/load SDL dynamic library" thrownull drop
 "VN" "SDL_SetYUVConversionMode" func: SDL_SetYUVConversionMode
 "N" "SDL_GetYUVConversionMode" func: SDL_GetYUVConversionMode
 "NNN" "SDL_GetYUVConversionModeForResolution" func: SDL_GetYUVConversionModeForResolution
+
+\ wrapper for SDL_LoadBMP macro
+: SDL_LoadBMP \ s --
+    "rb" SDL_RWFromFile 1 SDL_LoadBMP_RW ;
+
+\ wrapper for SDL_SaveBMP macro
+: SDL_SaveBMP \ p s --
+    "wb" SDL_RWFromFile 1 SDL_SaveBMP_RW ;

@@ -2,24 +2,28 @@
 
 needs rec
 needs sdl/sdl
+needs sdl/image
 
 ns: glib
 
 \ subsystems
 needs glib/events
+needs glib/image
 needs glib/input
 
-\ main words to override
-defer: load
-defer: step
-defer: draw
-
-\ internal state
-private
+\ global window and renderer
 var window
 var renderer
 
-: create-window \ m --
+\ run loop callbacks
+defer: step
+defer: draw
+
+-- w: glib:create-window
+-- s: m -- ptr
+-- d: Create the main window using a map of options.
+
+: create-window \ m -- ptr
     >r
 
     \ window title
@@ -35,69 +39,73 @@ var renderer
     r> "flags" m:_@ sdl:SDL_WINDOW_SHOWN ?:
 
     \ attempt to create the window, die on failure
-    sdl:SDL_CreateWindow "Failed to create SDL window!" thrownull
-    window ! ;
+    sdl:SDL_CreateWindow "Failed to create SDL window!" thrownull ;
 
-: create-renderer \ --
+-- w: glib:create-renderer
+-- s: ptr -- ptr
+-- d: Create the renderer for the main window.
+
+: create-renderer \ -- ptr
     window @ -1 sdl:SDL_RENDERER_ACCELERATED
 
     \ attempt to create the renderer, die on failure
-    sdl:SDL_CreateRenderer "Failed to create SDL renderer!" thrownull
-    renderer ! ;
+    sdl:SDL_CreateRenderer "Failed to create SDL renderer!" thrownull ;
+
+-- w: glib:glib-init
+-- s: m --
+-- d: Initializes SDL library and auto shutdown. Asserts on failure. Creates
+-- d: a window and renderer using the provided map of options.
+
+: glib-init \ m --
+    sdl:SDL_INIT_EVERYTHING sdl:SDL_Init 0 = assert ' sdl:SDL_Quit onexit
+
+    \ create the main window and renderer
+    create-window window !
+    create-renderer renderer ! ;
+
+-- w: glib:process-events
+-- s: --
+-- d: Loop until the event queue has been completely processed.
 
 : process-events \ --
     repeat
-        glib:poll-event null;
+        poll-event null;
 
         \ switch based on the event type
-        glib:event-type
+        event-type
             [ ( dup sdl:SDL_QUIT n:= ) , ( bye )
-            , ( dup sdl:SDL_KEYDOWN n:= ) , ( drop glib:on-keydown )
-            , ( dup sdl:SDL_KEYUP n:= ) , ( drop glib:on-keyup )
+            , ( dup sdl:SDL_KEYDOWN n:= ) , ( drop on-keydown )
+            , ( dup sdl:SDL_KEYUP n:= ) , ( drop on-keyup )
             , ( 2drop )
             ] when
     again ;
 
+-- w: glib:clear
+-- s: --
+-- d: Clear the renderer.
+
+: clear \ --
+    renderer @ sdl:SDL_RenderClear drop ;
+
+-- w: glib:present
+-- s: --
+-- d: Swap the backbuffer.
+
+: present \ --
+    renderer @ sdl:SDL_RenderPresent ;
+
+-- w: glib:run-loop
+-- s: --
+-- d: Run the main game loop until glib:quit is called.
+
 : run-loop \ --
-    #p:process-events
-
-    \ clear the backbuffer
-    #p:renderer @ sdl:SDL_RenderClear drop
-
-    \ step + render
-    glib:step
-    glib:draw
-
-    \ swap and show backbuffer
-    #p:renderer @ sdl:SDL_RenderPresent
-
-    \ loop
-    run-loop ;
-
-public
-
--- w: glib:glib-init
--- s: --
--- d: Initializes SDL library and auto shutdown. Asserts on failure.
-
-: glib-init \ --
-    sdl:SDL_INIT_EVERYTHING sdl:SDL_Init 0 = assert ' sdl:SDL_Quit onexit ;
-
--- w: glib:run
--- s: --
--- d: Run the main game loop.
-
-: run \ m --
-    #p:create-window
-    #p:create-renderer
-
-    \ load assets and main game loop
-    load #p:run-loop
-
-    \ cleanup
-    #p:renderer @ sdl:SDL_DestroyRenderer
-    #p:window @ sdl:SDL_DestroyWindow
-    ;
+    repeat
+        process-events
+        clear
+        step
+        draw
+        present
+    again ;
 
 -- w: glib:quit
 -- s: --

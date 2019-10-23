@@ -3,7 +3,7 @@
 ns: sdl
 
 \ ensure the SDL library loaded
-sdl "Failed to find/load SDL dynamic library" thrownull drop
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ window flag constants
 0x00000001 constant SDL_WINDOW_FULLSCREEN

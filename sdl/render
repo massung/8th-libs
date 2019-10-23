@@ -3,7 +3,7 @@
 ns: sdl
 
 \ ensure the SDL library loaded
-sdl "Failed to find/load SDL dynamic library" thrownull drop
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ render flag constants
 0x00000001 constant SDL_RENDERER_SOFTWARE
@@ -85,8 +85,8 @@ packed-rec;
 "NPPN" "SDL_RenderDrawRects" func: SDL_RenderDrawRects
 "NPP" "SDL_RenderFillRect" func: SDL_RenderFillRect
 "NPPN" "SDL_RenderFillRects" func: SDL_RenderFillRects
-"NPPPP" "SDL_RenderCopy" func: SDL_RenderCopy
-"NPPPPDPN" "SDL_RenderCopyEx" func: SDL_RenderCopyEx
+"NPPbb" "SDL_RenderCopy" func: SDL_RenderCopy
+"NPPbbDbN" "SDL_RenderCopyEx" func: SDL_RenderCopyEx
 "NPFF" "SDL_RenderDrawPointF" func: SDL_RenderDrawPointF
 "NPPN" "SDL_RenderDrawPointsF" func: SDL_RenderDrawPointsF
 "NPFFFF" "SDL_RenderDrawLineF" func: SDL_RenderDrawLineF
@@ -96,7 +96,7 @@ packed-rec;
 "NPP" "SDL_RenderFillRectF" func: SDL_RenderFillRectF
 "NPPN" "SDL_RenderFillRectsF" func: SDL_RenderFillRectsF
 "NPPPP" "SDL_RenderCopyF" func: SDL_RenderCopyF
-"NPPPPDPN" "SDL_RenderCopyExF" func: SDL_RenderCopyExF
+"NPPbbDbN" "SDL_RenderCopyExF" func: SDL_RenderCopyExF
 "NPPNPN" "SDL_RenderReadPixels" func: SDL_RenderReadPixels
 "VP" "SDL_RenderPresent" func: SDL_RenderPresent
 "VP" "SDL_DestroyTexture" func: SDL_DestroyTexture
