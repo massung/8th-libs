@@ -16,6 +16,9 @@ libsdl-image "Failed to find/load SDL_image dynamic library" thrownull drop
 0x00000004 constant IMG_INIT_TIF
 0x00000008 constant IMG_INIT_WEBP
 
+\ all init flags
+0xFFFFFFFF constant IMG_INIT_ALL
+
 \ animation (multiple frames)
 packed-rec: IMG_Animation
     "=" field: w

@@ -5,19 +5,15 @@ needs glib/glib
 \ define actions
 glib:action: quit
 
-\ called once per frame to update game
-: step \ --
-    quit glib:pressed if glib:quit then ;
-
 \ entry point
 : app:main \ --
-    { "title" : "Glib Example 1" } glib:glib-init
+    { "title" : "Glib Example 1 - Basics" } glib:glib-init
 
     \ create action bindings
-    sdl:SDLK_ESCAPE ' quit glib:bind-key
+    sdl:SDLK_ESCAPE quit glib:bind-key
 
-    \ callbacks
-    ' step w:is glib:step
+    \ if the action occurs, then signal quit
+    ( quit glib:pressed if glib:quit then ) w:is glib:step
 
     \ main loop
     glib:run-loop ;

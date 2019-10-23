@@ -38,11 +38,11 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "NNNNPNNPN" "SDL_ConvertPixels" func: SDL_ConvertPixels
 "NPPN" "SDL_FillRect" func: SDL_FillRect
 "NPPNN" "SDL_FillRects" func: SDL_FillRects
-"NPPPP" "SDL_UpperBlit" func: SDL_UpperBlit
-"NPPPP" "SDL_LowerBlit" func: SDL_LowerBlit
-"NPPPP" "SDL_SoftStretch" func: SDL_SoftStretch
-"NPPPP" "SDL_UpperBlitScaled" func: SDL_UpperBlitScaled
-"NPPPP" "SDL_LowerBlitScaled" func: SDL_LowerBlitScaled
+"NPbPb" "SDL_UpperBlit" func: SDL_UpperBlit
+"NPbPb" "SDL_LowerBlit" func: SDL_LowerBlit
+"NPbPb" "SDL_SoftStretch" func: SDL_SoftStretch
+"NPbPb" "SDL_UpperBlitScaled" func: SDL_UpperBlitScaled
+"NPbPb" "SDL_LowerBlitScaled" func: SDL_LowerBlitScaled
 "VN" "SDL_SetYUVConversionMode" func: SDL_SetYUVConversionMode
 "N" "SDL_GetYUVConversionMode" func: SDL_GetYUVConversionMode
 "NNN" "SDL_GetYUVConversionModeForResolution" func: SDL_GetYUVConversionModeForResolution
@@ -54,3 +54,9 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 \ wrapper for SDL_SaveBMP macro
 : SDL_SaveBMP \ p s --
     "wb" SDL_RWFromFile 1 SDL_SaveBMP_RW ;
+
+\ SDL_BlitSurface macro
+' SDL_UpperBlit alias: SDL_BlitSurface
+
+\ SDL_BlitScaled macro
+' SDL_UpperBlitScaled alias: SDL_BlitScaled

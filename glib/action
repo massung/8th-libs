@@ -17,20 +17,20 @@ rec;
 -- d: Define a new action that can be bound to a key or mouse button.
 
 : action: \ <name> -- \\\ IMMEDIATE
-    0 0 action:new p: constant i;
+    0 0 action:new p: var, i;
 
 -- w: glib:bind-key
--- s: n w --
--- d: Bind the keycode n to the action w.
+-- s: n action --
+-- d: Bind the keycode n to the action.
 
-: bind-key \ n w --
+: bind-key \ n action --
     key-bindings @ -rot m:! drop ;
 
 -- w: glib:bind-mouse
--- s: n w --
--- d: Bind a mouse button n to the action w.
+-- s: n action --
+-- d: Bind a mouse button n to the action.
 
-: bind-mouse \ n w --
+: bind-mouse \ n action --
     mouse-bindings @ -rot m:! drop ;
 
 -- w: glib:released
@@ -38,49 +38,49 @@ rec;
 -- d: True if the action is currently in the released state.
 
 : released \ action -- T
-    action:state nip %1 n:band 0 = ;
+    @ action:state nip %1 n:band 0 = ;
 
 -- w: glib:just-released
 -- s: action -- T
 -- d: True if the action was just released.
 
 : just-released \ action -- T
-    action:state nip %10 = ;
+    @ action:state nip %10 = ;
 
 -- w: glib:pressed
 -- s: action -- T
 -- d: True if the action is currently in the pressed state.
 
 : pressed \ action -- T
-    action:state nip %1 n:band 1 = ;
+    @ action:state nip %1 n:band 1 = ;
 
 -- w: glib:just-pressed
 -- s: action -- T
 -- d: True if the action was just pressed.
 
 : just-pressed \ action -- T
-    action:state nip %11 = ;
+    @ action:state nip %11 = ;
 
 -- w: glib:clear-hits
 -- s: action --
 -- d: Remove all hits from an action.
 
 : clear-hits \ action --
-    0 action:hits! ;
+    @ 0 action:hits! drop ;
 
 -- w: glib:release
 -- s: action --
 -- d: Update the action to the released state.
 
 : release \ action --
-    dup pressed if %10 else %00 then action:state! ;
+    @ action:state 1 shl %11 band action:state! drop ;
 
 -- w: glib:press
 -- s: action --
 -- d: Update the action to the pressed state.
 
 : press \ action --
-    dup released if %11 else %01 then action:state! ;
+    @ action:state 1 bxor 1 shl 1 bor %11 band action:state! drop ;
 
 -- w: glib:on-keydown
 -- s: b --
@@ -92,11 +92,8 @@ rec;
     SDL_Keysym:unpack drop
     SDL_Keysym:sym nip
 
-    \ lookup the binding for this keycode
-    key-bindings @ swap m:_@ null;
-
-    \ apply the binding and press it
-    w:exec press ;
+    \ lookup the binding for this keycode and press it
+    key-bindings @ swap m:_@ null; press ;
 
 -- w: glib:on-keyup
 -- s: b --
@@ -108,8 +105,5 @@ rec;
     SDL_Keysym:unpack drop
     SDL_Keysym:sym nip
 
-    \ lookup the binding for this keycode
-    key-bindings @ swap m:_@ null;
-
-    \ apply the binding and press it
-    w:exec release ;
+    \ lookup the binding for this keycode and release it
+    key-bindings @ swap m:_@ null; release ;

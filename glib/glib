@@ -3,13 +3,14 @@
 needs rec
 needs sdl/sdl
 needs sdl/image
+needs sdl/mixer
 
 ns: glib
 
 \ subsystems
+needs glib/action
 needs glib/events
 needs glib/image
-needs glib/input
 
 \ global window and renderer
 var window
@@ -32,8 +33,8 @@ defer: draw
     \ x,y coordinates and size
     r@ "x" m:_@ sdl:SDL_WINDOWPOS_UNDEFINED ?:
     r@ "y" m:_@ sdl:SDL_WINDOWPOS_UNDEFINED ?:
-    r@ "w" m:_@ 640 ?:
-    r@ "h" m:_@ 480 ?:
+    r@ "width" m:_@ 640 ?:
+    r@ "height" m:_@ 480 ?:
 
     \ flags
     r> "flags" m:_@ sdl:SDL_WINDOW_SHOWN ?:
@@ -58,6 +59,10 @@ defer: draw
 
 : glib-init \ m --
     sdl:SDL_INIT_EVERYTHING sdl:SDL_Init 0 = assert ' sdl:SDL_Quit onexit
+
+    \ initialize sdl-image, sdl-mixer, etc.
+    sdl:IMG_INIT_ALL sdl:IMG_Init 0 > assert ' sdl:IMG_Quit onexit
+    sdl:MIX_INIT_ALL sdl:Mix_Init 0 > assert ' sdl:Mix_Quit onexit
 
     \ create the main window and renderer
     create-window window !

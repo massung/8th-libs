@@ -5,27 +5,31 @@ needs glib/glib
 \ define actions
 glib:action: quit
 
-var mario
+\ a sprite to load
+"c:/users/jeff/desktop/mario.png" constant sprite-file
 
-\ called once before the run loop begins
-: load \ --
-    glib:renderer @ "c:/users/jeff/desktop/mario.png" glib:load-texture mario ! ;
+\ container for the sprite
+null var, sprite
 
 \ called once per frame to update game
 : step \ --
     quit glib:pressed if glib:quit then ;
 
 : draw \ --
-    glib:renderer @ mario @ null null sdl:SDL_RenderCopy drop ;
+    glib:renderer @ sprite @ null null sdl:SDL_RenderCopy drop ;
 
 \ entry point
 : app:main \ --7
-    { "title" : "Glib Example 1" } glib:glib-init
+    { "title" : "Glib Example 2 - Images"
+    , "width" : 200
+    , "height" : 200
+    } glib:glib-init
 
-    load
+    \ load a simple image
+    glib:renderer @ sprite-file glib:load-texture sprite !
 
     \ create action bindings
-    sdl:SDLK_ESCAPE ' quit glib:bind-key
+    sdl:SDLK_ESCAPE quit glib:bind-key
 
     \ callbacks
     ' step w:is glib:step

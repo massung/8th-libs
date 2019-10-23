@@ -1,0 +1,67 @@
+\ -*- 8th -*-
+
+needs glib/glib
+needs rec
+
+\ define actions
+glib:action: quit
+glib:action: make-rect
+
+\ a rectangle structure
+rec: rectangle
+    field: sdl-rect
+    field: color
+rec;
+
+\ a bunch of rectangles
+[] var, rectangles
+
+: make-rand-rect \ --
+    rectangles @
+
+    \ build the rectangle buffer
+    rand 255 band >r \ height
+    rand 511 band >r \ width
+    rand 512 r@ n:- n:mod r> \ x
+    rand 256 r@ n:- n:mod swap r> \ y
+    SDL_Rect:new SDL_Rect:pack
+
+    \ random color array
+    ( rand 255 band ) 4 times 4 a:close
+
+    \ create the rectangle and add it to the array
+    rectangle:new a:push drop ;
+
+\ called once per frame to update game
+: step \ --
+    quit glib:pressed if glib:quit then
+    make-rect glib:just-pressed if make-rand-rect then ;
+
+: draw \ --
+    rectangles @ (
+        >r glib:renderer @ dup
+
+        \ set the color of the rectangle
+        r@ rectangle:color nip a:open sdl:SDL_SetRenderDrawColor drop
+
+        \ draw the rectangle
+        r> rectangle:sdl-rect nip sdl:SDL_RenderFillRect drop
+    ) a:each! drop ;
+
+\ entry point
+: app:main \ --7
+    { "title" : "Glib Example 3 - Random"
+    , "width" : 512
+    , "height" : 256
+    } glib:glib-init
+
+    \ create action bindings
+    sdl:SDLK_ESCAPE quit glib:bind-key
+    sdl:SDLK_SPACE make-rect glib:bind-key
+
+    \ callbacks
+    ' step w:is glib:step
+    ' draw w:is glib:draw
+
+    \ main loop
+    glib:run-loop ;

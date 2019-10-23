@@ -8,4 +8,45 @@ ns: sdl
 "SDL2_mixer" lib libsdl-mixer
 
 \ ensure the SDL library loaded
-mixer-image "Failed to find/load SDL_mixer dynamic library" thrownull drop
+libsdl-mixer "Failed to find/load SDL_mixer dynamic library" thrownull drop
+
+\ init flags
+0x00000001 constant IX_INIT_FLAC
+0x00000002 constant MIX_INIT_MOD
+0x00000008 constant MIX_INIT_MP3
+0x00000010 constant MIX_INIT_OGG
+0x00000020 constant MIX_INIT_MID
+0x00000040 constant MIX_INIT_OPUS
+
+\ all init flags
+0xFFFFFFFF constant MIX_INIT_ALL
+
+\ fading constants
+0 constant MIX_NO_FADING
+1 constant MIX_FADING_OUT
+2 constant MIX_FADING_IN
+
+\ music types
+0 constant MUS_NONE
+1 constant MUS_CMD
+2 constant MUS_WAV
+3 constant MUS_MOD
+4 constant MUS_MID
+5 constant MUS_OGG
+6 constant MUS_MP3
+7 constant MUS_MP3_MAD_UNUSED
+8 constant MUS_FLAC
+9 constant MUS_MODPLUG_UNUSED
+10 constant MUS_OPUS
+
+\ mix chunks
+packed-rec: Mix_Chunk
+    "=" field: allocated
+    "p" field: abuf
+    "i" field: alen
+    "B" field: volume
+packed-rec;
+
+\ initialization
+"NN" "Mix_Init" func: Mix_Init
+"V" "Mix_Quit" func: Mix_Quit

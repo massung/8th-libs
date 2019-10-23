@@ -94,6 +94,11 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
  0 constant SDL_DISABLE
  1 constant SDL_ENABLE
 
+\ event actions
+0 constant SDL_ADDEVENT
+1 constant SDL_PEEKEVENT
+2 constant SDL_GETEVENT
+
 \ union event type
 packed-rec: SDL_Event
     "56b" field: data
