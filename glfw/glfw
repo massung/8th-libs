@@ -1,0 +1,526 @@
+\ -*- 8th -*-
+
+ns: glfw
+
+\ load the GLFW dynamic library
+"glfw3" lib glfw
+
+\ ensure the SDL library loaded
+glfw "Failed to find/load GLFW dynamic library" thrownull drop
+
+\ version
+3 constant GLFW_VERSION_MAJOR
+3 constant GLFW_VERSION_MINOR
+0 constant GLFW_VERSION_REVISION
+
+\ booleans
+0 constant GLFW_FALSE
+1 constant GLFW_TRUE
+
+\ key and button actions
+0 constant GLFW_RELEASE
+1 constant GLFW_PRESS
+2 constant GLFW_REPEAT
+
+\ joystick hat states
+0x0 constant GLFW_HAT_CENTERED
+0x1 constant GLFW_HAT_UP
+0x2 constant GLFW_HAT_RIGHT
+0x3 constant GLFW_HAT_RIGHT_UP
+0x4 constant GLFW_HAT_DOWN
+0x6 constant GLFW_HAT_RIGHT_DOWN
+0x8 constant GLFW_HAT_LEFT
+0x9 constant GLFW_HAT_LEFT_UP
+0xC constant GLFW_HAT_LEFT_DOWN
+
+\ the unknown key
+-1 constant GLFW_KEY_UNKNOWN
+
+\ printable keys
+32 constant GLFW_KEY_SPACE
+39 constant GLFW_KEY_APOSTROPHE
+44 constant GLFW_KEY_COMMA
+45 constant GLFW_KEY_MINUS
+46 constant GLFW_KEY_PERIOD
+47 constant GLFW_KEY_SLASH
+48 constant GLFW_KEY_0
+49 constant GLFW_KEY_1
+50 constant GLFW_KEY_2
+51 constant GLFW_KEY_3
+52 constant GLFW_KEY_4
+53 constant GLFW_KEY_5
+54 constant GLFW_KEY_6
+55 constant GLFW_KEY_7
+56 constant GLFW_KEY_8
+57 constant GLFW_KEY_9
+59 constant GLFW_KEY_SEMICOLON
+61 constant GLFW_KEY_EQUAL
+65 constant GLFW_KEY_A
+66 constant GLFW_KEY_B
+67 constant GLFW_KEY_C
+68 constant GLFW_KEY_D
+69 constant GLFW_KEY_E
+70 constant GLFW_KEY_F
+71 constant GLFW_KEY_G
+72 constant GLFW_KEY_H
+73 constant GLFW_KEY_I
+74 constant GLFW_KEY_J
+75 constant GLFW_KEY_K
+76 constant GLFW_KEY_L
+77 constant GLFW_KEY_M
+78 constant GLFW_KEY_N
+79 constant GLFW_KEY_O
+80 constant GLFW_KEY_P
+81 constant GLFW_KEY_Q
+82 constant GLFW_KEY_R
+83 constant GLFW_KEY_S
+84 constant GLFW_KEY_T
+85 constant GLFW_KEY_U
+86 constant GLFW_KEY_V
+87 constant GLFW_KEY_W
+88 constant GLFW_KEY_X
+89 constant GLFW_KEY_Y
+90 constant GLFW_KEY_Z
+91 constant GLFW_KEY_LEFT_BRACKET
+92 constant GLFW_KEY_BACKSLASH
+93 constant GLFW_KEY_RIGHT_BRACKET
+96 constant GLFW_KEY_GRAVE_ACCENT
+161 constant GLFW_KEY_WORLD_1
+162 constant GLFW_KEY_WORLD_2
+
+\ function keys
+256 constant GLFW_KEY_ESCAPE
+257 constant GLFW_KEY_ENTER
+258 constant GLFW_KEY_TAB
+259 constant GLFW_KEY_BACKSPACE
+260 constant GLFW_KEY_INSERT
+261 constant GLFW_KEY_DELETE
+262 constant GLFW_KEY_RIGHT
+263 constant GLFW_KEY_LEFT
+264 constant GLFW_KEY_DOWN
+265 constant GLFW_KEY_UP
+266 constant GLFW_KEY_PAGE_UP
+267 constant GLFW_KEY_PAGE_DOWN
+268 constant GLFW_KEY_HOME
+269 constant GLFW_KEY_END
+280 constant GLFW_KEY_CAPS_LOCK
+281 constant GLFW_KEY_SCROLL_LOCK
+282 constant GLFW_KEY_NUM_LOCK
+283 constant GLFW_KEY_PRINT_SCREEN
+284 constant GLFW_KEY_PAUSE
+290 constant GLFW_KEY_F1
+291 constant GLFW_KEY_F2
+292 constant GLFW_KEY_F3
+293 constant GLFW_KEY_F4
+294 constant GLFW_KEY_F5
+295 constant GLFW_KEY_F6
+296 constant GLFW_KEY_F7
+297 constant GLFW_KEY_F8
+298 constant GLFW_KEY_F9
+299 constant GLFW_KEY_F10
+300 constant GLFW_KEY_F11
+301 constant GLFW_KEY_F12
+302 constant GLFW_KEY_F13
+303 constant GLFW_KEY_F14
+304 constant GLFW_KEY_F15
+305 constant GLFW_KEY_F16
+306 constant GLFW_KEY_F17
+307 constant GLFW_KEY_F18
+308 constant GLFW_KEY_F19
+309 constant GLFW_KEY_F20
+310 constant GLFW_KEY_F21
+311 constant GLFW_KEY_F22
+312 constant GLFW_KEY_F23
+313 constant GLFW_KEY_F24
+314 constant GLFW_KEY_F25
+320 constant GLFW_KEY_KP_0
+321 constant GLFW_KEY_KP_1
+322 constant GLFW_KEY_KP_2
+323 constant GLFW_KEY_KP_3
+324 constant GLFW_KEY_KP_4
+325 constant GLFW_KEY_KP_5
+326 constant GLFW_KEY_KP_6
+327 constant GLFW_KEY_KP_7
+328 constant GLFW_KEY_KP_8
+329 constant GLFW_KEY_KP_9
+330 constant GLFW_KEY_KP_DECIMAL
+331 constant GLFW_KEY_KP_DIVIDE
+332 constant GLFW_KEY_KP_MULTIPLY
+333 constant GLFW_KEY_KP_SUBTRACT
+334 constant GLFW_KEY_KP_ADD
+335 constant GLFW_KEY_KP_ENTER
+336 constant GLFW_KEY_KP_EQUAL
+340 constant GLFW_KEY_LEFT_SHIFT
+341 constant GLFW_KEY_LEFT_CONTROL
+342 constant GLFW_KEY_LEFT_ALT
+343 constant GLFW_KEY_LEFT_SUPER
+344 constant GLFW_KEY_RIGHT_SHIFT
+345 constant GLFW_KEY_RIGHT_CONTROL
+346 constant GLFW_KEY_RIGHT_ALT
+347 constant GLFW_KEY_RIGHT_SUPER
+348 constant GLFW_KEY_MENU
+
+\ no more keys
+GLFW_KEY_MENU constant GLFW_KEY_LAST
+
+\ modifier keys
+0x0001 constant GLFW_MOD_SHIFT
+0x0002 constant GLFW_MOD_CONTROL
+0x0004 constant GLFW_MOD_ALT
+0x0008 constant GLFW_MOD_SUPER
+0x0010 constant GLFW_MOD_CAPS_LOCK
+0x0020 constant GLFW_MOD_NUM_LOCK
+
+\ mouse buttons
+0 constant GLFW_MOUSE_BUTTON_1
+1 constant GLFW_MOUSE_BUTTON_2
+2 constant GLFW_MOUSE_BUTTON_3
+3 constant GLFW_MOUSE_BUTTON_4
+4 constant GLFW_MOUSE_BUTTON_5
+5 constant GLFW_MOUSE_BUTTON_6
+6 constant GLFW_MOUSE_BUTTON_7
+7 constant GLFW_MOUSE_BUTTON_8
+
+\ last mouse button
+GLFW_MOUSE_BUTTON_8 constant GLFW_MOUSE_BUTTON_LAST
+
+\ named mouse buttons
+GLFW_MOUSE_BUTTON_1 constant GLFW_MOUSE_BUTTON_LEFT
+GLFW_MOUSE_BUTTON_2 constant GLFW_MOUSE_BUTTON_RIGHT
+GLFW_MOUSE_BUTTON_3 constant GLFW_MOUSE_BUTTON_MIDDLE
+
+\ joystick ids
+0 constant GLFW_JOYSTICK_1
+1 constant GLFW_JOYSTICK_2
+2 constant GLFW_JOYSTICK_3
+3 constant GLFW_JOYSTICK_4
+4 constant GLFW_JOYSTICK_5
+5 constant GLFW_JOYSTICK_6
+6 constant GLFW_JOYSTICK_7
+7 constant GLFW_JOYSTICK_8
+8 constant GLFW_JOYSTICK_9
+9 constant GLFW_JOYSTICK_10
+10 constant GLFW_JOYSTICK_11
+11 constant GLFW_JOYSTICK_12
+12 constant GLFW_JOYSTICK_13
+13 constant GLFW_JOYSTICK_14
+14 constant GLFW_JOYSTICK_15
+15 constant GLFW_JOYSTICK_16
+
+\ last joystick id
+GLFW_JOYSTICK_16 constant GLFW_JOYSTICK_LAST
+
+\ gamepad buttons
+0 constant GLFW_GAMEPAD_BUTTON_A
+1 constant GLFW_GAMEPAD_BUTTON_B
+2 constant GLFW_GAMEPAD_BUTTON_X
+3 constant GLFW_GAMEPAD_BUTTON_Y
+4 constant GLFW_GAMEPAD_BUTTON_LEFT_BUMPER
+5 constant GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER
+6 constant GLFW_GAMEPAD_BUTTON_BACK
+7 constant GLFW_GAMEPAD_BUTTON_START
+8 constant GLFW_GAMEPAD_BUTTON_GUIDE
+9 constant GLFW_GAMEPAD_BUTTON_LEFT_THUMB
+10 constant GLFW_GAMEPAD_BUTTON_RIGHT_THUMB
+11 constant GLFW_GAMEPAD_BUTTON_DPAD_UP
+12 constant GLFW_GAMEPAD_BUTTON_DPAD_RIGHT
+13 constant GLFW_GAMEPAD_BUTTON_DPAD_DOWN
+14 constant GLFW_GAMEPAD_BUTTON_DPAD_LEFT
+
+\ last gamepad button
+GLFW_GAMEPAD_BUTTON_DPAD_LEFT constant GLFW_GAMEPAD_BUTTON_LAST
+
+\ named gamepad buttons
+GLFW_GAMEPAD_BUTTON_A constant GLFW_GAMEPAD_BUTTON_CROSS
+GLFW_GAMEPAD_BUTTON_B constant GLFW_GAMEPAD_BUTTON_CIRCLE
+GLFW_GAMEPAD_BUTTON_X constant GLFW_GAMEPAD_BUTTON_SQUARE
+GLFW_GAMEPAD_BUTTON_Y constant GLFW_GAMEPAD_BUTTON_TRIANGLE
+
+\ gamepad axes
+0 constant GLFW_GAMEPAD_AXIS_LEFT_X
+1 constant GLFW_GAMEPAD_AXIS_LEFT_Y
+2 constant GLFW_GAMEPAD_AXIS_RIGHT_X
+3 constant GLFW_GAMEPAD_AXIS_RIGHT_Y
+4 constant GLFW_GAMEPAD_AXIS_LEFT_TRIGGER
+5 constant GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER
+
+\ last gamepad axis
+GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER constant GLFW_GAMEPAD_AXIS_LAST
+
+\ errors
+0x00000000 constant GLFW_NO_ERROR
+0x00010001 constant GLFW_NOT_INITIALIZED
+0x00010002 constant GLFW_NO_CURRENT_CONTEXT
+0x00010003 constant GLFW_INVALID_ENUM
+0x00010004 constant GLFW_INVALID_VALUE
+0x00010005 constant GLFW_OUT_OF_MEMORY
+0x00010006 constant GLFW_API_UNAVAILABLE
+0x00010007 constant GLFW_VERSION_UNAVAILABLE
+0x00010008 constant GLFW_PLATFORM_ERROR
+0x00010009 constant GLFW_FORMAT_UNAVAILABLE
+0x0001000A constant GLFW_NO_WINDOW_CONTEXT
+
+\ window flags
+0x00020001 constant GLFW_FOCUSED
+0x00020002 constant GLFW_ICONIFIED
+0x00020003 constant GLFW_RESIZABLE
+0x00020004 constant GLFW_VISIBLE
+0x00020005 constant GLFW_DECORATED
+0x00020006 constant GLFW_AUTO_ICONIFY
+0x00020007 constant GLFW_FLOATING
+0x00020008 constant GLFW_MAXIMIZED
+0x00020009 constant GLFW_CENTER_CURSOR
+0x0002000A constant GLFW_TRANSPARENT_FRAMEBUFFER
+0x0002000B constant GLFW_HOVERED
+0x0002000C constant GLFW_FOCUS_ON_SHOW
+
+\ buffer bits
+0x00021001 constant GLFW_RED_BITS
+0x00021002 constant GLFW_GREEN_BITS
+0x00021003 constant GLFW_BLUE_BITS
+0x00021004 constant GLFW_ALPHA_BITS
+0x00021005 constant GLFW_DEPTH_BITS
+0x00021006 constant GLFW_STENCIL_BITS
+0x00021007 constant GLFW_ACCUM_RED_BITS
+0x00021008 constant GLFW_ACCUM_GREEN_BITS
+0x00021009 constant GLFW_ACCUM_BLUE_BITS
+0x0002100A constant GLFW_ACCUM_ALPHA_BITS
+0x0002100B constant GLFW_AUX_BUFFERS
+0x0002100C constant GLFW_STEREO
+0x0002100D constant GLFW_SAMPLES
+0x0002100E constant GLFW_SRGB_CAPABLE
+0x0002100F constant GLFW_REFRESH_RATE
+0x00021010 constant GLFW_DOUBLEBUFFER
+
+\ opengl context/client flags
+0x00022001 constant GLFW_CLIENT_API
+0x00022002 constant GLFW_CONTEXT_VERSION_MAJOR
+0x00022003 constant GLFW_CONTEXT_VERSION_MINOR
+0x00022004 constant GLFW_CONTEXT_REVISION
+0x00022005 constant GLFW_CONTEXT_ROBUSTNESS
+0x00022006 constant GLFW_OPENGL_FORWARD_COMPAT
+0x00022007 constant GLFW_OPENGL_DEBUG_CONTEXT
+0x00022008 constant GLFW_OPENGL_PROFILE
+0x00022009 constant GLFW_CONTEXT_RELEASE_BEHAVIOR
+0x0002200A constant GLFW_CONTEXT_NO_ERROR
+0x0002200B constant GLFW_CONTEXT_CREATION_API
+0x0002200C constant GLFW_SCALE_TO_MONITOR
+
+\ cocoa flags
+0x00023001 constant GLFW_COCOA_RETINA_FRAMEBUFFER
+0x00023002 constant GLFW_COCOA_FRAME_NAME
+0x00023003 constant GLFW_COCOA_GRAPHICS_SWITCHING
+
+\ x11 flags
+0x00024001 constant GLFW_X11_CLASS_NAME
+0x00024002 constant GLFW_X11_INSTANCE_NAME
+
+\ opengl api
+0x00000000 constant GLFW_NO_API
+0x00030001 constant GLFW_OPENGL_API
+0x00030002 constant GLFW_OPENGL_ES_API
+
+\ contexts
+0x00000000 constant GLFW_NO_ROBUSTNESS
+0x00031001 constant GLFW_NO_RESET_NOTIFICATION
+0x00031002 constant GLFW_LOSE_CONTEXT_ON_RESET
+
+\ opengl profile
+0x00000000 constant GLFW_OPENGL_ANY_PROFILE
+0x00032001 constant GLFW_OPENGL_CORE_PROFILE
+0x00032002 constant GLFW_OPENGL_COMPAT_PROFILE
+
+\ input settings
+0x00033001 constant GLFW_CURSOR
+0x00033002 constant GLFW_STICKY_KEYS
+0x00033003 constant GLFW_STICKY_MOUSE_BUTTONS
+0x00033004 constant GLFW_LOCK_KEY_MODS
+0x00033005 constant GLFW_RAW_MOUSE_MOTION
+
+\ cursor flags
+0x00034001 constant GLFW_CURSOR_NORMAL
+0x00034002 constant GLFW_CURSOR_HIDDEN
+0x00034003 constant GLFW_CURSOR_DISABLED
+
+\ release behaviors
+0x00000000 constant GLFW_ANY_RELEASE_BEHAVIOR
+0x00035001 constant GLFW_RELEASE_BEHAVIOR_FLUSH
+0x00035002 constant GLFW_RELEASE_BEHAVIOR_NONE
+
+\ native apis
+0x00036001 constant GLFW_NATIVE_CONTEXT_API
+0x00036002 constant GLFW_EGL_CONTEXT_API
+0x00036003 constant GLFW_OSMESA_CONTEXT_API
+
+\ cusor icons
+0x00036001 constant GLFW_ARROW_CURSOR
+0x00036002 constant GLFW_IBEAM_CURSOR
+0x00036003 constant GLFW_CROSSHAIR_CURSOR
+0x00036004 constant GLFW_HAND_CURSOR
+0x00036005 constant GLFW_HRESIZE_CURSOR
+0x00036006 constant GLFW_VRESIZE_CURSOR
+
+\ connection
+0x00040001 constant GLFW_CONNECTED
+0x00040002 constant GLFW_DISCONNECTED
+
+\ joystick hat buttons
+0x00050001 constant GLFW_JOYSTICK_HAT_BUTTONS
+
+\ macos specific hints
+0x00051001 constant GLFW_COCOA_CHDIR_RESOURCES
+0x00051002 constant GLFW_COCOA_MENUBAR
+
+\ init/shutdown
+"N" "glfwInit" func: glfwInit
+"V" "glfwTerminate" func: glfwTerminate
+"VNN" "glfwInitHint" func: glfwInitHint
+
+\ version info
+"VPPP" "glfwGetVersion" func: glfwGetVersion
+"Z" "glfwGetVersionString" func: glfwGetVersionString
+
+\ error handling
+"NP" "glfwGetError" func: glfwGetError
+"wN" "glfwSetErrorCallback" func: glfwSetErrorCallback
+
+\ monitors
+"PP" "glfwGetMonitors" func: glfwGetMonitors
+"P" "glfwGetPrimaryMonitor" func: glfwGetPrimaryMonitor
+"VPPP" "glfwGetMonitorPos" func: glfwGetMonitorPos
+"VPPPPP" "glfwGetMonitorWorkarea" func: glfwGetMonitorWorkarea
+"VPPP" "glfwGetMonitorPhysicalSize" func: glfwGetMonitorPhysicalSize
+"VPPP" "glfwGetMonitorContentScale" func: glfwGetMonitorContentScale
+"ZP" "glfwGetMonitorName" func: glfwGetMonitorName
+"VPP" "glfwSetMonitorUserPointer" func: glfwSetMonitorUserPointer
+"PP" "glfwGetMonitorUserPointer" func: glfwGetMonitorUserPointer
+"wW" "glfwSetMonitorCallback" func: glfwSetMonitorCallback
+
+\ video modes
+"PPP" "glfwGetVideoModes" func: glfwGetVideoModes
+"PP" "glfwGetVideoMode" func: glfwGetVideoMode
+"VPF" "glfwSetGamma" func: glfwSetGamma
+"PP" "glfwGetGammaRamp" func: glfwGetGammaRamp
+"VPP" "glfwSetGammaRamp" func: glfwSetGammaRamp
+
+\ windows
+"V" "glfwDefaultWindowHints" func: glfwDefaultWindowHints
+"VPP" "glfwWindowHint" func: glfwWindowHint
+"VPZ" "glfwWindowHintString" func: glfwWindowHintString
+"PNNZPP" "glfwCreateWindow" func: glfwCreateWindow
+"VP" "glfwDestroyWindow" func: glfwDestroyWindow
+"NP" "glfwWindowShouldClose" func: glfwWindowShouldClose
+"VPN" "glfwSetWindowShouldClose" func: glfwSetWindowShouldClose
+"VPZ" "glfwSetWindowTitle" func: glfwSetWindowTitle
+"VPNP" "glfwSetWindowIcon" func: glfwSetWindowIcon
+"VPPP" "glfwGetWindowPos" func: glfwGetWindowPos
+"VPNN" "glfwSetWindowPos" func: glfwSetWindowPos
+"VPPP" "glfwGetWindowSize" func: glfwGetWindowSize
+"VPNNNN" "glfwSetWindowSizeLimits" func: glfwSetWindowSizeLimits
+"VPNN" "glfwSetWindowAspectRatio" func: glfwSetWindowAspectRatio
+"VPNN" "glfwSetWindowSize" func: glfwSetWindowSize
+"VPPP" "glfwGetFramebufferSize" func: glfwGetFramebufferSize
+"VPPPPP" "glfwGetWindowFrameSize" func: glfwGetWindowFrameSize
+"VPPP" "glfwGetWindowContentScale" func: glfwGetWindowContentScale
+"FP" "glfwGetWindowOpacity" func: glfwGetWindowOpacity
+"VPF" "glfwSetWindowOpacity" func: glfwSetWindowOpacity
+"VP" "glfwIconifyWindow" func: glfwIconifyWindow
+"VP" "glfwRestoreWindow" func: glfwRestoreWindow
+"VP" "glfwMaximizeWindow" func: glfwMaximizeWindow
+"VP" "glfwShowWindow" func: glfwShowWindow
+"VP" "glfwHideWindow" func: glfwHideWindow
+"VP" "glfwFocusWindow" func: glfwFocusWindow
+"VP" "glfwRequestWindowAttention" func: glfwRequestWindowAttention
+"PP" "glfwGetWindowMonitor" func: glfwGetWindowMonitor
+"VPPNNNN" "glfwSetWindowMonitor" func: glfwSetWindowMonitor
+"NPN" "glfwGetWindowAttrib" func: glfwGetWindowAttrib
+"VPNN" "glfwSetWindowAttrib" func: glfwSetWindowAttrib
+"VPP" "glfwSetWindowUserPointer" func: glfwSetWindowUserPointer
+"PP" "glfwGetWindowUserPointer" func: glfwGetWindowUserPointer
+
+\ window callbacks
+"PPW" "glfwSetWindowPosCallback" func: glfwSetWindowPosCallback
+"PPW" "glfwSetWindowSizeCallback" func: glfwSetWindowSizeCallback
+"PPW" "glfwSetWindowCloseCallback" func: glfwSetWindowCloseCallback
+"PPW" "glfwSetWindowRefreshCallback" func: glfwSetWindowRefreshCallback
+"PPW" "glfwSetWindowFocusCallback" func: glfwSetWindowFocusCallback
+"PPW" "glfwSetWindowIconifyCallback" func: glfwSetWindowIconifyCallback
+"PPW" "glfwSetWindowMaximizeCallback" func: glfwSetWindowMaximizeCallback
+"PPW" "glfwSetFramebufferSizeCallback" func: glfwSetFramebufferSizeCallback
+"PPW" "glfwSetWindowContentScaleCallback" func: glfwSetWindowContentScaleCallback
+
+\ events
+"V" "glfwPollEvents" func: glfwPollEvents
+"V" "glfwWaitEvents" func: glfwWaitEvents
+"VD" "glfwWaitEventsTimeout" func: glfwWaitEventsTimeout
+"V" "glfwPostEmptyEvent" func: glfwPostEmptyEvent
+
+\ input modes
+"NPN" "glfwGetInputMode" func: glfwGetInputMode
+"VPNN" "glfwSetInputMode" func: glfwSetInputMode
+"N" "glfwRawMouseMotionSupported" func: glfwRawMouseMotionSupported
+
+\ key codes
+"ZNN" "glfwGetKeyName" func: glfwGetKeyName
+"NN" "glfwGetKeyScancode" func: glfwGetKeyScancode
+"NPN" "glfwGetKey" func: glfwGetKey
+
+\ mouse state
+"NPN" "glfwGetMouseButton" func: glfwGetMouseButton
+"VPPP" "glfwGetCursorPos" func: glfwGetCursorPos
+"VPPP" "glfwSetCursorPos" func: glfwSetCursorPos
+
+\ mouse cursor
+"PPNN" "glfwCreateCursor" func: glfwCreateCursor
+"PN" "glfwCreateStandardCursor" func: glfwCreateStandardCursor
+"VP" "glfwDestroyCursor" func: glfwDestroyCursor
+"VPP" "glfwSetCursor" func: glfwSetCursor
+
+\ input callbacks
+"PPW" "glfwSetKeyCallback" func: glfwSetKeyCallback
+"PPW" "glfwSetCharCallback" func: glfwSetCharCallback
+"PPW" "glfwSetCharModsCallback" func: glfwSetCharModsCallback
+"PPW" "glfwSetMouseButtonCallback" func: glfwSetMouseButtonCallback
+"PPW" "glfwSetCursorPosCallback" func: glfwSetCursorPosCallback
+"PPW" "glfwSetCursorEnterCallback" func: glfwSetCursorEnterCallback
+"PPW" "glfwSetScrollCallback" func: glfwSetScrollCallback
+"PPW" "glfwSetDropCallback" func: glfwSetDropCallback
+
+\ joysticks + gamepads
+"NN" "glfwJoystickPresent" func: glfwJoystickPresent
+"PNP" "glfwGetJoystickAxes" func: glfwGetJoystickAxes
+"PNP" "glfwGetJoystickButtons" func: glfwGetJoystickButtons
+"PNP" "glfwGetJoystickHats" func: glfwGetJoystickHats
+"ZN" "glfwGetJoystickName" func: glfwGetJoystickName
+"ZN" "glfwGetJoystickGUID" func: glfwGetJoystickGUID
+"VNP" "glfwSetJoystickUserPointer" func: glfwSetJoystickUserPointer
+"PN" "glfwGetJoystickUserPointer" func: glfwGetJoystickUserPointer
+"NN" "glfwJoystickIsGamepad" func: glfwJoystickIsGamepad
+"wW" "glfwSetJoystickCallback" func: glfwSetJoystickCallback
+"NZ" "glfwUpdateGamepadMappings" func: glfwUpdateGamepadMappings
+"ZN" "glfwGetGamepadName" func: glfwGetGamepadName
+"NNP" "glfwGetGamepadState" func: glfwGetGamepadState
+
+\ clipboard
+"VPZ" "glfwSetClipboardString" func: glfwSetClipboardString
+"ZP" "glfwGetClipboardString" func: glfwGetClipboardString
+
+\ time
+"D" "glfwGetTime" func: glfwGetTime
+"VD" "glfwSetTime" func: glfwSetTime
+"X" "glfwGetTimerValue" func: glfwGetTimerValue
+"X" "glfwGetTimerFrequency" func: glfwGetTimerFrequency
+
+\ opengl context
+"VP" "glfwMakeContextCurrent" func: glfwMakeContextCurrent
+"P" "glfwGetCurrentContext" func: glfwGetCurrentContext
+
+\ backbuffer swapping
+"VP" "glfwSwapBuffers" func: glfwSwapBuffers
+"VN" "glfwSwapInterval" func: glfwSwapInterval
+
+\ extension support
+"NZ" "glfwExtensionSupported" func: glfwExtensionSupported
+"PZ" "glfwGetProcAddress" func: glfwGetProcAddress
+"N" "glfwVulkanSupported" func: glfwVulkanSupported
+"PP" "glfwGetRequiredInstanceExtensions" func: glfwGetRequiredInstanceExtensions

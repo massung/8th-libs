@@ -2,14 +2,47 @@
 
 ns: glib
 
--- w: glib:load-image
--- s: s -- ptr
--- d: Load an image as an SDL_Surface from disk.
+\ texture and stats
+rec: texture
+    field: ptr
+    field: h
+    field: w
+    field: access
+    field: format
+rec;
 
-' sdl:IMG_Load alias: load-image
+-- w: texture:size
+-- s: texture -- texture n n
+-- d: Return the width and height of the texture.
+
+: texture:size \ texture -- texture n n
+    texture:h >r texture:w r> ;
+
+-- w: texture:rect
+-- s: texture n n -- texture a
+-- d: Create an x,y,w,h array at the given coordinates.
+
+: texture:rect \ texture n n -- texture a
+    rot texture:w swap texture:h swap >r SDL_Rect:new r> swap ;
 
 -- w: glib:load-texture
--- s: ptr s -- ptr
--- d: Load an image as an SDL_Texture from disk.
+-- s: s -- image
+-- d: Load a texture image into a record.
 
-' sdl:IMG_LoadTexture alias: load-texture
+: load-texture \ s -- image
+    renderer @ swap
+
+    \ load the texture
+    sdl:IMG_LoadTexture dup null;
+
+    \ outputs of texture query
+    ( 0 "i" ptr:pack dup >r ) 4 times
+
+    \ get data about the texture
+    sdl:SDL_QueryTexture drop
+
+    \ unpack attributes
+    ( r> ptr:unpack ) 4 times
+
+    \ create the texture
+    texture:new ;

@@ -1,0 +1,46 @@
+\ -*- 8th -*-
+
+ns: glib
+
+\ renderable sprite, fields in order of SDL_RenderCopyEx parameters
+packed-rec: sprite
+    "p" field: texture
+    "b" field: src
+    "b" field: dest
+    "d" field: angle
+    "b" field: center
+    "i" field: flip
+packed-rec;
+
+-- w: glib:make-sprite
+-- s: texture -- sprite
+-- d: Create a sprite from a texture.
+
+: make-sprite \ texture -- sprite
+    texture:ptr swap
+
+    \ src rect in texture
+    >r null
+
+    \ destination buffer
+    0 0 r> texture:size rot drop SDL_Rect:new SDL_Rect:pack
+
+    \ angle, center and flip flags
+    0.0 null 0 sprite:new ;
+
+-- w: glib:sprite-moveto
+-- s: sprite n n -- sprite
+-- d: Update the position of the sprite.
+
+: sprite-moveto \ sprite n n -- sprite
+    >r >r sprite:dest SDL_Rect:unpack drop
+
+    \ update the x,y coordinates, pack, and store back
+    r> SDL_Rect:x! r> SDL_Rect:y! SDL_Rect:pack sprite:dest! ;
+
+-- w: glib:sprite-blit
+-- s: sprite --
+-- d: Render a sprite.
+
+: sprite-blit \ sprite --
+    renderer @ swap a:open sdl:SDL_RenderCopyEx drop ;

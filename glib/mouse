@@ -1,0 +1,28 @@
+\ -*- 8th -*-
+
+ns: glib
+
+\ mouse coordinates
+var mouse-x
+var mouse-y
+
+-- w: glib:mouse-pos
+-- s: -- n n
+-- d: Extract the x and y coordinates of the mouse.
+
+: mouse-pos \ -- n n
+    mouse-x @ mouse-y @ ;
+
+-- w: glib:on-mousemove
+-- s: b --
+-- d: Handle mouse movement events.
+
+: on-mousemove \ b --
+    SDL_MouseMotionEvent:unpack drop
+
+    \ update x and y
+    SDL_MouseMotionEvent:x mouse-x !
+    SDL_MouseMotionEvent:y mouse-y !
+
+    \ no longer need record
+    drop ;

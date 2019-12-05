@@ -107,3 +107,25 @@ rec;
 
     \ lookup the binding for this keycode and release it
     key-bindings @ swap m:_@ null; release ;
+
+-- w: glib:on-mousedown
+-- s: b --
+-- d: Update any bound actions.
+
+: on-mousedown \ b --
+    SDL_MouseButtonEvent:unpack drop
+    SDL_MouseButtonEvent:button
+
+    \ lookup the binding for this button and press it
+    mouse-bindings @ swap m:_@ null; press ;
+
+-- w: glib:on-mousei[
+-- s: b --
+-- d: Update any bound actions.
+
+: on-mouseup \ b --
+    SDL_MouseButtonEvent:unpack drop
+    SDL_MouseButtonEvent:button
+
+    \ lookup the binding for this button and release it
+    mouse-bindings @ swap m:_@ null; release ;

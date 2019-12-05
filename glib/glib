@@ -7,14 +7,16 @@ needs sdl/mixer
 
 ns: glib
 
-\ subsystems
-needs glib/action
-needs glib/events
-needs glib/image
-
 \ global window and renderer
 var window
 var renderer
+
+\ subsystems
+needs glib/action
+needs glib/events
+needs glib/mouse
+needs glib/image
+needs glib/sprite
 
 \ run loop callbacks
 defer: step
@@ -81,6 +83,9 @@ defer: draw
             [ ( dup sdl:SDL_QUIT n:= ) , ( bye )
             , ( dup sdl:SDL_KEYDOWN n:= ) , ( drop on-keydown )
             , ( dup sdl:SDL_KEYUP n:= ) , ( drop on-keyup )
+            , ( dup sdl:SDL_MOUSEMOTION n:= ) , ( drop on-mousemove )
+            , ( dup sdl:SDL_MOUSEBUTTONDOWN n:= ) , ( drop on-mousedown )
+            , ( dup sdl:SDL_MOUSEBUTTONUP n:= ) , ( drop on-mouseup )
             , ( 2drop )
             ] when
     again ;

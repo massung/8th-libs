@@ -13,20 +13,23 @@ null var, sprite
 
 \ called once per frame to update game
 : step \ --
-    quit glib:pressed if glib:quit then ;
+    quit glib:pressed if glib:quit then
+
+    \ update sprite position
+    sprite @ glib:mouse-pos glib:sprite-moveto drop ;
 
 : draw \ --
-    glib:renderer @ sprite @ null null sdl:SDL_RenderCopy drop ;
+    sprite @ glib:sprite-blit ;
 
 \ entry point
-: app:main \ --7
+: app:main \ --
     { "title" : "Glib Example 2 - Images"
-    , "width" : 200
-    , "height" : 200
+    , "width" : 400
+    , "height" : 400
     } glib:glib-init
 
     \ load a simple image
-    glib:renderer @ sprite-file glib:load-texture sprite !
+    sprite-file glib:load-texture glib:make-sprite sprite !
 
     \ create action bindings
     sdl:SDLK_ESCAPE quit glib:bind-key

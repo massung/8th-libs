@@ -1,0 +1,70 @@
+\ -*- 8th -*-
+
+needs ext
+
+ns: ini
+
+-- w: ini:section?
+-- s: s -- s false | s' true
+-- d: Returns true and the section name if a section line, otherwise false
+-- d: and the string is unchanged.
+
+: section? \ s -- s false | s' true
+    dup /\[([^]]+)\]/ r:match 0 n:= if drop false ;then nip 1 r:@ nip true ;
+
+-- w: ini:key-value?
+-- s: s -- s false | k v true
+-- d: Returns true and the key and value if a k/v line, otherwise false and
+-- d: the string is unchanged.
+
+: key-value? \ s -- s false | k v true
+    dup /([^=]+)=([^;]*)/ r:match 0 n:= if drop false ;then
+
+    \ extract the key and the value from the match
+    nip 1 r:@ s:trim swap 2 r:@ s:trim nip true ;
+
+-- w: ini:+section
+-- s: m s -- m m'
+-- d: Create a new section map and add it to the root map.
+
+: +section \ m s -- m m'
+    m:new dup >r m:! r> ;
+
+-- w: ini:read
+-- s: m m' f -- m m' f \\\ r: f -- f
+-- d: Read the next line of an INI file and parse a section or key/value
+-- d: pair. If a new section, drop the current section map and make a new
+-- d: one. If a key/value pair, add it to the current section map. Return
+-- d: once the entire file has been read. Lines that aren't understood
+-- d: are just ignored.
+
+: parse \ m m' -- m m' \\\ r: f -- f
+    r@ f:getline nip null;
+
+    \ skip empty lines and comments
+    [ ( s:len 0 = ) , ( drop )
+    , ( 0 s:@ '; = ) , ( drop )
+
+    \ create a new section or add a key
+    , ( section? ) , ( nip +section )
+    , ( key-value? ) , ( m:! )
+
+    \ unknown line, skip it
+    , ( drop )
+    ] when
+
+    \ read every line
+    recurse ;
+
+-- w: ini:load
+-- s: s -- m
+-- d: Open an INI file by name, parse it into a map.
+
+: load \ s -- m
+    f:open-ro null? if; >r
+
+    \ create the root map and "default" section
+    m:new m:new >r "default" r@ m:! r>
+
+    \ parse each line of the INI, close file
+    parse drop r> f:close ;

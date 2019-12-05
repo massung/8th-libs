@@ -1,0 +1,27 @@
+\ -*- 8th -*-
+
+needs ini/ini
+
+ns: aws
+
+"AWS_ACCESS_KEY_ID" getenv var, aws-key
+"AWS_SECRET_ACCESS_KEY" getenv var, aws-secret
+
+-- w: aws:load-credentials
+-- s: --
+-- d: Load AWS credentials from known locations. The environment is checked
+-- d: first and if not there look in ~/.aws/credentials.
+
+: load-credentials \ --
+    ".aws/credentials" f:homefile ini:load null; "default" m:_@ null;
+
+    \ read the key and secret
+    aws-key @ "aws_access_key_id" m:@ ?: aws-key !
+    aws-secret @ "aws_secret_access_key" m:_@ ?: aws-secret ! ;
+
+-- w: aws:init
+-- s: -- T
+-- d: Attempt to initialize the library with AWS credentials.
+
+: init \ -- T
+    load-credentials ;

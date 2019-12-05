@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs pipe
+needs ext/pipe
 
 ns: csv
 
@@ -66,7 +66,7 @@ m:new var, columns
 -- d: otherwise it is a column name and looked up in the map.
 
 : col \ x -- w
-    string? if columns @ swap ( null ) m:@? nip ;then ' a:@ curry ;
+    dup >n if >n ' a:@ curry ;then columns @ swap ( null ) m:@? nip ;
 
 -- w: csv:cut
 -- s: a cols -- a1
