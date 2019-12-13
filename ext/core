@@ -132,6 +132,15 @@ ns: a
 : +! \ a v --
     @ swap a:+ drop ;
 
+-- w: a:take!
+-- s: n v -- a
+-- d: Take the first n items from the array stored in the variable and return
+-- d: them as a new array. The variable is updated to store the elements
+-- d: not taken.
+
+: take! \ n v -- a
+    dup >r @ swap a:take swap r> ! ;
+
 -- w: a:push!
 -- s: x v --
 -- d: Push x onto the array stored in the variable.

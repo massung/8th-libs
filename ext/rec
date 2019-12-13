@@ -11,7 +11,7 @@ ns: rec
  *
  * ok> words/ pt:
  * pt
- * new x x! y y!
+ * _x _y new x x! y y!
  *
  * ok> 10 20 pt:new .s
  *
@@ -36,7 +36,7 @@ ns: rec
  *
  * ok> words/ pt:
  * pt
- * new pack unpack x x! y y!
+ * _x _y new pack unpack x x! y y!
  *
  * ok> 10 20 pt:new .s
  *
@@ -75,6 +75,14 @@ private
 : (getter) \ s --
     (:) dup p: literal ' m:@ p: compile p: ; ;
 
+-- w: (_getter)
+-- s: s --
+-- d: Defines a getter word named _s for the current record type that
+-- d: doesn't leave the record on the stack.
+
+: (_getter) \ s --
+    dup "_" s:<+ (:) p: literal ' m:_@ p: compile p: ; ;
+
 -- w: (setter)
 -- s: s --
 -- d: Defines a setter word named s! for the current record type.
@@ -87,18 +95,26 @@ private
 -- d: Defines a setter and getter word for a mapped record.
 
 : (field) \ a <name> -- a
-    parsews dup #p:(getter) dup #p:(setter) a:push ;
+    parsews dup #p:(getter) dup #p:(_getter) dup #p:(setter) a:push ;
 
 -- w: (packed-getter)
 -- s: n s --
--- d: Defined a getter word named s for the current index.
+-- d: Defines a getter word named s for the current index.
 
 : (packed-getter) \ n s --
     (:) p: literal ' a:@ p: compile p: ; ;
 
+-- w: (_packed-getter)
+-- s: n s --
+-- d: Defines a getter word named _s for the current index that doesn't
+-- d: leave the packed record on the stack.
+
+: (_packed-getter) \ n s --
+    "_" s:<+ (:) p: literal ' a:_@ p: compile p: ; ;
+
 -- w: (packed-setter)
 -- s: n s --
--- d: Defined a setter word named s! for the current index.
+-- d: Defines a setter word named s! for the current index.
 
 : (packed-setter) \ n s --
     "!" s:+ (:) p: literal ' swap p: compile ' a:! p: compile p: ; ;
@@ -111,7 +127,7 @@ private
 -- d: current index of this field.
 
 : (packed-field) \ n s s -- n s
-    s:+ >r dup parsews 2dup #p:(packed-getter) #p:(packed-setter) n:1+ r> ;
+    s:+ >r dup parsews 2dup #p:(packed-getter) 2dup #p:(_packed-getter) #p:(packed-setter) n:1+ r> ;
 
 -- w: (pack)
 -- s: s --
