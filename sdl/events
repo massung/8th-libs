@@ -387,8 +387,8 @@ packed-rec;
 \ functions
 "V" "SDL_PumpEvents" func: SDL_PumpEvents
 "NPNN" "SDL_PeepEvents" func: SDL_PeepEvents
-"NN" "SDL_HasEvent" func: SDL_HasEvent
-"NNN" "SDL_HasEvents" func: SDL_HasEvents
+"TN" "SDL_HasEvent" func: SDL_HasEvent
+"TNN" "SDL_HasEvents" func: SDL_HasEvents
 "VN" "SDL_FlushEvent" func: SDL_FlushEvent
 "VNN" "SDL_FlushEvents" func: SDL_FlushEvents
 "Nb" "SDL_PollEvent" func: SDL_PollEvent
@@ -396,7 +396,7 @@ packed-rec;
 "NbN" "SDL_WaitEventTimeout" func: SDL_WaitEventTimeout
 "Nb" "SDL_PushEvent" func: SDL_PushEvent
 "VNP" "SDL_SetEventFilter" func: SDL_SetEventFilter
-"VPP" "SDL_GetEventFilter" func: SDL_GetEventFilter
+"TPP" "SDL_GetEventFilter" func: SDL_GetEventFilter
 "VNP" "SDL_AddEventWatch" func: SDL_AddEventWatch
 "VNP" "SDL_DelEventWatch" func: SDL_DelEventWatch
 "VNP" "SDL_FilterEvents" func: SDL_FilterEvents

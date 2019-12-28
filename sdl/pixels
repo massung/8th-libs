@@ -97,7 +97,7 @@ packed-rec;
 
 \ functions
 "ZN" "SDL_GetPixelFormatName" func: SDL_GetPixelFormatName
-"NNPPPPP" "SDL_PixelFormatEnumToMasks" func: SDL_PixelFormatEnumToMasks
+"TNPPPPP" "SDL_PixelFormatEnumToMasks" func: SDL_PixelFormatEnumToMasks
 "NNNNNN" "SDL_MasksToPixelFormatEnum" func: SDL_MasksToPixelFormatEnum
 "BN" "SDL_AllocFormat" func: SDL_AllocFormat
 "VB" "SDL_PixelFormat" func: SDL_PixelFormat

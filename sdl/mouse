@@ -45,9 +45,9 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "NPP" "SDL_GetRelativeMouseState" func: SDL_GetRelativeMouseState
 "VPNN" "SDL_WarpMouseInWindow" func: SDL_WarpMouseInWindow
 "NNN" "SDL_WarpMouseGlobal" func: SDL_WarpMouseGlobal
-"NN" "SDL_SetRelativeMouseMode" func: SDL_SetRelativeMouseMode
-"NN" "SDL_CaptureMouse" func: SDL_CaptureMouse
-"N" "SDL_GetRelativeMouseMode" func: SDL_GetRelativeMouseMode
+"NT" "SDL_SetRelativeMouseMode" func: SDL_SetRelativeMouseMode
+"NT" "SDL_CaptureMouse" func: SDL_CaptureMouse
+"T" "SDL_GetRelativeMouseMode" func: SDL_GetRelativeMouseMode
 "PPPNNNN" "SDL_CreateCursor" func: SDL_CreateCursor
 "PPNN" "SDL_CreateColorCursor" func: SDL_CreateColorCursor
 "PN" "SDL_CreateSystemCursor" func: SDL_CreateSystemCursor

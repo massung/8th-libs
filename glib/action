@@ -1,5 +1,7 @@
 \ -*- 8th -*-
 
+needs ext/rec
+
 ns: glib
 
 \ mapping of key/button constants to action words

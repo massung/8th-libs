@@ -22,7 +22,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "NPPN" "SDL_SaveBMP_RW" func: SDL_SaveBMP_RW
 "NPN" "SDL_SetSurfaceRLE" func: SDL_SetSurfaceRLE
 "NPNN" "SDL_SetColorKey" func: SDL_SetColorKey
-"NP" "SDL_HasColorKey" func: SDL_HasColorKey
+"TP" "SDL_HasColorKey" func: SDL_HasColorKey
 "NPP" "SDL_GetColorKey" func: SDL_GetColorKey
 "NPNNN" "SDL_SetSurfaceColorMod" func: SDL_SetSurfaceColorMod
 "NPPPP" "SDL_GetSurfaceColorMod" func: SDL_GetSurfaceColorMod
@@ -30,7 +30,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "NPP" "SDL_GetSurfaceAlphaMod" func: SDL_GetSurfaceAlphaMod
 "NPN" "SDL_SetSurfaceBlendMode" func: SDL_SetSurfaceBlendMode
 "NPP" "SDL_GetSurfaceBlendMode" func: SDL_GetSurfaceBlendMode
-"NPP" "SDL_SetClipRect" func: SDL_SetClipRect
+"TPP" "SDL_SetClipRect" func: SDL_SetClipRect
 "VPP" "SDL_GetClipRect" func: SDL_GetClipRect
 "PP" "SDL_DuplicateSurface" func: SDL_DuplicateSurface
 "PPPN" "SDL_ConvertSurface" func: SDL_ConvertSurface

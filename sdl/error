@@ -5,7 +5,17 @@ ns: sdl
 \ ensure the SDL library loaded
 libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
+\ error enumeration
+0 constant SDL_ENOMEM
+1 constant SDL_EFREAD
+2 constant SDL_EFWRITE
+3 constant SDL_EFSEEK
+4 constant SDL_UNSUPPORTED
+
 \ functions
 "Z" "SDL_GetError" func: SDL_GetError
 "V" "SDL_ClearError" func: SDL_ClearError
 "NN" "SDL_Error" func: SDL_Error
+
+: SDL_OutOfMemory SDL_ENOMEM SDL_Error ;
+: SDL_Unsupported SDL_UNSUPPORTED SDL_Error ;

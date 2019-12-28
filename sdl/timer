@@ -11,4 +11,4 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "8N" "SDL_GetPerformanceFrequency" func: SDL_GetPerformanceFrequency
 "VN" "SDL_Delay" func: SDL_Delay
 "NNwP" "SDL_AddTimer" func: SDL_AddTimer
-"NN" "SDL_RemoveTimer" func: SDL_RemoveTimer
+"TN" "SDL_RemoveTimer" func: SDL_RemoveTimer

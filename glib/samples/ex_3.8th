@@ -1,7 +1,7 @@
 \ -*- 8th -*-
 
-needs glib/glib
-needs rec
+needs glib/loaded
+needs ext/rec
 
 \ define actions
 glib:action: quit
@@ -53,7 +53,7 @@ rec;
     { "title" : "Glib Example 3 - Random"
     , "width" : 512
     , "height" : 256
-    } glib:glib-init
+    } glib:init
 
     \ create action bindings
     sdl:SDLK_ESCAPE quit glib:bind-key

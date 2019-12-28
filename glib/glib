@@ -1,9 +1,6 @@
 \ -*- 8th -*-
 
-needs rec
-needs sdl/sdl
-needs sdl/image
-needs sdl/mixer
+needs ext/rec
 
 ns: glib
 
@@ -49,18 +46,29 @@ defer: draw
 -- d: Create the renderer for the main window.
 
 : create-renderer \ -- ptr
-    window @ -1 sdl:SDL_RENDERER_ACCELERATED
+    window @ -1
+
+    \ renderer flags
+    sdl:SDL_RENDERER_ACCELERATED
 
     \ attempt to create the renderer, die on failure
     sdl:SDL_CreateRenderer "Failed to create SDL renderer!" thrownull ;
 
--- w: glib:glib-init
+-- w: glib:init
 -- s: m --
 -- d: Initializes SDL library and auto shutdown. Asserts on failure. Creates
--- d: a window and renderer using the provided map of options.
+-- d: a window and renderer using the provided map of options. Valid map
+-- d: options are:
+-- d:
+-- d:   title (string) - window title
+-- d:   x (int)        - left position of window
+-- d:   y (int)        - top position of window
+-- d:   width (int)    - width of window in pixels
+-- d:   height (int)   - height of window in pixels
+-- d:   flags (int)    - SDL_WINDOW_* flags
 
-: glib-init \ m --
-    sdl:SDL_INIT_EVERYTHING sdl:SDL_Init 0 = assert ' sdl:SDL_Quit onexit
+: init \ m --
+    sdl:init ' sdl:SDL_Quit onexit
 
     \ initialize sdl-image, sdl-mixer, etc.
     sdl:IMG_INIT_ALL sdl:IMG_Init 0 > assert ' sdl:IMG_Quit onexit

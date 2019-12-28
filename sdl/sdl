@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs rec
+needs ext/rec
 
 \ SDL namespace
 ns: sdl
@@ -48,6 +48,7 @@ needs sdl/cpu
 needs sdl/error
 needs sdl/events
 needs sdl/gesture
+needs sdl/haptic
 needs sdl/keyboard
 needs sdl/keycode
 needs sdl/mouse
@@ -64,11 +65,11 @@ needs sdl/timer
 needs sdl/touch
 needs sdl/video
 
--- w: sdl:sdl-init
+-- w: sdl:init
 -- s: --
 -- d: Initializes SDL library and auto shutdown. Asserts on failure.
 
-: sdl-init \ --
+: init \ --
     SDL_INIT_EVERYTHING SDL_Init 0 = assert ' SDL_Quit onexit ;
 
 -- w: sdl:quit-requested
@@ -76,4 +77,4 @@ needs sdl/video
 -- d: Checks to see if an SDL_Quit event is in the queue.
 
 : quit-requested \ -- T
-    SDL_PumpEvents null 100 SDL_PEEKEVENT SDL_QUIT dup SDL_PeepEvents 0 > ;
+    SDL_QUIT SDL_HasEvent ;

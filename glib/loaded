@@ -1,0 +1,4 @@
+\ -*- 8th -*-
+
+needs sdl/loaded
+needs glib/glib

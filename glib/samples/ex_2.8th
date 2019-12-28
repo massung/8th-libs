@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs glib/glib
+needs glib/loaded
 
 \ define actions
 glib:action: quit
@@ -26,7 +26,7 @@ null var, sprite
     { "title" : "Glib Example 2 - Images"
     , "width" : 400
     , "height" : 400
-    } glib:glib-init
+    } glib:init
 
     \ load a simple image
     sprite-file glib:load-texture glib:make-sprite sprite !

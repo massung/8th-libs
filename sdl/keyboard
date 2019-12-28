@@ -24,8 +24,8 @@ packed-rec;
 "ZN" "SDL_GetKeyName" func: SDL_GetKeyName
 "NZ" "SDL_GetKeyFromName" func: SDL_GetKeyFromName
 "V" "SDL_StartTextInput" func: SDL_StartTextInput
-"N" "SDL_IsTextInputActive" func: SDL_IsTextInputActive
+"T" "SDL_IsTextInputActive" func: SDL_IsTextInputActive
 "V" "SDL_StopTextInput" func: SDL_StopTextInput
 "VP" "SDL_SetTextInputRect" func: SDL_SetTextInputRect
-"N" "SDL_HasScreenKeyboardSupport" func: SDL_HasScreenKeyboardSupport
-"NP" "SDL_IsScreenKeyboardShown" func: SDL_IsScreenKeyboardShown
+"T" "SDL_HasScreenKeyboardSupport" func: SDL_HasScreenKeyboardSupport
+"TP" "SDL_IsScreenKeyboardShown" func: SDL_IsScreenKeyboardShown

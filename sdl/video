@@ -92,8 +92,8 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "VPPP" "SDL_GetWindowMinimumSize" func: SDL_GetWindowMinimumSize
 "VPNN" "SDL_SetWindowMaximumSize" func: SDL_SetWindowMaximumSize
 "VPPP" "SDL_GetWindowMaximumSize" func: SDL_GetWindowMaximumSize
-"VPN" "SDL_SetWindowBordered" func: SDL_SetWindowBordered
-"VPN" "SDL_SetWindowResizable" func: SDL_SetWindowResizable
+"VPT" "SDL_SetWindowBordered" func: SDL_SetWindowBordered
+"VPT" "SDL_SetWindowResizable" func: SDL_SetWindowResizable
 "VP" "SDL_ShowWindow" func: SDL_ShowWindow
 "VP" "SDL_HideWindow" func: SDL_HideWindow
 "VP" "SDL_RaiseWindow" func: SDL_RaiseWindow
@@ -104,8 +104,8 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "VPP" "SDL_GetWindowSurface" func: SDL_GetWindowSurface
 "VP" "SDL_UpdateWindowSurface" func: SDL_UpdateWindowSurface
 "VPPN" "SDL_UpdateWindowSurfaceRects" func: SDL_UpdateWindowSurfaceRects
-"VPN" "SDL_SetWindowGrab" func: SDL_SetWindowGrab
-"NP" "SDL_GetWindowGrab" func: SDL_GetWindowGrab
+"VPT" "SDL_SetWindowGrab" func: SDL_SetWindowGrab
+"TP" "SDL_GetWindowGrab" func: SDL_GetWindowGrab
 "P" "SDL_GetGrabbedWindow" func: SDL_GetGrabbedWindow
 "NPF" "SDL_SetWindowBrightness" func: SDL_SetWindowBrightness
 "FP" "SDL_GetWindowBrightness" func: SDL_GetWindowBrightness
@@ -117,6 +117,6 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "NPPPP" "SDL_GetWindowGammaRamp" func: SDL_GetWindowGammaRamp
 "NPWP" "SDL_SetWindowHitTest" func: SDL_SetWindowHitTest
 "VP" "SDL_DestroyWindow" func: SDL_DestroyWindow
-"N" "SDL_IsScreenSaverEnabled" func: SDL_IsScreenSaverEnabled
+"T" "SDL_IsScreenSaverEnabled" func: SDL_IsScreenSaverEnabled
 "V" "SDL_EnableScreenSaver" func: SDL_EnableScreenSaver
 "V" "SDL_DisableScreenSaver" func: SDL_DisableScreenSaver

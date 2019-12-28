@@ -11,6 +11,16 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
  1 constant SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE
  2 constant SDL_TOUCH_DEVICE_INDIRECT_RELATIVE
 
+packed-rec: SDL_Finger
+    "l" field: id
+    "f" field: x
+    "f" field: y
+    "f" field: pressure
+packed-rec;
+
+-1 constant SDL_TOUCH_MOUSEID
+-1 constant SDL_MOUSE_TOUCHID
+
 \ functions
 "N" "SDL_GetNumTouchDevices" func: SDL_GetNumTouchDevices
 "NN" "SDL_GetTouchDevice" func: SDL_GetTouchDevice

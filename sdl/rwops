@@ -15,7 +15,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 
 \ functions
 "PZZ" "SDL_RWFromFile" func: SDL_RWFromFile
-"PPN" "SDL_RWFromFP" func: SDL_RWFromFP
+"PPT" "SDL_RWFromFP" func: SDL_RWFromFP
 "PbN" "SDL_RWFromMem" func: SDL_RWFromMem
 "PbN" "SDL_RWFromConstMem" func: SDL_RWFromConstMem
 "P" "SDL_AllocRW" func: SDL_AllocRW

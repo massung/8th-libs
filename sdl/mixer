@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs rec
+needs ext/rec
 
 ns: sdl
 

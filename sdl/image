@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs rec
+needs ext/rec
 
 ns: sdl
 
@@ -43,21 +43,21 @@ packed-rec;
 "PPPNZ" "IMG_LoadTextureTyped_RW" func: IMG_LoadTextureTyped_RW
 
 \ predicate functions
-"NP" "IMG_isICO" func: IMG_isICO
-"NP" "IMG_isCUR" func: IMG_isCUR
-"NP" "IMG_isBMP" func: IMG_isBMP
-"NP" "IMG_isGIF" func: IMG_isGIF
-"NP" "IMG_isJPG" func: IMG_isJPG
-"NP" "IMG_isLBM" func: IMG_isLBM
-"NP" "IMG_isPCX" func: IMG_isPCX
-"NP" "IMG_isPNG" func: IMG_isPNG
-"NP" "IMG_isPNM" func: IMG_isPNM
-"NP" "IMG_isSVG" func: IMG_isSVG
-"NP" "IMG_isTIF" func: IMG_isTIF
-"NP" "IMG_isXCF" func: IMG_isXCF
-"NP" "IMG_isXPM" func: IMG_isXPM
-"NP" "IMG_isXV" func: IMG_isXV
-"NP" "IMG_isWEBP" func: IMG_isWEBP
+"TP" "IMG_isICO" func: IMG_isICO
+"TP" "IMG_isCUR" func: IMG_isCUR
+"TP" "IMG_isBMP" func: IMG_isBMP
+"TP" "IMG_isGIF" func: IMG_isGIF
+"TP" "IMG_isJPG" func: IMG_isJPG
+"TP" "IMG_isLBM" func: IMG_isLBM
+"TP" "IMG_isPCX" func: IMG_isPCX
+"TP" "IMG_isPNG" func: IMG_isPNG
+"TP" "IMG_isPNM" func: IMG_isPNM
+"TP" "IMG_isSVG" func: IMG_isSVG
+"TP" "IMG_isTIF" func: IMG_isTIF
+"TP" "IMG_isXCF" func: IMG_isXCF
+"TP" "IMG_isXPM" func: IMG_isXPM
+"TP" "IMG_isXV" func: IMG_isXV
+"TP" "IMG_isWEBP" func: IMG_isWEBP
 
 \ load surface by type
 "PP" "IMG_LoadICO_RW" func: IMG_LoadICO_RW

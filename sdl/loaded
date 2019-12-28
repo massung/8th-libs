@@ -1,0 +1,12 @@
+\ -*- 8th -*-
+
+\ load the SDL dynamic library
+"SDL2" lib libsdl
+
+\ ensure the SDL library loaded
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ foreign interface
+needs sdl/sdl
+needs sdl/image
+needs sdl/mixer

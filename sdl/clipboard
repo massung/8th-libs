@@ -8,4 +8,4 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 \ functions
 "NZ" "SDL_SetClipboardText" func: SDL_SetClipboardText
 "Z" "SDL_GetClipboardText" func: SDL_GetClipboardText
-"N" "SDL_HasClipboardText" func: SDL_HasClipboardText
+"T" "SDL_HasClipboardText" func: SDL_HasClipboardText

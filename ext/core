@@ -6,6 +6,13 @@
 
 ns: G
 
+-- w: G:exchange
+-- s: x -- y  \\\ r: y -- x
+-- d: Exchange the values on the data and return stacks.
+
+: exchange \ x -- y  \\\ r: y -- x
+    r> swap >r ;
+
 -- w: G:n-cmp
 -- s: a -- w
 -- d: Using an array of sort compare functions (see: `a:qsort`), create a

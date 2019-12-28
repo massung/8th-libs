@@ -1,0 +1,57 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ haptic effect constants
+0x0001 constant SDL_HAPTIC_CONSTANT
+0x0002 constant SDL_HAPTIC_SINE
+0x0004 constant SDL_HAPTIC_LEFTRIGHT
+0x0008 constant SDL_HAPTIC_TRIANGLE
+0x0010 constant SDL_HAPTIC_SAWTOOTHUP
+0x0020 constant SDL_HAPTIC_SAWTOOTHDOWN
+0x0040 constant SDL_HAPTIC_RAMP
+0x0080 constant SDL_HAPTIC_SPRING
+0x0100 constant SDL_HAPTIC_DAMPER
+0x0200 constant SDL_HAPTIC_INERTIA
+0x0400 constant SDL_HAPTIC_FRICTION
+0x0800 constant SDL_HAPTIC_CUSTOM
+0x1000 constant SDL_HAPTIC_GAIN
+0x2000 constant SDL_HAPTIC_AUTOCENTER
+0x4000 constant SDL_HAPTIC_STATUS
+0x8000 constant SDL_HAPTIC_PAUSE
+
+\ direction encodings
+0 constant SDL_HAPTIC_POLAR
+1 constant SDL_HAPTIC_CARTESIAN
+2 constant SDL_HAPTIC_SPHERICAL
+
+\ inifinity
+4294967295 constant SDL_HAPTIC_INFINITY
+
+packed-rec: SDL_HapticDirection
+    "B" field: type
+    "3i" field: dir
+packed-rec;
+
+packed-rec: SDL_HapticConstant
+    "w" field: type
+    "b" field: direction
+    "i" field: length
+    "w" field: delay
+    "w" field: button
+    "w" field: interval
+    "w" field: level
+    "w" field: attack_length
+    "w" field: attack_level
+    "w" field: fade_length
+    "w" field: fade_level
+packed-rec;
+
+packed-rec: SDL_HapticPeriodic
+    "w" field: type
+    "b" field: direction
+
+packed-rec;

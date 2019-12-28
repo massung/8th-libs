@@ -1,13 +1,13 @@
 \ -*- 8th -*-
 
-needs glib/glib
+needs glib/loaded
 
 \ define actions
 glib:action: quit
 
 \ entry point
 : app:main \ --
-    { "title" : "Glib Example 1 - Basics" } glib:glib-init
+    { "title" : "Glib Example 1 - Basics" } glib:init
 
     \ create action bindings
     sdl:SDLK_ESCAPE quit glib:bind-key

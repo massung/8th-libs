@@ -16,8 +16,18 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 2 constant ShapeModeReverseBinarizeAlpha
 3 constant ShapeModeColorKey
 
+packed-rec: SDL_WindowShapeParams
+    "B" field: binarizationCutoff
+    "b" field: colorKey
+packed-rec;
+
+packed-rec: SDL_WindowShapeMode
+    "i" field: mode
+    "b" field: parameters
+packed-rec;
+
 \ functions
 "PZNNNNN" "SDL_CreateShapedWindow" func: SDL_CreateShapedWindow
-"NP" "SDL_IsShapedWindow" func: SDL_IsShapedWindow
+"TP" "SDL_IsShapedWindow" func: SDL_IsShapedWindow
 "NPPP" "SDL_SetWindowShape" func: SDL_SetWindowShape
 "NPP" "SDL_GetShapedWindowMode" func: SDL_GetShapedWindowMode
