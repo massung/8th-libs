@@ -27,6 +27,10 @@ libsdl-ttf "Failed to find/load SDL_ttf dynamic library" thrownull drop
 0x02 constant TTF_HINTING_MONO
 0x03 constant TTF_HINTING_NONE
 
+\ error "macros"
+: TTF_SetError SDL_SetError ;
+: TTF_GetError SDL_GetError ;
+
 \ byte swapping
 "VT" "TTF_ByteSwappedUNICODE" func: TTF_ByteSwappedUNICODE
 
@@ -34,10 +38,6 @@ libsdl-ttf "Failed to find/load SDL_ttf dynamic library" thrownull drop
 "N" "TTF_Init" func: TTF_Init
 "T" "TTF_WasInit" func: TTF_WasInit
 "V" "TTF_Quit" func: TTF_Quit
-
-\ errors
-"VZ" "TTF_SetError" func: TTF_SetError
-"Z" "TTF_GetError" func: TTF_GetError
 
 \ management
 "PZN" "TTF_OpenFont" func: TTF_OpenFont

@@ -121,7 +121,7 @@ rec;
     \ lookup the binding for this button and press it
     mouse-bindings @ swap m:_@ null; press ;
 
--- w: glib:on-mousei[
+-- w: glib:on-mouseup
 -- s: b --
 -- d: Update any bound actions.
 

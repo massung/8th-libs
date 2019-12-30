@@ -18,5 +18,6 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "V" "SDL_ClearError" func: SDL_ClearError
 "NN" "SDL_Error" func: SDL_Error
 
+\ helper "macros"
 : SDL_OutOfMemory SDL_ENOMEM SDL_Error ;
 : SDL_Unsupported SDL_UNSUPPORTED SDL_Error ;
