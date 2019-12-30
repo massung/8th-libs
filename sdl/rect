@@ -11,6 +11,9 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "Tbbb" "SDL_UnionRect" func: SDL_UnionRect
 "TbNbb" "SDL_EnclosePoints" func: SDL_EnclosePoints
 "Tbbbb" "SDL_IntersectRectAndLine" func: SDL_IntersectRectAndLine
+"Tbb" "SDL_PointInRect" func: SDL_PointInRect
+"Tb" "SDL_RectEmpty" func: SDL_RectEmpty
+"Tbb" "SDL_RectEquals" func: SDL_RectEquals
 
 \ SDL_Point record
 packed-rec: SDL_Point
