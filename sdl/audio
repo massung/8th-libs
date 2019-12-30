@@ -1,0 +1,156 @@
+\ -*- 8th -*-
+
+ns: sdl
+
+\ ensure the SDL library loaded
+libsdl "Failed to find/load SDL dynamic library" thrownull drop
+
+\ audio flags
+0x00FF constant SDL_AUDIO_MASK_BITSIZE
+0x0100 constant SDL_AUDIO_MASK_DATATYPE
+0x1000 constant SDL_AUDIO_MASK_ENDIAN
+0x8000 constant SDL_AUDIO_MASK_SIGNED
+
+\ audio flag "macros"
+: SDL_AUDIO_BITSIZE \ n -- n
+    SDL_AUDIO_MASK_BITSIZE n:band ;
+
+: SDL_AUDIO_ISFLOAT \ n -- T
+    SDL_AUDIO_MASK_DATATYPE n:band 0 > ;
+: SDL_AUDIO_ISBIGENDIAN \ n -- T
+    SDL_AUDIO_MASK_ENDIAN n:band 0 > ;
+: SDL_AUDIO_ISSIGNED \ n -- T
+    SDL_AUDIO_MASK_SIGNED n:band 0 > ;
+
+: SDL_AUDIO_ISINT \ n -- T
+    SDL_AUDIO_ISFLOAT not ;
+: SDL_AUDIO_ISLITTLEENDIAN \ n -- T
+    SDL_AUDIO_ISBIGENDIAN not ;
+: SDL_AUDIO_ISUNSIGNED \ n -- T
+    SDL_AUDIO_ISSIGNED not ;
+
+\ audio flag formats
+0x0008 constant AUDIO_U8
+0x8008 constant AUDIO_S8
+0x0010 constant AUDIO_U16LSB
+0x8010 constant AUDIO_S16LSB
+0x1010 constant AUDIO_U16MSB
+0x9010 constant AUDIO_S16MSB
+0x8020 constant AUDIO_S32LSB
+0x9020 constant AUDIO_S32MSB
+0x8120 constant AUDIO_F32LSB
+0x9120 constant AUDIO_F32MSB
+
+\ backwards compatibility
+AUDIO_U16LSB constant AUDIO_U16
+AUDIO_S16LSB constant AUDIO_S16
+AUDIO_S32LSB constant AUDIO_S32
+AUDIO_F32LSB constant AUDIO_F32
+
+\ native byte ordering (assumes little endian)
+AUDIO_U16LSB constant AUDIO_U16SYS
+AUDIO_S16LSB constant AUDIO_S16SYS
+AUDIO_S32LSB constant AUDIO_S32SYS
+AUDIO_F32LSB constant AUDIO_F32SYS
+
+\ change flags
+0x00000001 constant SDL_AUDIO_ALLOW_FREQUENCY_CHANGE
+0x00000002 constant SDL_AUDIO_ALLOW_FORMAT_CHANGE
+0x00000004 constant SDL_AUDIO_ALLOW_CHANNELS_CHANGE
+0x00000008 constant SDL_AUDIO_ALLOW_SAMPLES_CHANGE
+0x0000000F constant SDL_AUDIO_ALLOW_ANY_CHANGE
+
+\ limits
+9 constant SDL_AUDIOCVT_MAX_FILTERS
+128 constant SDL_MIX_MAXVOLUME
+
+\ audio status
+0 constant SDL_AUDIO_STOPPED
+1 constant SDL_AUDIO_PLAYING
+2 constant SDL_AUDIO_PAUSED
+
+packed-rec: SDL_AudioSpec
+    "=" field: freq
+    "i" field: format
+    "B" field: channels
+    "B" field: silence
+    "w" field: samples
+    "w" field: padding
+    "i" field: size
+    "p" field: callback
+    "p" field: userdata
+packed-rec;
+
+packed-rec: SDL_AudioCVT
+    "=" field: needed
+    "i" field: src_format
+    "i" field: dst_format
+    "d" field: rate_incr
+    "p" field: buf
+    "=" field: len
+    "=" field: len_cvt
+    "=" field: len_mult
+    "d" field: len_ratio
+    "10i" field: filters
+    "=" field: filter_index
+packed-rec;
+
+\ driver discovery
+"N" "SDL_GetNumAudioDrivers" func: SDL_GetNumAudioDrivers
+"ZN" "SDL_GetAudioDriver" func: SDL_GetAudioDriver
+"Z" "SDL_GetCurrentAudioDriver" func: SDL_GetCurrentAudioDriver
+
+\ initialization
+"NZ" "SDL_AudioInit" func: SDL_AudioInit
+"V" "SDL_AudioQuit" func: SDL_AudioQuit
+
+\ devices
+"NPP" "SDL_OpenAudio" func: SDL_OpenAudio
+"NN" "SDL_GetNumAudioDevices" func: SDL_GetNumAudioDevices
+"ZNN" "SDL_GetAudioDeviceName" func: SDL_GetAudioDeviceName
+"NZNPPN" "SDL_OpenAudioDevice" func: SDL_OpenAudioDevice
+
+\ status
+"N" "SDL_GetAudioStatus" func: SDL_GetAudioStatus
+"NN" "SDL_GetAudioDeviceStatus" func: SDL_GetAudioDeviceStatus
+
+\ audio pause state
+"VT" "SDL_PauseAudio" func: SDL_PauseAudio
+"VNT" "SDL_PauseAudioDevice" func: SDL_PauseAudioDevice
+
+\ wav sources
+"PPNPPP" "SDL_LoadWAV_RW" func: SDL_LoadWAV_RW
+"VP" "SDL_FreeWAV" func: SDL_FreeWAV
+
+\ audio cvt
+"NPNNNNNN" "SDL_BuildAudioCVT" func: SDL_BuildAudioCVT
+"NP" "SDL_ConvertAudio" func: SDL_ConvertAudio
+
+\ audio streams
+"PNNNNNN" "SDL_NewAudioStream" func: SDL_NewAudioStream
+"NPPN" "SDL_AudioStreamPut" func: SDL_AudioStreamPut
+"NPPN" "SDL_AudioStreamGet" func: SDL_AudioStreamGet
+"TP" "SDL_AudioStreamAvailable" func: SDL_AudioStreamAvailable
+"NP" "SDL_AudioStreamFlush" func: SDL_AudioStreamFlush
+"VP" "SDL_AudioStreamClear" func: SDL_AudioStreamClear
+"VP" "SDL_FreeAudioStream" func: SDL_FreeAudioStream
+
+\ audio mixing
+"VPPNN" "SDL_MixAudio" func: SDL_MixAudio
+"VPPNNN" "SDL_MixAudioFormat" func: SDL_MixAudioFormat
+
+\ audio queue
+"NNPN" "SDL_QueueAudio" func: SDL_QueueAudio
+"NNPN" "SDL_DequeueAudio" func: SDL_DequeueAudio
+"NN" "SDL_GetQueuedAudioSize" func: SDL_GetQueuedAudioSize
+"VN" "SDL_ClearQueuedAudio" func: SDL_ClearQueuedAudio
+
+\ audio locking
+"V" "SDL_LockAudio" func: SDL_LockAudio
+"VN" "SDL_LockAudioDevice" func: SDL_LockAudioDevice
+"V" "SDL_UnlockAudio" func: SDL_UnlockAudio
+"VN" "SDL_UnlockAudioDevice" func: SDL_UnlockAudioDevice
+
+\ closing audio
+"V" "SDL_CloseAudio" func: SDL_CloseAudio
+"VN" "SDL_CloseAudioDevice" func: SDL_CloseAudioDevice

@@ -42,6 +42,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 "S" "SDL_GetRevision" func: SDL_GetRevision
 "N" "SDL_GetRevisionNumber" func: SDL_GetRevisionNumber
 
+needs sdl/audio
 needs sdl/blendmode
 needs sdl/clipboard
 needs sdl/cpu

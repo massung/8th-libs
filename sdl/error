@@ -13,6 +13,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 4 constant SDL_UNSUPPORTED
 
 \ functions
+"NZ" "SDL_SetError" func: SDL_SetError
 "Z" "SDL_GetError" func: SDL_GetError
 "V" "SDL_ClearError" func: SDL_ClearError
 "NN" "SDL_Error" func: SDL_Error

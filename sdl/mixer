@@ -39,6 +39,10 @@ libsdl-mixer "Failed to find/load SDL_mixer dynamic library" thrownull drop
 0x09 constant MUS_MODPLUG_UNUSED
 0x0A constant MUS_OPUS
 
+\ defaults
+22050 constant MIX_DEFAULT_FREQUENCY
+AUDIO_S16SYS constant MIX_DEFAULT_FORMAT
+
 \ mix chunks
 packed-rec: Mix_Chunk
     "=" field: allocated
@@ -47,6 +51,93 @@ packed-rec: Mix_Chunk
     "B" field: volume
 packed-rec;
 
+\ error "macros"
+: Mix_SetError SDL_SetError ;
+: Mix_GetError SDL_GetError ;
+
 \ initialization
 "NN" "Mix_Init" func: Mix_Init
 "V" "Mix_Quit" func: Mix_Quit
+
+\ audio devices
+"NNNNN" "Mix_OpenAudio" func: Mix_OpenAudio
+"V" "Mix_CloseAudio" func: Mix_CloseAudio
+
+\ specs
+"NPPP" "Mix_QuerySpec" func: Mix_QuerySpec
+
+\ chunks
+"N" "Mix_GetNumChunkDecoders" func: Mix_GetNumChunkDecoders
+"ZN" "Mix_GetChunkDecoder" func: Mix_GetChunkDecoder
+"PZN" "Mix_LoadWAV_RW" func: Mix_LoadWAV_RW
+"PP" "Mix_QuickLoad_WAV" func: Mix_QuickLoad_WAV
+"PP" "Mix_QuickLoad_RAW" func: Mix_QuickLoad_RAW
+"NPN" "Mix_VolumeChunk" func: Mix_VolumeChunk
+"VP" "Mix_FreeChunk" func: Mix_FreeChunk
+
+\ helper macros
+: Mix_LoadWAV \ s -- p
+    "rb" SDL_RWFromFile 1 Mix_LoadWAV_RW ;
+
+\ channels
+"NN" "Mix_AllocateChannels" func: Mix_AllocateChannels
+"NNN" "Mix_Volume" func: Mix_Volume
+"NNPN" "Mix_PlayChannel" func: Mix_PlayChannel
+"NNPNN" "Mix_PlayChannelTimed" func: Mix_PlayChannelTimed
+"NNPNN" "Mix_FadeInChannel" func: Mix_FadeInChannel
+"NNPNNN" "Mix_FadeInChannelTimed" func: Mix_FadeInChannelTimed
+"VN" "Mix_Pause" func: Mix_Pause
+"VN" "Mix_Resume" func: Mix_Resume
+"NN" "Mix_HaltChannel" func: Mix_HaltChannel
+"NNN" "Mix_ExpireChannel" func: Mix_ExpireChannel
+"NNN" "Mix_FadeOutChannel" func: Mix_FadeOutChannel
+"VW" "Mix_ChannelFinished" func: Mix_ChannelFinished
+"NN" "Mix_Playing" func: Mix_Playing
+"NN" "Mix_Paused" func: Mix_Paused
+"NN" "Mix_FadingChannel" func: Mix_FadingChannel
+"PN" "Mix_GetChunk" func: Mix_GetChunk
+"NN" "Mix_ReserveChannels" func: Mix_ReserveChannels
+
+\ channel groups
+"NNN" "Mix_GroupChannel" func: Mix_GroupChannel
+"NNNN" "Mix_GroupChannels" func: Mix_GroupChannels
+"NN" "Mix_GroupCount" func: Mix_GroupCount
+"NN" "Mix_GroupAvailable" func: Mix_GroupAvailable
+"NN" "Mix_GroupOldest" func: Mix_GroupOldest
+"NN" "Mix_GroupNewer" func: Mix_GroupNewer
+"NNN" "Mix_FadeOutGroup" func: Mix_FadeOutGroup
+"NN" "Mix_HaltGroup" func: Mix_HaltGroup
+
+\ music
+"N" "Mix_GetNumMusicDecoders" func: Mix_GetNumMusicDecoders
+"ZN" "Mix_GetMusicDecoder" func: Mix_GetMusicDecoder
+"PZ" "Mix_LoadMUS" func: Mix_LoadMUS
+"VP" "Mix_FreeMusic" func: Mix_FreeMusic
+"NPN" "Mix_PlayMusic" func: Mix_PlayMusic
+"NPNN" "Mix_FadeInMusic" func: Mix_FadeInMusic
+"NPNND" "Mix_FadeInMusicPos" func: Mix_FadeInMusicPos
+"VWP" "Mix_HookMusic" func: Mix_HookMusic
+"NN" "Mix_VolumeMusic" func: Mix_VolumeMusic
+"V" "Mix_PauseMusic" func: Mix_PauseMusic
+"V" "Mix_ResumeMusic" func: Mix_ResumeMusic
+"V" "Mix_RewindMusic" func: Mix_RewindMusic
+"VD" "Mix_SetMusicPosition" func: Mix_SetMusicPosition
+"NZ" "Mix_SetMusicCMD" func: Mix_SetMusicCMD
+"N" "Mix_HaltMusic" func: Mix_HaltMusic
+"NN" "Mix_FadeOutMusic" func: Mix_FadeOutMusic
+"VW" "Mix_HookMusicFinished" func: Mix_HookMusicFinished
+"NP" "Mix_GetMusicType" func: Mix_GetMusicType
+"T" "Mix_PlayingMusic" func: Mix_PlayingMusic
+"T" "Mix_PausedMusic" func: Mix_PausedMusic
+"N" "Mix_FadingMusic" func: Mix_FadingMusic
+"P" "Mix_GetMusicHookData" func: Mix_GetMusicHookData
+
+\ effects
+"NNWWP" "Mix_RegisterEffect" func: Mix_RegisterEffect
+"NNW" "Mix_UnregisterEffect" func: Mix_UnregisterEffect
+"NN" "Mix_UnregisterAllEffects" func: Mix_UnregisterAllEffects
+"VWP" "Mix_SetPostMix" func: Mix_SetPostMix
+"NNNN" "Mix_SetPanning" func: Mix_SetPanning
+"NNN" "Mix_SetDistance" func: Mix_SetDistance
+"NNNN" "Mix_SetPosition" func: Mix_SetPosition
+"NNT" "Mix_SetReverseStereo" func: Mix_SetReverseStereo

@@ -73,6 +73,14 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 8 constant SDL_HITTEST_RESIZE_BOTTOMLEFT
 9 constant SDL_HITTEST_RESIZE_LEFT
 
+packed-rec: SDL_DisplayMode
+    "i" field: format
+    "=" field: w
+    "=" field: h
+    "=" field: refresh_rate
+    "p" field: driverdata
+packed-rec;
+
 \ functions
 "PZNNNNN" "SDL_CreateWindow" func: SDL_CreateWindow
 "XP" "SDL_GetWindowID" func: SDL_GetWindowID
