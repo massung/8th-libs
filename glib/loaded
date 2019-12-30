@@ -1,4 +1,8 @@
 \ -*- 8th -*-
 
-needs sdl/loaded
+requires sdl
+
 needs glib/glib
+
+\ for requires
+true

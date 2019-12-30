@@ -1,6 +1,7 @@
 \ -*- 8th -*-
 
-needs glib/loaded
+requires glib
+
 needs ext/rec
 
 \ define actions

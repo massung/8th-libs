@@ -64,17 +64,3 @@ needs sdl/surface
 needs sdl/timer
 needs sdl/touch
 needs sdl/video
-
--- w: sdl:init
--- s: --
--- d: Initializes SDL library and auto shutdown. Asserts on failure.
-
-: init \ --
-    SDL_INIT_EVERYTHING SDL_Init 0 = assert ' SDL_Quit onexit ;
-
--- w: sdl:quit-requested
--- s: -- T
--- d: Checks to see if an SDL_Quit event is in the queue.
-
-: quit-requested \ -- T
-    SDL_QUIT SDL_HasEvent ;

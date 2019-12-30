@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs glib/loaded
+requires glib
 
 \ define actions
 glib:action: quit

@@ -10,3 +10,32 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
 needs sdl/sdl
 needs sdl/image
 needs sdl/mixer
+needs sdl/ttf
+
+ns: sdl
+
+-- w: sdl:init-all
+-- s: --
+-- d: Initialize SDL, SDL_image, SDL_mixer, and SDL_ttf. Assert if any fail
+-- d: to initialize and setup quit handlers on program exit.
+
+: init-all \ --
+    SDL_INIT_EVERYTHING SDL_Init 0 = assert ' SDL_Quit onexit
+
+    \ initialize SDL_image and SDL_mixer
+    IMG_INIT_ALL IMG_Init 0 > assert ' IMG_Quit onexit
+    MIX_INIT_ALL Mix_Init 0 > assert ' Mix_Quit onexit
+
+    \ initialize SDL_ttf
+    TTF_Init 0 = assert ' TTF_Quit onexit
+    ;
+
+-- w: sdl:quit-requested
+-- s: -- T
+-- d: Checks to see if an SDL_Quit event is in the queue.
+
+: quit-requested? \ -- T
+    SDL_QUIT SDL_HasEvent ;
+
+\ for requires
+true

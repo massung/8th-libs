@@ -1,0 +1,94 @@
+\ -*- 8th -*-
+
+needs ext/rec
+
+ns: sdl
+
+\ attempt to load extension libraries
+"SDL2_ttf" lib libsdl-ttf
+
+\ ensure the SDL library loaded
+libsdl-ttf "Failed to find/load SDL_ttf dynamic library" thrownull drop
+
+\ unicode
+0xFEFF constant UNICODE_BOM_NATIVE
+0xFFFE constant UNICODE_BOM_SWAPPED
+
+\ style constants
+0x00 constant TTF_STYLE_NORMAL
+0x01 constant TTF_STYLE_BOLD
+0x02 constant TTF_STYLE_ITALIC
+0x04 constant TTF_STYLE_UNDERLINE
+0x08 constant TTF_STYLE_STRIKETHROUGH
+
+\ hinting constants
+0x00 constant TTF_HINTING_NORMAL
+0x01 constant TTF_HINTING_LIGHT
+0x02 constant TTF_HINTING_MONO
+0x03 constant TTF_HINTING_NONE
+
+\ byte swapping
+"VT" "TTF_ByteSwappedUNICODE" func: TTF_ByteSwappedUNICODE
+
+\ initialization
+"N" "TTF_Init" func: TTF_Init
+"T" "TTF_WasInit" func: TTF_WasInit
+"V" "TTF_Quit" func: TTF_Quit
+
+\ errors
+"VZ" "TTF_SetError" func: TTF_SetError
+"Z" "TTF_GetError" func: TTF_GetError
+
+\ management
+"PZN" "TTF_OpenFont" func: TTF_OpenFont
+"PPNN" "TTF_OpenFontRW" func: TTF_OpenFontRW
+"PZNN" "TTF_OpenFontIndex" func: TTF_OpenFontIndex
+"PPNNN" "TTF_OpenFontIndexRW" func: TTF_OpenFontIndexRW
+"VP" "TTF_CloseFont" func: TTF_CloseFont
+
+\ attributes
+"NP" "TTF_GetFontStyle" func: TTF_GetFontStyle
+"VPN" "TTF_SetFontStyle" func: TTF_SetFontStyle
+"NP" "TTF_GetFontOutline" func: TTF_GetFontOutline
+"VPN" "TTF_SetFontOutline" func: TTF_SetFontOutline
+"NP" "TTF_GetFontHinting" func: TTF_GetFontHinting
+"VPN" "TTF_SetFontHinting" func: TTF_SetFontHinting
+"NP" "TTF_GetFontKerning" func: TTF_GetFontKerning
+"VPN" "TTF_SetFontKerning" func: TTF_SetFontKerning
+"NP" "TTF_GetFontHeight" func: TTF_GetFontHeight
+"VPN" "TTF_SetFontHeight" func: TTF_SetFontHeight
+"NP" "TTF_GetFontAscent" func: TTF_GetFontAscent
+"VPN" "TTF_SetFontAscent" func: TTF_SetFontAscent
+"NP" "TTF_GetFontDescent" func: TTF_GetFontDescent
+"VPN" "TTF_SetFontDescent" func: TTF_SetFontDescent
+"NP" "TTF_GetFontLineSkip" func: TTF_GetFontLineSkip
+"VPN" "TTF_SetFontLineSkip" func: TTF_SetFontLineSkip
+
+\ faces
+"NP" "TTF_FontFaces" func: TTF_FontFaces
+"TP" "TTF_FontFaceIsFixedWidth" func: TTF_FontFaceIsFixedWidth
+"ZP" "TTF_FontFaceFamilyName" func: TTF_FontFaceFamilyName
+"ZP" "TTF_FontFaceStyleName" func: TTF_FontFaceStyleName
+
+\ glyphs
+"NPN" "TTF_GlyphIsProvided" func: TTF_GlyphIsProvided
+"NPNPPPPP" "TTF_GlyphMetrics" func: TTF_GlyphMetrics
+
+\ size
+"NPZPP" "TTF_SizeText" func: TTF_SizeText
+"NPZPP" "TTF_SizeUTF8" func: TTF_SizeUTF8
+"NPZPP" "TTF_SizeUNICODE" func: TTF_SizeUNICODE
+
+\ rendering
+"PPZN" "TTF_RenderText_Solid" func: TTF_RenderText_Solid
+"PPZN" "TTF_RenderUTF8_Solid" func: TTF_RenderUTF8_Solid
+"PPZN" "TTF_RenderUNICODE_Solid" func: TTF_RenderUNICODE_Solid
+"PPNN" "TTF_RenderGlyph_Solid" func: TTF_RenderGlyph_Solid
+"PPZNN" "TTF_RenderText_Shaded" func: TTF_RenderText_Shaded
+"PPZNN" "TTF_RenderUTF8_Shaded" func: TTF_RenderUTF8_Shaded
+"PPZNN" "TTF_RenderUNICODE_Shaded" func: TTF_RenderUNICODE_Shaded
+"PPNNN" "TTF_RenderGlyph_Shaded" func: TTF_RenderGlyph_Shaded
+"PPZNN" "TTF_RenderText_Blended" func: TTF_RenderText_Blended
+"PPZNN" "TTF_RenderUTF8_Blended" func: TTF_RenderUTF8_Blended
+"PPZNN" "TTF_RenderUNICODE_Blended" func: TTF_RenderUNICODE_Blended
+"PPNNN" "TTF_RenderGlyph_Blended" func: TTF_RenderGlyph_Blended

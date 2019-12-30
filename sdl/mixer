@@ -27,17 +27,17 @@ libsdl-mixer "Failed to find/load SDL_mixer dynamic library" thrownull drop
 2 constant MIX_FADING_IN
 
 \ music types
-0 constant MUS_NONE
-1 constant MUS_CMD
-2 constant MUS_WAV
-3 constant MUS_MOD
-4 constant MUS_MID
-5 constant MUS_OGG
-6 constant MUS_MP3
-7 constant MUS_MP3_MAD_UNUSED
-8 constant MUS_FLAC
-9 constant MUS_MODPLUG_UNUSED
-10 constant MUS_OPUS
+0x00 constant MUS_NONE
+0x01 constant MUS_CMD
+0x02 constant MUS_WAV
+0x03 constant MUS_MOD
+0x04 constant MUS_MID
+0x05 constant MUS_OGG
+0x06 constant MUS_MP3
+0x07 constant MUS_MP3_MAD_UNUSED
+0x08 constant MUS_FLAC
+0x09 constant MUS_MODPLUG_UNUSED
+0x0A constant MUS_OPUS
 
 \ mix chunks
 packed-rec: Mix_Chunk

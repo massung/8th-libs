@@ -68,11 +68,7 @@ defer: draw
 -- d:   flags (int)    - SDL_WINDOW_* flags
 
 : init \ m --
-    sdl:init ' sdl:SDL_Quit onexit
-
-    \ initialize sdl-image, sdl-mixer, etc.
-    sdl:IMG_INIT_ALL sdl:IMG_Init 0 > assert ' sdl:IMG_Quit onexit
-    sdl:MIX_INIT_ALL sdl:Mix_Init 0 > assert ' sdl:Mix_Quit onexit
+    sdl:init-all
 
     \ create the main window and renderer
     create-window window !
