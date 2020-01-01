@@ -1,5 +1,6 @@
 \ -*- 8th -*-
 
+needs ext/core
 needs ini/ini
 
 ns: aws
