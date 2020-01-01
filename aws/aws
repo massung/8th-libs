@@ -4,6 +4,7 @@ needs ini/ini
 
 ns: aws
 
+\ attempt to load AWS tokens from the environment
 "AWS_ACCESS_KEY_ID" getenv var, aws-key
 "AWS_SECRET_ACCESS_KEY" getenv var, aws-secret
 
@@ -16,8 +17,8 @@ ns: aws
     ".aws/credentials" f:homefile ini:load null; "default" m:_@ null;
 
     \ read the key and secret
-    aws-key @ "aws_access_key_id" m:@ ?: aws-key !
-    aws-secret @ "aws_secret_access_key" m:_@ ?: aws-secret ! ;
+    "aws_access_key_id" m:@ aws-key @ ?: aws-key !
+    "aws_secret_access_key" m:_@ aws-secret @ ?: aws-secret ! ;
 
 -- w: aws:init
 -- s: -- T
