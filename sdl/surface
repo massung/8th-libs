@@ -56,7 +56,7 @@ libsdl "Failed to find/load SDL dynamic library" thrownull drop
     "wb" SDL_RWFromFile 1 SDL_SaveBMP_RW ;
 
 \ SDL_BlitSurface macro
-' SDL_UpperBlit alias: SDL_BlitSurface
+' SDL_UpperBlit w:alias: SDL_BlitSurface
 
 \ SDL_BlitScaled macro
-' SDL_UpperBlitScaled alias: SDL_BlitScaled
+' SDL_UpperBlitScaled w:alias: SDL_BlitScaled

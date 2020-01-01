@@ -6,6 +6,20 @@ ns: glib
 var mouse-x
 var mouse-y
 
+-- w: glib:hide-mouse
+-- s: --
+-- d: Hide the mouse cursor.
+
+: hide-mouse \ --
+    sdl:SDL_DISABLE sdl:SDL_ShowCursor ;
+
+-- w: glib:show-mouse
+-- s: --
+-- d: Show the mouse cursor.
+
+: show-mouse \ --
+    sdl:SDL_ENABLE sdl:SDL_ShowCursor ;
+
 -- w: glib:mouse-pos
 -- s: -- n n
 -- d: Extract the x and y coordinates of the mouse.

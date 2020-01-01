@@ -1025,9 +1025,9 @@ gl "Failed to find/load OpenGL dynamic library" thrownull drop
 "VP" "glIndexubv" func: glIndexubv
 "V" "glInitNames" func: glInitNames
 "VNNP" "glInterleavedArrays" func: glInterleavedArrays
-"NN" "glIsEnabled" func: glIsEnabled
-"NN" "glIsList" func: glIsList
-"NN" "glIsTexture" func: glIsTexture
+"TN" "glIsEnabled" func: glIsEnabled
+"TN" "glIsList" func: glIsList
+"TN" "glIsTexture" func: glIsTexture
 "VNNF" "glLightf" func: glLightf
 "VNNP" "glLightfv" func: glLightfv
 "VNNN" "glLighti" func: glLighti

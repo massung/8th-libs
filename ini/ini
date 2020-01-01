@@ -1,6 +1,6 @@
 \ -*- 8th -*-
 
-needs ext
+needs ext/core
 
 ns: ini
 

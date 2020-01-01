@@ -7,26 +7,27 @@ ns: glib
 -- d: Create a new event buffer for use with SDL_PollEvent, etc.
 
 : new-event \ -- b
-    56 b:new ;
+    null SDL_Event:pack ;
 
 -- w: sdl:event-type
 -- s: n -- b n
 -- d: Unpack the type from an event buffer.
 
 : event-type \ b -- b n
-    dup SDL_CommonEvent:unpack drop SDL_CommonEvent:type nip ;
+    dup SDL_CommonEvent:unpack drop SDL_CommonEvent:_type ;
 
 -- w: sdl:poll-event
--- s: -- b n true | false
--- d: Wrapper for SDL_PollEvent that return an event buffer, type of event
--- d: and a flag if there even was an event.
+-- s: -- b n | null
+-- d: Wrapper for SDL_PollEvent that return the event buffer and type or null
+-- d: if there is no events pending.
 
 : poll-event \ -- b n | null
-    new-event dup sdl:SDL_PollEvent 0 = if drop null then ;
+    new-event dup sdl:SDL_PollEvent 0 = if drop null ;then event-type ;
 
 -- w: sdl:wait-event
--- s: -- b n
--- d: Wait for the next event and unpack it.
+-- s: -- b n | null
+-- d: Wait for the next event. Returns the event buffer and type or null if
+-- d: no event received.
 
 : wait-event \ -- b n | null
-    new-event dup sdl:SDL_WaitEvent 0 = if drop null then ;
+    new-event dup sdl:SDL_WaitEvent 0 = if drop null ;then event-type ;

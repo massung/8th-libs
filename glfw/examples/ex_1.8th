@@ -1,0 +1,36 @@
+requires glfw
+
+with: glfw
+with: gl
+
+: app:main \ --
+    glfwInit assert ' glfwTerminate onexit
+
+    \ create a window (leave it on the stack)
+    640 480 "Example 1" null null glfwCreateWindow
+
+    \ ensure the window was created successfully
+    "Failed to create window!" thrownull
+
+    \ make it the current context
+    dup glfwMakeContextCurrent
+
+    \ loop forever
+    repeat
+        GL_COLOR_BUFFER_BIT glClear
+
+        \ render a simple triangle
+        1 0 0 glColor3f
+        GL_TRIANGLES glBegin
+            -0.5 -0.5 -1 glVertex3f
+             0.0  0.5 -1 glVertex3f
+             0.5 -0.5 -1 glVertex3f
+        glEnd
+
+        \ process event queue
+        glfwPollEvents
+
+        \ present and optionally quit
+        dup glfwSwapBuffers
+        dup glfwWindowShouldClose
+    until! ;

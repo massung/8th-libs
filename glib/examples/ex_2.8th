@@ -28,6 +28,9 @@ null var, sprite
     , "height" : 400
     } glib:init
 
+    \ disable the mouse cursor
+    glib:hide-mouse
+
     \ load a simple image
     sprite-file glib:load-texture glib:make-sprite sprite !
 

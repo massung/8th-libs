@@ -52,8 +52,8 @@ packed-rec: Mix_Chunk
 packed-rec;
 
 \ error "macros"
-: Mix_SetError SDL_SetError ;
-: Mix_GetError SDL_GetError ;
+' SDL_SetError w:alias: Mix_SetError
+' SDL_GetError w:alias: Mix_GetError
 
 \ initialization
 "NN" "Mix_Init" func: Mix_Init

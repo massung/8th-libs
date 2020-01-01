@@ -1,7 +1,9 @@
 \ -*- 8th -*-
 
+needs ext/core
 needs ext/rec
 
+with: sdl
 ns: glib
 
 \ global window and renderer
@@ -11,51 +13,58 @@ var renderer
 \ subsystems
 needs glib/action
 needs glib/events
-needs glib/mouse
 needs glib/image
+needs glib/mouse
 needs glib/sprite
 
 \ run loop callbacks
 defer: step
 defer: draw
 
+\ window options
+rec: window-opts
+    field: title
+    field: x
+    field: y
+    field: width
+    field: height
+    field: flags
+rec;
+
 -- w: glib:create-window
 -- s: m -- ptr
 -- d: Create the main window using a map of options.
 
-: create-window \ m -- ptr
+: create-window \ window-opts -- ptr
     >r
 
     \ window title
-    r@ "title" m:_@ "GLIB Window" ?:
+    r@ window-opts:_title "GLIB Window" ?:
 
     \ x,y coordinates and size
-    r@ "x" m:_@ sdl:SDL_WINDOWPOS_UNDEFINED ?:
-    r@ "y" m:_@ sdl:SDL_WINDOWPOS_UNDEFINED ?:
-    r@ "width" m:_@ 640 ?:
-    r@ "height" m:_@ 480 ?:
+    r@ window-opts:_x SDL_WINDOWPOS_UNDEFINED ?:
+    r@ window-opts:_y SDL_WINDOWPOS_UNDEFINED ?:
+    r@ window-opts:_width 640 ?:
+    r@ window-opts:_height 480 ?:
 
-    \ flags
-    r> "flags" m:_@ sdl:SDL_WINDOW_SHOWN ?:
+    \ window flags
+    r> window-opts:_flags SDL_WINDOW_SHOWN ?:
 
     \ attempt to create the window, die on failure
-    sdl:SDL_CreateWindow "Failed to create SDL window!" thrownull ;
+    SDL_CreateWindow "Failed to create SDL window!" thrownull ;
 
 -- w: glib:create-renderer
 -- s: ptr -- ptr
 -- d: Create the renderer for the main window.
 
 : create-renderer \ -- ptr
-    window @ -1
-
-    \ renderer flags
-    sdl:SDL_RENDERER_ACCELERATED
+    window @ -1 SDL_RENDERER_ACCELERATED
 
     \ attempt to create the renderer, die on failure
-    sdl:SDL_CreateRenderer "Failed to create SDL renderer!" thrownull ;
+    SDL_CreateRenderer "Failed to create SDL renderer!" thrownull ;
 
 -- w: glib:init
--- s: m --
+-- s: window-opts --
 -- d: Initializes SDL library and auto shutdown. Asserts on failure. Creates
 -- d: a window and renderer using the provided map of options. Valid map
 -- d: options are:
@@ -67,8 +76,8 @@ defer: draw
 -- d:   height (int)   - height of window in pixels
 -- d:   flags (int)    - SDL_WINDOW_* flags
 
-: init \ m --
-    sdl:init-all
+: init \ window-opts --
+    init-all
 
     \ create the main window and renderer
     create-window window !
@@ -83,15 +92,14 @@ defer: draw
         poll-event null;
 
         \ switch based on the event type
-        event-type
-            [ ( dup sdl:SDL_QUIT n:= ) , ( bye )
-            , ( dup sdl:SDL_KEYDOWN n:= ) , ( drop on-keydown )
-            , ( dup sdl:SDL_KEYUP n:= ) , ( drop on-keyup )
-            , ( dup sdl:SDL_MOUSEMOTION n:= ) , ( drop on-mousemove )
-            , ( dup sdl:SDL_MOUSEBUTTONDOWN n:= ) , ( drop on-mousedown )
-            , ( dup sdl:SDL_MOUSEBUTTONUP n:= ) , ( drop on-mouseup )
-            , ( 2drop )
-            ] when
+        [ ( dup SDL_QUIT n:= ) , ( bye )
+        , ( dup SDL_KEYDOWN n:= ) , ( drop on-keydown )
+        , ( dup SDL_KEYUP n:= ) , ( drop on-keyup )
+        , ( dup SDL_MOUSEMOTION n:= ) , ( drop on-mousemove )
+        , ( dup SDL_MOUSEBUTTONDOWN n:= ) , ( drop on-mousedown )
+        , ( dup SDL_MOUSEBUTTONUP n:= ) , ( drop on-mouseup )
+        , ( 2drop )
+        ] when
     again ;
 
 -- w: glib:clear
@@ -99,14 +107,14 @@ defer: draw
 -- d: Clear the renderer.
 
 : clear \ --
-    renderer @ sdl:SDL_RenderClear drop ;
+    renderer @ SDL_RenderClear drop ;
 
 -- w: glib:present
 -- s: --
 -- d: Swap the backbuffer.
 
 : present \ --
-    renderer @ sdl:SDL_RenderPresent ;
+    renderer @ SDL_RenderPresent ;
 
 -- w: glib:run-loop
 -- s: --
@@ -126,7 +134,9 @@ defer: draw
 -- d: Posts a quit event that will be processed next frame.
 
 : quit \ --
-    sdl:SDL_QUIT 0 SDL_CommonEvent:new SDL_CommonEvent:pack
+    SDL_QUIT 0 SDL_CommonEvent:new SDL_CommonEvent:pack
 
     \ post the event, ignore the return value
-    sdl:SDL_PushEvent drop ;
+    SDL_PushEvent drop ;
+
+;with

@@ -215,3 +215,16 @@ ns: f
 
 : spit \ x s --
     f:create swap f:write drop f:close ;
+
+\ -------------------
+\ Numeric utils
+\ -------------------
+
+ns: n
+
+-- w: n:flags
+-- s: a -- n
+-- d: Given an array of flags (integers), OR them together.
+
+: flags \ a -- n
+    ' n:bor 0 a:reduce ;

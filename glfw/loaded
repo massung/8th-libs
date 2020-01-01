@@ -1,0 +1,7 @@
+\ -*- 8th -*-
+
+needs glfw/glfw
+needs glfw/gl
+
+\ success
+true

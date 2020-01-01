@@ -372,7 +372,7 @@ GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER constant GLFW_GAMEPAD_AXIS_LAST
 0x00051002 constant GLFW_COCOA_MENUBAR
 
 \ init/shutdown
-"N" "glfwInit" func: glfwInit
+"T" "glfwInit" func: glfwInit
 "V" "glfwTerminate" func: glfwTerminate
 "VNN" "glfwInitHint" func: glfwInitHint
 
@@ -394,7 +394,7 @@ GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER constant GLFW_GAMEPAD_AXIS_LAST
 "ZP" "glfwGetMonitorName" func: glfwGetMonitorName
 "VPP" "glfwSetMonitorUserPointer" func: glfwSetMonitorUserPointer
 "PP" "glfwGetMonitorUserPointer" func: glfwGetMonitorUserPointer
-"wW" "glfwSetMonitorCallback" func: glfwSetMonitorCallback
+"WW" "glfwSetMonitorCallback" func: glfwSetMonitorCallback
 
 \ video modes
 "PPP" "glfwGetVideoModes" func: glfwGetVideoModes
@@ -409,8 +409,8 @@ GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER constant GLFW_GAMEPAD_AXIS_LAST
 "VPZ" "glfwWindowHintString" func: glfwWindowHintString
 "PNNZPP" "glfwCreateWindow" func: glfwCreateWindow
 "VP" "glfwDestroyWindow" func: glfwDestroyWindow
-"NP" "glfwWindowShouldClose" func: glfwWindowShouldClose
-"VPN" "glfwSetWindowShouldClose" func: glfwSetWindowShouldClose
+"TP" "glfwWindowShouldClose" func: glfwWindowShouldClose
+"VPT" "glfwSetWindowShouldClose" func: glfwSetWindowShouldClose
 "VPZ" "glfwSetWindowTitle" func: glfwSetWindowTitle
 "VPNP" "glfwSetWindowIcon" func: glfwSetWindowIcon
 "VPPP" "glfwGetWindowPos" func: glfwGetWindowPos
@@ -496,7 +496,7 @@ GLFW_GAMEPAD_AXIS_RIGHT_TRIGGER constant GLFW_GAMEPAD_AXIS_LAST
 "VNP" "glfwSetJoystickUserPointer" func: glfwSetJoystickUserPointer
 "PN" "glfwGetJoystickUserPointer" func: glfwGetJoystickUserPointer
 "NN" "glfwJoystickIsGamepad" func: glfwJoystickIsGamepad
-"wW" "glfwSetJoystickCallback" func: glfwSetJoystickCallback
+"WW" "glfwSetJoystickCallback" func: glfwSetJoystickCallback
 "NZ" "glfwUpdateGamepadMappings" func: glfwUpdateGamepadMappings
 "ZN" "glfwGetGamepadName" func: glfwGetGamepadName
 "NNP" "glfwGetGamepadState" func: glfwGetGamepadState

@@ -20,7 +20,7 @@ rec;
 
 -- w: texture:rect
 -- s: texture n n -- texture a
--- d: Create an x,y,w,h array at the given coordinates.
+-- d: Create an [x,y,w,h] array at the given coordinates.
 
 : texture:rect \ texture n n -- texture a
     rot texture:w swap texture:h swap >r SDL_Rect:new r> swap ;
@@ -33,13 +33,13 @@ rec;
     renderer @ swap
 
     \ load the texture
-    sdl:IMG_LoadTexture dup null;
+    IMG_LoadTexture dup null;
 
     \ outputs of texture query
     ( 0 "i" ptr:pack dup >r ) 4 times
 
     \ get data about the texture
-    sdl:SDL_QueryTexture drop
+    SDL_QueryTexture drop
 
     \ unpack attributes
     ( r> ptr:unpack ) 4 times

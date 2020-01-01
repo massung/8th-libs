@@ -28,8 +28,8 @@ libsdl-ttf "Failed to find/load SDL_ttf dynamic library" thrownull drop
 0x03 constant TTF_HINTING_NONE
 
 \ error "macros"
-: TTF_SetError SDL_SetError ;
-: TTF_GetError SDL_GetError ;
+' SDL_SetError w:alias: TTF_SetError
+' SDL_GetError w:alias: TTF_GetError
 
 \ byte swapping
 "VT" "TTF_ByteSwappedUNICODE" func: TTF_ByteSwappedUNICODE

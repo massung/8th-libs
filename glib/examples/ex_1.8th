@@ -5,6 +5,10 @@ requires glib
 \ define actions
 glib:action: quit
 
+\ called once per loop iteration
+: step \ --
+    quit glib:pressed if glib:quit then ;
+
 \ entry point
 : app:main \ --
     { "title" : "Glib Example 1 - Basics" } glib:init
@@ -13,7 +17,7 @@ glib:action: quit
     sdl:SDLK_ESCAPE quit glib:bind-key
 
     \ if the action occurs, then signal quit
-    ( quit glib:pressed if glib:quit then ) w:is glib:step
+    ' step w:is glib:step
 
     \ main loop
     glib:run-loop ;
